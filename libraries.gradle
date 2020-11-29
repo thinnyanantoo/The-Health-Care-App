@@ -1,0 +1,106 @@
+ext{
+    glideVersion = "4.11.0"
+    recyclerViewVersion = "1.1.0"
+    materialVersion = "1.2.0-alpha04"
+    gsonVersion = "2.8.6"
+    roomVersion = "2.2.3"
+    lifecycleVersion = "2.2.0"
+    workerVersion = "2.3.1"
+    retrofitVersion = "2.6.1"
+    retrofitConverterTogsonVersion = "2.5.0"
+    swipeRefreshVersion = "1.0.0"
+    rxkotlinVersion = "2.4.0"
+    rxandroidVersion = "2.1.1"
+    exoplayerVersion = "2.11.7"
+    imageSliderVersion = "1.3.9"
+    viewpager2Version = "1.0.0-alpha01"
+    legacyVersion = "1.0.0"
+
+    appcompatVersion = "1.1.0"
+    corektx = "1.3.1"
+    constraintlayoutVersion = "1.1.3"
+    youtubePlayerVersion = "10.0.5"
+
+    libraries = [
+            glide : "com.github.bumptech.glide:glide:$glideVersion",
+            glidekapt : "com.github.bumptech.glide:compiler:$glideVersion",
+
+            recyclerview : "androidx.recyclerview:recyclerview:$recyclerViewVersion",
+
+            material : "com.google.android.material:material:$materialVersion",
+
+            gson : "com.google.code.gson:gson:$gsonVersion",
+
+            room : "androidx.room:room-runtime:$roomVersion",
+            roomkapt : "androidx.room:room-compiler:$roomVersion",
+
+            //mmTextView
+            mmtext : "org.mmtextview:mmtextview:1.5",
+
+            //lifecycle
+            lifecycle : "android.arch.lifecycle:extensions:$lifecycleVersion",
+            lifecyclekapt : "android.arch.lifecycle:compiler:$lifecycleVersion",
+
+            //liveData
+            livedata : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            lifecyclecompiler : "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion",
+
+            //worker
+            worker : "androidx.work:work-runtime:$workerVersion",
+
+            //Retrofit
+            retrofit : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            convertergson : "com.squareup.retrofit2:converter-gson:$retrofitConverterTogsonVersion",
+            rxjava : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+
+            swiperefresh : "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshVersion",
+
+            //RxKotlin
+            rxkotlin : "io.reactivex.rxjava2:rxkotlin:$rxkotlinVersion",
+            rxandroid : "io.reactivex.rxjava2:rxandroid:$rxandroidVersion",
+
+            exoplayer : "com.google.android.exoplayer:exoplayer:$exoplayerVersion",
+            exocore : "com.google.android.exoplayer:exoplayer-core:$exoplayerVersion",
+            exoplayerdash : "com.google.android.exoplayer:exoplayer-dash:$exoplayerVersion",
+            exoplayerhls : "com.google.android.exoplayer:exoplayer-hls:$exoplayerVersion",
+
+            imageslider : "com.github.smarteist:autoimageslider:$imageSliderVersion",
+
+            youtubeplayer : "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubePlayerVersion",
+
+            viewpager2 : "androidx.viewpager2:viewpager2:$viewpager2Version",
+
+            appcompat : "androidx.appcompat:appcompat:$appcompatVersion",
+            corektx : "androidx.core:core-ktx:$corektx",
+            constraintlayout :  "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion",
+            legacy:  "androidx.legacy:legacy-support-v4:$legacyVersion"
+    ]
+
+    junitVersion = "4.12"
+    junitktxVersion = "1.1.1"
+    corektxVersion = "1.2.0"
+    mockkVersion = "1.10.0"
+    mockitoVersion = "3.1.0"
+    robolectricVersion = "4.3.1"
+    espressoVersion = "3.2.0"
+
+    testruleVersion = "1.2.0"
+
+
+    localTest = [
+            junit : "junit:junit:$junitVersion",
+            junitktx :  "androidx.test.ext:junit-ktx:$junitktxVersion",
+            corektx :  "androidx.test:core-ktx:$corektxVersion",
+            mockk :  "io.mockk:mockk:$mockkVersion",
+            mockito : "org.mockito:mockito-core:$mockitoVersion",
+            robolectric : "org.robolectric:robolectric:$robolectricVersion",
+
+
+            espresso :  "androidx.test.espresso:espresso-core:$espressoVersion",
+            testrule : "androidx.test:rules:$testruleVersion",
+            testrunner :  "androidx.test:runner:$testruleVersion",
+            espressocontrib : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            extjunit : "androidx.test.ext:junit:$junitktxVersion"
+    ]
+}
+

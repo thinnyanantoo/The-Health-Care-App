@@ -1,0 +1,4 @@
+include ':shared'
+include ':doctor'
+include ':app'
+rootProject.name = "The-Health-Care-App"
