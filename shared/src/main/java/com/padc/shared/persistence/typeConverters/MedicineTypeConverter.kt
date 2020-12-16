@@ -7,13 +7,13 @@ import com.padc.shared.data.vos.MedicineVO
 
 class MedicineTypeConverter{
     @TypeConverter
-    fun toString(dataList : ArrayList<MedicineVO>): String{
+    fun toString(dataList : MedicineVO): String{
         return Gson().toJson(dataList)
     }
 
     @TypeConverter
-    fun toList(JsonStr: String) : ArrayList<MedicineVO> {
-        val dataListType = object  : TypeToken<ArrayList<MedicineVO>>(){}.type
+    fun toList(JsonStr: String) : MedicineVO {
+        val dataListType = object  : TypeToken<MedicineVO>(){}.type
         return Gson().fromJson(JsonStr,dataListType)
     }
 }

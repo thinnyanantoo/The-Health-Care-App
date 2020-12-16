@@ -1,29 +1,154 @@
 package com.padc.shared.network
 
 import com.padc.shared.data.vos.*
+import com.padc.shared.persistence.typeConverters.OneTimeGeneralQuestionTypeConverter
 
 interface FirebaseApi {
 
-    fun getAllDoctor(onSuccess: (doctors : List<DoctorVO>) -> Unit, onFailure: (String) -> Unit)
+    fun getDoctorFromFirestore(onSuccess: (doctors: List<DoctorVO>) -> Unit, onFailure: (String) -> Unit)
     fun addDoctors(doctorVO: DoctorVO, onSuccess: () -> Unit, onFailure: (String) -> Unit)
-    fun addPatient(patientVO: PatientVO,onSuccess: () -> Unit, onFailure: (String) -> Unit)
-    fun getPatient(onSuccess: (patient : List<PatientVO>) -> Unit, onFailure: (String) -> Unit)
+    fun addPatient(patientVO: PatientVO, onSuccess: () -> Unit, onFailure: (String) -> Unit)
 
-    fun getSpecialities(onSuccess : (SpecialityList : List<SpecialityVO>) -> Unit, onFailure: (String) -> Unit)
-    fun startConsultation(onSuccess: (ConsultationVO : ConsultationVO) -> Unit, onFailure: (String) -> Unit)
-    fun getRecentlyDoctor(onSuccess: (patient : PatientVO) -> Unit, onFailure: (String) -> Unit)
+    fun addOneTimeGeneralQuestionToPatient(id: String,question : String, answer : String)
+    fun getOneTimeGeneralQuestionFromPatient(
+        patientId: String,
+        onSuccess: (oneTimeGeneralQuestionVo: List<OnetimeGeneralQuestionVO>) -> Unit
+    )
+    fun addAddressToPatient(id: String,addressVO: AddressVO,onSuccess: () -> Unit,onFailure: (String) -> Unit)
+    fun getPatientFromFirestore(onSuccess: (patient: List<PatientVO>) -> Unit, onFailure: (String) -> Unit)
 
-    //Doctor
-    fun getPrescribeMedicine(onSuccess: (MedicineVO : List<MedicineVO>) -> Unit, onFailure: (String) -> Unit)
-    fun finishConsultation(onSuccess: (DoctorVO : List<DoctorVO>) -> Unit, onFailure: (String) -> Unit)
+    fun getSpecialities(
+        onSuccess: (SpecialityList: List<SpecialityVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
 
-    //Patient
-    fun broadCastConsultationRequest(onSuccess: (patientVO :List<PatientVO>) -> Unit, onFailure: (String) -> Unit)
-    fun checkOutMedicine(onSuccess: (checkOutVO : CheckOutVO) -> Unit, onFailure: (String) -> Unit)
-    fun sendDirectRequest(onSuccess: () -> Unit,onFailure: (String) -> Unit)
+    fun startConsultation(
+        caseSummaryVO: CaseSummaryVO,
+        id: String,
+        patientVO: PatientVO,
+        doctorVO: DoctorVO,
+        onSuccess: (ConsultationVO: ConsultationVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+
+    fun addedRecentlyDoctor(
+        documentId: String,
+        patientVO: PatientVO,
+        doctorVo: DoctorVO,
+        onSuccess: (patientVO: PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getRecentlyDoctor(
+        id: String,
+        onSuccess: (recentlyDoctor: List<RecentlyDoctorVo>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun finishConsultation(
+        consultation : ConsultationVO,
+        documentId: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+
+    fun broadCastConsultationRequest(
+        patientVO: PatientVO,
+        caseSummaryVO: List<CaseSummaryVO>,
+        specialityName: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getBrodaCastConsultationRequest(
+             specialityName : String,
+             onSuccess: (consultationrequest : List<ConsultationRequestVO>) -> Unit,
+             onFailure: (String) -> Unit
+    )
+
+//    fun addToCaseSummaryToBroadCastRequest(
+//        question: String,
+//        answer: String
+//    )
+
+    fun addMessageInConsultation(
+        documentkey: String,
+        imageMessage: String,
+        sendAt: String,
+        sendByVO: SendByVO,
+        textMessage: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getMessageChart(
+        documentId: String,
+        onSuccess: (messageVO: List<ChatMessageVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun sendDirectRequest(
+        patientVO: PatientVO,
+        caseSummaryVO: CaseSummaryVO,
+        recentlyDoctor: RecentlyDoctorVo,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getAllMedicine(
+        specialityId: String,
+        onSuccess: (medicineVO: List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getMedicinetoPrescribe(
+        specialityVO: SpecialityVO,
+        specialityName: String,
+        onSuccess: (medicine: MedicineVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultation(
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit,onFailure: (String) -> Unit
+    )
+
+    fun getPrescription(
+        documentId: String,
+        onSuccess: (prescription: List<PresriptionVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun addToPrescription(
+        documentId: String,
+        id: String,
+        mname: String,
+        price: String,
+        routineVO: RoutineVO
+    )
+
+    fun getGeneralQuestion(
+        onSuccess: (generalQuestionVO: List<GeneralQuestionVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getSpecialQuestionBySpecialityName(
+        specialityId: String,
+        onSuccess: (specialQuestionVO : List<SpecialQuestionVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
 
     //CheckOut
-    fun addToCheckOut(medicineId : String, name : String, price : Int, qty : Int)
-    fun getCheckOutItem(onSuccess : (List<CheckOutVO>) -> Unit, onFailure: (String) -> Unit)
-    fun clearCheckOut()
+
+    fun checkOutMedicine(
+        prescription: List<PresriptionVO>,
+        deliveryRoutineVO: DeliveryRoutineVO,
+        id: String,
+        address: String,
+        onSuccess: (checkOutVO: CheckOutVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
 }

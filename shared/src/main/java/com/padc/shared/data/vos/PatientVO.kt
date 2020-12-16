@@ -2,31 +2,30 @@ package com.padc.shared.data.vos
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.firebase.firestore.IgnoreExtraProperties
+import com.padc.shared.persistence.typeConverters.AddressTypeConverters
 
 @IgnoreExtraProperties
 @Entity(tableName = "patient")
+@TypeConverters(AddressTypeConverters::class)
 data class PatientVO(
     @PrimaryKey
     var id: String = "",
-    var DOB: String? = "",
     var photo: String? = "",
-    var gender: String? = "",
-    var name: String = "",
-    var address: String = "",
-    var recentlyDoctorVo: List<RecentlyDoctorVo> = emptyList()
+    var pname: String? = "",
+    var email : String? = "",
+    var password : String? = "",
+    var weight : String? = "",
+    var height : String? = "",
+    var DOB : String? = "",
+    var allergicMedicine: String? = "",
+    var bloodPressure : String? = "",
+    var bloodType : String? = "",
+    var deviceId : String ? = ""
+  //  var address: AddressVO ? = null
+  //  var oneTimeGeneralQuestion: OnetimeGeneralQuestionVO = OnetimeGeneralQuestionVO()
+//    var recentlyDoctor: RecentlyDoctorVo? = null
 )
 
-fun MutableMap<String, Any>?.convertToPatientVO(): PatientVO {
-    val patientVo = PatientVO()
-    patientVo.id = this?.get("id") as String
-    patientVo.name = this["pname"] as String
-    patientVo.DOB = this["DOB"] as String
-    patientVo.photo = this["photo"] as String
-    patientVo.gender = this["gender"] as String
-    patientVo.address = this["address"] as String
-    patientVo.recentlyDoctorVo = this["recently_doctor"] as String as List<RecentlyDoctorVo>
 
-    return patientVo
-
-}

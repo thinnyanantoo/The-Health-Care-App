@@ -7,13 +7,13 @@ import com.padc.shared.data.vos.SpecialQuestionVO
 
 class SpecialQuestionTypeConverter {
     @TypeConverter
-    fun toString(dataList : ArrayList<SpecialQuestionVO>): String{
+    fun toString(dataList : SpecialQuestionVO): String{
         return Gson().toJson(dataList)
     }
 
     @TypeConverter
-    fun toList(JsonStr: String) : ArrayList<SpecialQuestionVO>{
-        val dataListType = object  : TypeToken<ArrayList<SpecialQuestionVO>>(){}.type
+    fun toList(JsonStr: String) : SpecialQuestionVO{
+        val dataListType = object  : TypeToken<SpecialQuestionVO>(){}.type
         return Gson().fromJson(JsonStr,dataListType)
     }
 }

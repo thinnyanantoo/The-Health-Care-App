@@ -10,6 +10,5 @@ class MedicineVO(
     @PrimaryKey
     var id: String = "",
     var name: String = "",
-    var price: String = "",
-    var routineVO: RoutineVO = RoutineVO()
+    var price: String = ""
 )

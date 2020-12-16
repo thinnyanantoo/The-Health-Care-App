@@ -15,6 +15,7 @@ ext{
     imageSliderVersion = "1.3.9"
     viewpager2Version = "1.0.0-alpha01"
     legacyVersion = "1.0.0"
+    stepperIndicatorVersion = "1.0.7"
 
     appcompatVersion = "1.1.0"
     corektx = "1.3.1"
@@ -67,6 +68,9 @@ ext{
             imageslider : "com.github.smarteist:autoimageslider:$imageSliderVersion",
 
             youtubeplayer : "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubePlayerVersion",
+
+
+            stepperIndicator  :  "com.github.badoualy:stepper-indicator:$stepperIndicatorVersion",
 
             viewpager2 : "androidx.viewpager2:viewpager2:$viewpager2Version",
 

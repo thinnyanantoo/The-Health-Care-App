@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f6f6"
+    android:orientation="vertical"
+    tools:context=".activities.HomeScreenActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivDImage"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="17dp"
+            android:src="@drawable/no_path"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp" />
+
+        <org.mmtextview.components.MMTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="46dp"
+            android:fontFamily="@font/poppins"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="10sp"
+            android:text="ပါမောက္ခဦးအောင်ဝင်း"
+            android:textColor="#424656"
+            android:id="@+id/tvdName"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/rvRequest"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:listitem="@layout/rv_request_list"
+       />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="9sp"
+        android:layout_marginStart="15dp"
+        android:text="ရက်ချိန်းယူထားခဲ့မှု မှတ်တမ်းများ"
+        android:textColor="#424656"
+        android:textSize="17sp"
+        android:textStyle="normal"
+        android:layout_marginTop="@dimen/margin_medium_3"/>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recordOfBookingLayout"-->
+<!--        tools:listitem="@layout/layout_booking_record"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_marginTop="@dimen/margin_medium_2"/>-->
+</LinearLayout>

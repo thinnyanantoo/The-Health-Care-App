@@ -1,9 +1,13 @@
 package com.padc.shared.data.vos
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-class SpecialQuestionVO(
-    var id: String? = "",
-    var name: String = ""
+@Entity(tableName = "specialQuestionTable")
+data class SpecialQuestionVO(
+    @PrimaryKey
+    var id: String = "",
+    var question: String = ""
 )

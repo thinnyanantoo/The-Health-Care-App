@@ -11,8 +11,8 @@ import com.padc.shared.persistence.typeConverters.*
 
 
 @Database(
-    entities = [SpecialityVO::class, DoctorVO::class, PatientVO::class, CheckOutVO::class],
-    version = 1, exportSchema = false
+    entities = [SpecialityVO::class, DoctorVO::class, PatientVO::class, CheckOutVO::class, MedicineVO::class, GeneralQuestionVO::class, SpecialQuestionVO::class, CaseSummaryVO::class],
+    version = 5, exportSchema = false
 )
 @TypeConverters(
     SpecialQuestionTypeConverter::class,
@@ -25,7 +25,10 @@ import com.padc.shared.persistence.typeConverters.*
     ChatMessageTypeConverter::class,
     CaseSummaryTypeConverter::class,
     DeliveryRoutineTypeConverter::class,
-    PrescriptionTypeConverter::class
+    PrescriptionTypeConverter::class,
+    SendByVOTypeConverter::class,
+    AddressTypeConverters::class,
+    OneTimeGeneralQuestionTypeConverter::class
 )
 abstract class CareDB : RoomDatabase() {
     companion object {
@@ -52,6 +55,9 @@ abstract class CareDB : RoomDatabase() {
     abstract fun checkOutDao(): CheckOutDao
     abstract fun spelicityDao(): SpecialitiesDao
     abstract fun medicineDao(): MedicineDao
+    abstract fun specialQuestionDao(): SpecialQuestionDao
+    abstract fun generalDao(): GeneralQuestonDao
+    abstract fun caseSummaryDao(): CaseSummaryDao
 
 }
 

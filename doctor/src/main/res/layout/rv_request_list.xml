@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="217dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="@dimen/margin_medium_2">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="9dp"
+                android:fontFamily="@font/poppins"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="9sp"
+                android:padding="@dimen/margin_small"
+                android:textColor="#424656"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:text="ရက်ချိန်းယူခြင်းတောင်းဆိုမှု" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="11dp"
+                android:layout_toRightOf="@id/tView"
+                android:backgroundTint="#ff9657"
+                android:textSize="@dimen/text_regular"
+                android:clickable="false"
+                android:text="လူနာအသစ်" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/viewOne"
+            android:layout_width="match_parent"
+            android:layout_height="1.2dp"
+            android:layout_below="@id/relOne"
+            android:background="#bfbfbf"
+            android:minWidth="@dimen/margin_small" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ivPatientInfoPhoto"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_below="@+id/viewOne"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="17dp"
+            android:src="@drawable/no_path"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp" />
+        <LinearLayout
+            android:id="@+id/llOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/ivPatientInfoPhoto"
+            android:layout_below="@id/viewOne"
+            android:layout_marginTop="26dp">
+
+            <org.mmtextview.components.MMTextView
+                android:id="@+id/tvPatientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="9sp"
+                android:textColor="#424656"
+                android:textSize="17sp"
+                android:textStyle="normal"
+                android:text="Aung Aung" />
+            <org.mmtextview.components.MMTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:id="@+id/tvBirthday"
+                android:textColor="#004247"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:text="23 Nov 1997"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_below="@id/llOne"
+            android:layout_marginTop="24dp">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="ကျော်မည်"
+                android:backgroundTint="#ff6767"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"/>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="လက်ခံမည်"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/blue"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

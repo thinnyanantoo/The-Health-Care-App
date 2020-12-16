@@ -1,4 +1,4 @@
-package com.example.padc_thepodcast_tutorial_tyno.workers
+package com.padc.shared.workers
 
 import android.content.Context
 import androidx.work.Worker

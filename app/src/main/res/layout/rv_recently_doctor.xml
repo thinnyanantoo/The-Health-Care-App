@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="144dp"
+    android:layout_height="184dp"
+    android:background="#f6f6f6"
+    android:layout_marginStart="6dp"
+    android:paddingBottom="@dimen/margin_small">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ivRecentlyDoctorPhoto"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="45dp"
+            android:layout_marginEnd="45dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="17dp"
+            android:src="@drawable/doctor"
+            app:civ_border_color="#FFFFFF"
+            app:civ_border_width="2dp" />
+
+        <org.mmtextview.components.MMTextView
+            android:id="@+id/tvRecentlyDoctorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivRecentlyDoctorPhoto"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:fontFamily="@font/raleway"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="5sp"
+            android:text="ပါမောက္ခဦးအောင်ဝင်း"
+            android:textColor="#424656"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <org.mmtextview.components.MMTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvRecentlyDoctorName"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="6dp"
+            android:fontFamily="@font/raleway_medium"
+            android:letterSpacing="-0.02"
+            android:lineSpacingExtra="2sp"
+            android:text="ဦးနှောက် နှင့် အာရုံကြော
+ဆိုင်ရာ"
+            android:textColor="#00122d"
+            android:textSize="13sp"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

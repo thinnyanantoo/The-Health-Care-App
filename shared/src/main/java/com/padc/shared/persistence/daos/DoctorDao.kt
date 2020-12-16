@@ -1,27 +1,32 @@
 package com.padc.shared.persistence.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.padc.shared.data.vos.DoctorVO
-import retrofit2.http.DELETE
 
 @Dao
 interface DoctorDao {
     @Query("SELECT * FROM doctor")
+    @ColumnInfo
     fun getDoctorsLit(): LiveData<DoctorVO>
 
     @Query("SELECT * FROM doctor WHERE id = :doctorID")
+    @ColumnInfo
     fun getDoctorById(doctorID : String) : LiveData<DoctorVO>
 
-    @DELETE
+//    @Query("SELECT * FROM doctor WHERE specialityName = :doctorName")
+//    @ColumnInfo
+//    fun getDoctorBySpecialityName(doctorName : String) : LiveData<DoctorVO>
+
+   @Delete
+   @ColumnInfo
     fun deleteDoctor(doctor : DoctorVO)
 
     @Query("DELETE FROM doctor")
+    @ColumnInfo
     fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @ColumnInfo
     fun insetDoctor(doctor: List<DoctorVO>)
 }

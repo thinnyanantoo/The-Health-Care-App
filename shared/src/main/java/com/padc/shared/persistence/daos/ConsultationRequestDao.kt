@@ -1,25 +1,24 @@
 package com.padc.shared.persistence.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.padc.shared.data.vos.ConsultationRequestVO
-import retrofit2.http.DELETE
+import com.padc.shared.data.vos.GeneralQuestionVO
 
 interface ConsultationRequestDao {
-    @Query("SELECT * FROM consultationRequest")
-    fun getConsultationRequestLit(): LiveData<ConsultationRequestVO>
+    @Query("SELECT * FROM generalQuestionTable")
+    @ColumnInfo
+    fun getGenerQuestion(): LiveData<ConsultationRequestVO>
 
-    @Query("SELECT * FROM consultationRequest WHERE id = :consultRequestID")
-    fun getConsultationRequestById(consultRequestID: String) : LiveData<ConsultationRequestVO>
-
-    @DELETE
-    fun deleteConsultationRequest(consultRequest : ConsultationRequestVO)
-
-    @Query("DELETE FROM consultationRequest")
-    fun deleteAll()
+    @Query("SELECT * FROM generalQuestionTable WHERE type = :type")
+    @ColumnInfo
+    fun getGeneralQuestionType(type : String) : LiveData<ConsultationRequestVO>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insetConsultationRequest(consultationRequest: List<ConsultationRequestVO>)
+    @ColumnInfo
+    fun insertGeneralQuestion(generalQuestionVO: List<ConsultationRequestVO>)
+
+    @Delete
+    @ColumnInfo
+    fun deleteGeneralQuestion(question : List<ConsultationRequestVO>)
 }

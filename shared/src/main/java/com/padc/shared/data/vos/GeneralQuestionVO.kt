@@ -9,5 +9,6 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 class GeneralQuestionVO(
     @PrimaryKey
     var id: String = "",
-    var name: String = ""
+    var name: String = "",
+    var type : String =""
 )

@@ -3,7 +3,6 @@ package com.padc.shared.persistence.typeConverters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.padc.shared.data.vos.GeneralQuestionVO
 import com.padc.shared.data.vos.PresriptionVO
 
 class PrescriptionTypeConverter {

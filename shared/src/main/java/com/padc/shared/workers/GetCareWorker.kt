@@ -1,14 +1,16 @@
-package com.example.padc_thepodcast_tutorial_tyno.workers
+package com.padc.shared.workers
 
 import android.content.Context
 import android.util.Log
 import androidx.work.WorkerParameters
+import com.padc.shared.data.vos.GeneralQuestionVO
 
 class GetCareWorker(context: Context, workerParams: WorkerParameters) :
     BaseWorkers(context, workerParams) {
     override fun doWork(): Result {
         var result = Result.failure()
-        var id: String = ""
+        var name: String = ""
+        var generalQuestionVO = GeneralQuestionVO()
 
         mHealthCareModel.getDoctorFromFirebaseApiAndSaveToDatabase(
             onSuccess = {
@@ -18,7 +20,17 @@ class GetCareWorker(context: Context, workerParams: WorkerParameters) :
                 result = Result.failure()
             }
         )
-        mHealthCareModel.getPatientFromFirebaseApiAndSaveToDatabase(
+//        mHealthCareModel.getPatientFromFirebaseApiAndSaveToDatabase(
+//            onSuccess = {
+//                Log.e("KEy","Reach to response")
+//                result = Result.success()
+//            },
+//            onError = {
+//                Log.e("KEy","Did not reach to response")
+//                result = Result.failure()
+//            }
+//        )
+        mHealthCareModel.getSpecialitiesFromFirebaseApiAndSaveToDatabase(
             onSuccess = {
                 Log.e("KEy","Reach to response")
                 result = Result.success()
@@ -28,7 +40,8 @@ class GetCareWorker(context: Context, workerParams: WorkerParameters) :
                 result = Result.failure()
             }
         )
-        mHealthCareModel.getSpecialitiesFromFirebaseApiAndSaveToDatabase(
+
+        mHealthCareModel.getGeneralQuestionFromFirebaseApiAndSaveToDataBase(
             onSuccess = {
                 Log.e("KEy","Reach to response")
                 result = Result.success()

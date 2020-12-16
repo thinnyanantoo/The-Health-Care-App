@@ -1,25 +1,28 @@
 package com.padc.shared.persistence.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.padc.shared.data.vos.MedicineVO
-import retrofit2.http.DELETE
 
+@Dao
 interface MedicineDao {
     @Query("SELECT * FROM medicine")
+    @ColumnInfo
     fun getMedicine(): LiveData<MedicineVO>
 
-    @Query("SELECT * FROM checkout WHERE id = :medicineID")
+    @Query("SELECT * FROM medicine WHERE id = :medicineID")
+    @ColumnInfo
     fun getMedicineById(medicineID : String) : LiveData<MedicineVO>
 
-    @DELETE
-    fun deleteMedicine(checkOut : MedicineVO)
+    @Delete
+    @ColumnInfo
+    fun deleteMedicine(medicine : MedicineVO)
 
     @Query("DELETE FROM medicine")
+    @ColumnInfo
     fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @ColumnInfo
     fun insertMedicine(medicine: List<MedicineVO>)
 }

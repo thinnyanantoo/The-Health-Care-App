@@ -1,11 +1,15 @@
 package com.padc.shared.data.vos
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-class CaseSummaryVO
-    (
+@Entity(tableName = "caseSummaryTable")
+class CaseSummaryVO(
+    @PrimaryKey
     var id: String = "",
-    var answer: String = "",
-    var question: String = ""
+    var question : String? = "",
+    var answer : String? = ""
 )
+

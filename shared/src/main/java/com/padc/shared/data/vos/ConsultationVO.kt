@@ -4,12 +4,20 @@ import androidx.room.Entity
 import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-@Entity(tableName = "consultationTable")
 class ConsultationVO(
-    var chatMessage: ArrayList<String> = arrayListOf(),
-    var prescription: PresriptionVO = PresriptionVO(),
-    var caseSummary: CaseSummaryVO = CaseSummaryVO(),
     var doctor: DoctorVO = DoctorVO(),
     var patient: PatientVO = PatientVO(),
-    var id: String = ""
+    var id: String = "",
+    var chatMessage: ChatMessageVO = ChatMessageVO(),
+    var presription: PresriptionVO = PresriptionVO()
 )
+
+fun MutableMap<String,Any?> . convertToConsultationVO(): ConsultationVO{
+    val consultation = ConsultationVO()
+    consultation.doctor = this.get("doctor") as DoctorVO
+    consultation.patient = this.get("patient")as PatientVO
+    consultation.id = this.get("id")as String
+    consultation.chatMessage = this.get("chat-message")as ChatMessageVO
+    consultation.presription = this.get("prescription")as PresriptionVO
+    return consultation
+ }

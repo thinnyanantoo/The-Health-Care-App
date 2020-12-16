@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="168dp"
+    android:layout_height="122dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:paddingStart="@dimen/margin_medium"
+    android:paddingEnd="@dimen/margin_medium"
+    android:layout_marginBottom="@dimen/margin_medium"
+    android:elevation="5dp"
+    app:cardCornerRadius="12dp"
+    >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="29dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="31dp"
+                android:layout_marginStart="17dp"
+                android:src="@drawable/ic_launcher_background"
+                android:id="@+id/ivSpeciality"/>
+
+            <org.mmtextview.components.MMTextView
+                android:id="@+id/tvSpecialityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_toRightOf="@+id/ivSpeciality"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="8sp"
+                android:padding="@dimen/margin_medium"
+                android:text="Speciality Name"
+                android:textColor="#00122d"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

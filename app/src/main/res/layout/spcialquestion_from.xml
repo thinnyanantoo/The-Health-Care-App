@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true"
+        android:background="#D3CDCD"
+        android:layout_margin="4dp"
+        android:id="@+id/rvSpecialQuestion"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_confirm_consultation"
+        android:background="@color/blue"
+        android:layout_gravity="end"
+        android:gravity="end"
+        android:id="@+id/btnConfirmInSpecialQuestion"
+        android:layout_marginEnd="@dimen/margin_medium_3"
+        android:layout_marginTop="@dimen/margin_medium" />
+</LinearLayout>
