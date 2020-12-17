@@ -17,15 +17,15 @@ import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.DoctorVO
 import kotlinx.android.synthetic.main.activity_home_screen.*
 
-class HomeScreenActivity : BaseActivity(),HomeScreenView{
+class HomeScreenActivity : BaseActivity(), HomeScreenView {
 
-    private lateinit var mPresenter : HomeScreenPresenter
-    private lateinit var mRequestAdapter : RequestAdapter
+    private lateinit var mPresenter: HomeScreenPresenter
+    private lateinit var mRequestAdapter: RequestAdapter
 
-    var doctorId : String = ""
-    var specialityName : String = ""
-    var dName : String = ""
-    var dPhoto : String = ""
+    var doctorId: String = ""
+    var specialityName: String = ""
+    var dName: String = ""
+    var dPhoto: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
@@ -37,7 +37,7 @@ class HomeScreenActivity : BaseActivity(),HomeScreenView{
         dName = intent.getStringExtra(DNAME).toString()
         dPhoto = intent.getStringExtra(DPHOTO).toString()
         tvdName.text = dName
-        Log.d("specialityName",specialityName.toString())
+        Log.d("specialityName", specialityName.toString())
         mPresenter.onUiReady(specialityName,this)
 
     }
@@ -47,27 +47,29 @@ class HomeScreenActivity : BaseActivity(),HomeScreenView{
         val DSPECIALITY = "DSPECIALITY"
         val DNAME = "DNAME"
         val DPHOTO = "DPHOTO"
-       fun newIntent(context: Context,dId : String,dSpecialname : String,dName: String, dPhoto: String): Intent {
-            val intent = Intent(context,HomeScreenActivity::class.java)
-            intent.putExtra(DID,dId)
-            intent.putExtra(DSPECIALITY,dSpecialname)
-            intent.putExtra(DNAME,dName)
-            intent.putExtra(DPHOTO,dPhoto)
+        fun newIntent(
+            context: Context,
+            dId: String,
+            dSpecialname: String,
+            dName: String,
+            dPhoto: String
+        ): Intent {
+            val intent = Intent(context, HomeScreenActivity::class.java)
+            intent.putExtra(DID, dId)
+            intent.putExtra(DSPECIALITY, dSpecialname)
+            intent.putExtra(DNAME, dName)
+            intent.putExtra(DPHOTO, dPhoto)
             return intent
         }
     }
 
-    private fun setUpPresenter(){
+    private fun setUpPresenter() {
         mPresenter = ViewModelProviders.of(this).get(HomeScreenPresenterImpl::class.java)
         mPresenter.initPresenter(this)
     }
 
-    private fun setUpActionListneer(){
-
-    }
-
-    private fun setUpAdapter(){
-        mRequestAdapter = RequestAdapter()
+    private fun setUpAdapter() {
+        mRequestAdapter = RequestAdapter(mPresenter)
         val linearLayoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvRequest.layoutManager = linearLayoutManager
@@ -76,12 +78,24 @@ class HomeScreenActivity : BaseActivity(),HomeScreenView{
 
 
     override fun showConsultationRequest(consultationRequestVO: List<ConsultationRequestVO>) {
-        Log.d("sizeCon",consultationRequestVO.size.toString())
-//        tvPatientName.text = consultationRequestVO.patientVO?.pname.toString()
-//        Log.d("PNAME",consultationRequestVO.patientVO?.pname.toString())
-//        tvdName.text = resources.getString(R.string.txt_bd)+consultationRequestVO.patientVO?.DOB
-        mRequestAdapter.setNewData(consultationRequestVO)
+        mRequestAdapter.setNewData(consultationRequestVO.toMutableList())
 
+    }
+
+    override fun navigateToPatientCaseSummaryInfo(consultationrequestId: ConsultationRequestVO) {
+        Log.d("specilaName",consultationrequestId.specialityName.toString())
+        Log.d("specilaId",consultationrequestId.specialityId.toString())
+        Log.d("id",consultationrequestId.id)
+        startActivity(
+            PatientInfoActivity.newIntent(
+                this,
+                consultationrequestId.id,
+                consultationrequestId.specialityName.toString(),
+                consultationrequestId.specialityId.toString()
+
+            )
+
+        )
     }
 
 }

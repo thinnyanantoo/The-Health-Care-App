@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    android:layout_marginBottom="14dp">
+<TextView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/round_edittext"
+    android:maxLines="3"
+    android:gravity="center"
+    android:scrollbars="none"
+    android:padding="4dp"
+    android:fontFamily="@font/poppins_medium"
+    android:textStyle="normal"
+    android:textSize="17sp"
+    android:textColor="#424656"
+    android:letterSpacing="-0.02"
+    android:text="သွာဖုံး သို့မဟုတ်လျှာမှာ အဖု သို့မဟုတ် အနာ‌တွေပေါက်လား။"
+    android:lineSpacingExtra="9sp"
+    android:id="@+id/itemShowQuestion"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+</androidx.cardview.widget.CardView>

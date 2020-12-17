@@ -6,9 +6,7 @@ import com.padc.shared.network.auth.AuthManager
 import com.padc.shared.network.auth.FirebaseAuthManager
 
 object AuthenticationModelImpl : AuthenticationModel{
-    override var mAuthManager: AuthManager
-        get() = FirebaseAuthManager
-        set(value) {}
+    override var mAuthManager: AuthManager = FirebaseAuthManager
 
     override fun loginDoctor(
         email: String,

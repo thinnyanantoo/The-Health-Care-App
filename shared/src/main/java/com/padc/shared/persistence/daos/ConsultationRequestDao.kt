@@ -5,20 +5,25 @@ import androidx.room.*
 import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.GeneralQuestionVO
 
+@Dao
 interface ConsultationRequestDao {
-    @Query("SELECT * FROM generalQuestionTable")
+    @Query("SELECT * FROM consultationRequestTable")
     @ColumnInfo
-    fun getGenerQuestion(): LiveData<ConsultationRequestVO>
+    fun getconsultationRequest(): LiveData<List<ConsultationRequestVO>>
 
-    @Query("SELECT * FROM generalQuestionTable WHERE type = :type")
+    @Query("SELECT * FROM consultationRequestTable WHERE id = :type")
     @ColumnInfo
-    fun getGeneralQuestionType(type : String) : LiveData<ConsultationRequestVO>
+    fun getConsultationRequestByID(type : String) : LiveData<ConsultationRequestVO>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @ColumnInfo
-    fun insertGeneralQuestion(generalQuestionVO: List<ConsultationRequestVO>)
+    fun insertConsultationRequest(generalQuestionVO: List<ConsultationRequestVO>)
 
     @Delete
     @ColumnInfo
-    fun deleteGeneralQuestion(question : List<ConsultationRequestVO>)
+    fun deleteConsultationRequest(question : List<ConsultationRequestVO>)
+
+    @Query("DELETE FROM consultationRequestTable")
+    @ColumnInfo
+    fun deleteAll()
 }

@@ -39,7 +39,7 @@ class DoctorLoginActivity : BaseActivity(), LoginView {
 
     override fun navigateToHomeScreen(doctorVO: DoctorVO) {
         Log.d("NAMEDD",doctorVO.name)
-        startActivity(HomeScreenActivity.newIntent(this,doctorVO.id,doctorVO.specialityName,doctorVO.name,doctorVO.photo!!))
+        startActivity(HomeScreenActivity.newIntent(this,doctorVO.id,doctorVO.specialityName, doctorVO.name,doctorVO.photo!!))
     }
 
     private fun setUpPresenter(){

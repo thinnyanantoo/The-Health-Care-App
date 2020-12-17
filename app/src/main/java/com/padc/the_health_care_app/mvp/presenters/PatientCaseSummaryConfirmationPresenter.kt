@@ -16,6 +16,7 @@ interface PatientCaseSummaryConfirmationPresenter : BasePresenter<ConfirmPatient
     fun onTapStartConsultationRequest(
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
-        speciality: String
+        speciality: String,
+        specialityId : String
     )
 }

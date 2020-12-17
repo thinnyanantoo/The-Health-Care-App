@@ -5,29 +5,51 @@ import com.padc.shared.persistence.typeConverters.OneTimeGeneralQuestionTypeConv
 
 interface FirebaseApi {
 
-    fun getDoctorFromFirestore(onSuccess: (doctors: List<DoctorVO>) -> Unit, onFailure: (String) -> Unit)
+    fun getDoctorFromFirestore(
+        email: String,
+        onSuccess: (doctors: List<DoctorVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
     fun addDoctors(doctorVO: DoctorVO, onSuccess: () -> Unit, onFailure: (String) -> Unit)
     fun addPatient(patientVO: PatientVO, onSuccess: () -> Unit, onFailure: (String) -> Unit)
 
-    fun addOneTimeGeneralQuestionToPatient(id: String,question : String, answer : String)
+    fun addOneTimeGeneralQuestionToPatient(id: String, question: String, answer: String)
     fun getOneTimeGeneralQuestionFromPatient(
         patientId: String,
         onSuccess: (oneTimeGeneralQuestionVo: List<OnetimeGeneralQuestionVO>) -> Unit
     )
-    fun addAddressToPatient(id: String,addressVO: AddressVO,onSuccess: () -> Unit,onFailure: (String) -> Unit)
-    fun getPatientFromFirestore(onSuccess: (patient: List<PatientVO>) -> Unit, onFailure: (String) -> Unit)
+
+    fun addAddressToPatient(
+        id: String,
+        addressVO: AddressVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getPatientFromFirestore(
+        onSuccess: (patient: List<PatientVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
 
     fun getSpecialities(
         onSuccess: (SpecialityList: List<SpecialityVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 
-    fun startConsultation(
-        caseSummaryVO: CaseSummaryVO,
+    fun getConfirmConsultationRequest(
         id: String,
+        onSuccess: (ConsultationRequestVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun startConsultation(
+        caseSummaryVO: List<CaseSummaryVO>,
+        id: String,
+        dataTime: String,
         patientVO: PatientVO,
         doctorVO: DoctorVO,
-        onSuccess: (ConsultationVO: ConsultationVO) -> Unit,
+        onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -47,7 +69,7 @@ interface FirebaseApi {
     )
 
     fun finishConsultation(
-        consultation : ConsultationVO,
+        consultation: ConsultationVO,
         documentId: String,
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
@@ -58,14 +80,15 @@ interface FirebaseApi {
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
+        specialityId: String,
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     )
 
     fun getBrodaCastConsultationRequest(
-             specialityName : String,
-             onSuccess: (consultationrequest : List<ConsultationRequestVO>) -> Unit,
-             onFailure: (String) -> Unit
+        specialityName: String,
+        onSuccess: (consultationrequest: List<ConsultationRequestVO>) -> Unit,
+        onFailure: (String) -> Unit
     )
 
 //    fun addToCaseSummaryToBroadCastRequest(
@@ -73,13 +96,15 @@ interface FirebaseApi {
 //        answer: String
 //    )
 
-    fun addMessageInConsultation(
-        documentkey: String,
-        imageMessage: String,
-        sendAt: String,
-        sendByVO: SendByVO,
-        textMessage: String,
-        onSuccess: () -> Unit,
+    fun getConsultationByDoctor(
+        id: String,
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultationByPatient(
+        id: String,
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -111,7 +136,7 @@ interface FirebaseApi {
     )
 
     fun getConsultation(
-        onSuccess: (consultation: List<ConsultationVO>) -> Unit,onFailure: (String) -> Unit
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit, onFailure: (String) -> Unit
     )
 
     fun getPrescription(
@@ -128,6 +153,13 @@ interface FirebaseApi {
         routineVO: RoutineVO
     )
 
+    fun sendMessage(
+        id: String,
+        message: ChatMessageVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
     fun getGeneralQuestion(
         onSuccess: (generalQuestionVO: List<GeneralQuestionVO>) -> Unit,
         onFailure: (String) -> Unit
@@ -135,7 +167,7 @@ interface FirebaseApi {
 
     fun getSpecialQuestionBySpecialityName(
         specialityId: String,
-        onSuccess: (specialQuestionVO : List<SpecialQuestionVO>) -> Unit,
+        onSuccess: (specialQuestionVO: List<SpecialQuestionVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 

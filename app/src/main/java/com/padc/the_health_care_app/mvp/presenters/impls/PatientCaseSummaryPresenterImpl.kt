@@ -36,9 +36,10 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     override fun onTapStartConsultationRequest(
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
-        speciality: String
+        speciality: String,
+    specialityId : String
     ) {
-        mModel.addBroadCastConsultationRequest(patientVO, caseSummaryVO, speciality, onSuccess = {
+        mModel.addBroadCastConsultationRequest(patientVO, caseSummaryVO, speciality,specialityId, onSuccess = {
             mView?.navigateToHomeScreen(patientVO)
         }, onFailure = {
 

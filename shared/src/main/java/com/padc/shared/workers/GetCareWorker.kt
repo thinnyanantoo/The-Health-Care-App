@@ -12,14 +12,6 @@ class GetCareWorker(context: Context, workerParams: WorkerParameters) :
         var name: String = ""
         var generalQuestionVO = GeneralQuestionVO()
 
-        mHealthCareModel.getDoctorFromFirebaseApiAndSaveToDatabase(
-            onSuccess = {
-                result = Result.success()
-            },
-            onError = {
-                result = Result.failure()
-            }
-        )
 //        mHealthCareModel.getPatientFromFirebaseApiAndSaveToDatabase(
 //            onSuccess = {
 //                Log.e("KEy","Reach to response")

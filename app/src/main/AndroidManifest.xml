@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PatientCaseSummaryConfirmActivity"></activity>
+        <activity android:name=".activities.ChatPatientActivity"></activity>
+        <activity android:name=".activities.PatientCaseSummaryConfirmActivity" />
         <activity android:name=".activities.PatientRegisterActivity" />
         <activity android:name=".activities.PatientLoginActivity">
             <intent-filter>
@@ -22,7 +23,7 @@
         <activity android:name=".activities.PatientInfoFillingForm" />
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar.TranslucentStatusBar" />
 
         <meta-data
             android:name="preloaded_fonts"

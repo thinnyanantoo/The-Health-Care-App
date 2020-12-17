@@ -27,22 +27,6 @@ class RegisterPresenterImpl : RegisterPresenter, AbstractBasePresenter<RegisterV
         photo: String,
         address: String
     ) {
-
-
-        var doctorVo = DoctorVO(
-            id = email,
-            email = email,
-            name = name,
-            password = password,
-            phoneNumber = phoneNumber,
-            specialityName = speciality,
-            degree = degree,
-            biography = biography,
-            experience = experience,
-            DOB = DOB,
-            photo = photo,
-            address = address
-        )
         mAuthenticatioModel.registerDoctor(
             email,
             name,
@@ -56,8 +40,22 @@ class RegisterPresenterImpl : RegisterPresenter, AbstractBasePresenter<RegisterV
             photo,
             address,
             onSuccess = {
+                var doctorVo = DoctorVO(
+                    id = email,
+                    email = email,
+                    name = name,
+                    password = password,
+                    phoneNumber = phoneNumber,
+                    specialityName = speciality,
+                    degree = degree,
+                    biography = biography,
+                    experience = experience,
+                    DOB = DOB,
+                    photo = photo,
+                    address = address
+                )
                 mModel.registerNewDoctor(doctorVo, onSuccess = {
-                    mModel.getDoctorFromFirebaseApiAndSaveToDatabase({},{})
+                   // mModel.getDoctorFromFirebaseApiAndSaveToDatabase({},{})
                     mView?.navigateToLoginActivity()
                 }, onFailure = {
                 })

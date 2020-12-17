@@ -1,9 +1,12 @@
-package com.padc.shared
+package com.padc.doctor
 
 import android.app.Application
+import android.content.Context
 import androidx.work.*
-import com.example.padc_thepodcast_tutorial_tyno.workers.GetCareWorker
+import com.padc.doctor.utils.SessionManager
 import com.padc.shared.data.models.impls.HealthCareModelImpl
+import com.padc.shared.persistence.db.CareDB
+import com.padc.shared.workers.GetCareWorker
 import java.util.concurrent.TimeUnit
 
 class HealthCareApp : Application() {
@@ -11,10 +14,16 @@ class HealthCareApp : Application() {
     override fun onCreate() {
         super.onCreate()
         HealthCareModelImpl.initDatabase(applicationContext)
+        SessionManager.init(applicationContext)
 
         getCareOneTime()
         getCarePeriodically()
         getCareWhileInDozeMode()
+
+         lateinit var mTheDB:CareDB
+        fun initDatabase(context: Context) {
+            mTheDB = CareDB.getDBInstance(context)
+        }
     }
 
     private fun getCareOneTime() {

@@ -7,13 +7,13 @@ import com.padc.shared.data.vos.CaseSummaryVO
 
 class CaseSummaryTypeConverter {
     @TypeConverter
-    fun toString(dataList : CaseSummaryVO): String{
+    fun toString(dataList : ArrayList<CaseSummaryVO>): String{
         return Gson().toJson(dataList)
     }
 
     @TypeConverter
-    fun toList(JsonStr: String) : CaseSummaryVO {
-        val dataListType = object  : TypeToken<CaseSummaryVO>(){}.type
+    fun toList(JsonStr: String) : ArrayList<CaseSummaryVO>{
+        val dataListType = object  : TypeToken<ArrayList<CaseSummaryVO>>(){}.type
         return Gson().fromJson(JsonStr,dataListType)
     }
 }

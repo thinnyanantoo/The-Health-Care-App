@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.padc.doctor.mvp.presenter.LoginPresenter
 import com.padc.doctor.mvp.views.LoginView
+import com.padc.doctor.utils.saveDoctorToSession
 import com.padc.shared.data.models.AuthenticationModel
 import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.AuthenticationModelImpl
@@ -20,18 +21,19 @@ class LoginPresenterImpl : LoginPresenter,AbstractBasePresenter<LoginView>() {
         if(email.isEmpty() || password.isEmpty()){
                  Log.d("Error", "failed all text field")
         } else  {
-            mAuthenticatioModel.loginDoctor(email,password,onSuccess = {
-            },onFailure = {})
-        //    mModel.getDoctorFromFirebaseApiAndSaveToDatabase({},{})
-            mModel.getDoctorbyEmail(email).observe(lifecycleOwner, Observer {
-                Log.d("DOCTORVO",it.address.toString())
-//                var doctorVO = DoctorVO(
-//                    email = email,
-//                    password = password
-//                )
-                Log.d("EmailDoctor",it.email.toString())
-                mView?.navigateToHomeScreen(it)
+            mAuthenticatioModel.loginDoctor(email, password, onSuccess = {
+                mModel.getDoctorFromFirebaseApiAndSaveToDatabase(email,onSuccess = {}, onError = {})
+                mModel.getDoctorbyEmail(email)
+                    .observe(lifecycleOwner, Observer { doctor ->
+                        doctor?.let {
+                            saveDoctorToSession(it)
+                            mView?.navigateToHomeScreen(doctor) }
+                    })
+
+            }, onFailure = {
+
             })
+
         }
     }
 

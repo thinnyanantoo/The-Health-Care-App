@@ -6,4 +6,5 @@ import com.padc.shared.mvp.views.BaseView
 
 interface HomeScreenView : BaseView{
     fun showConsultationRequest(consultationRequestVO: List<ConsultationRequestVO>)
+    fun navigateToPatientCaseSummaryInfo(consultationrequestId : ConsultationRequestVO)
 }

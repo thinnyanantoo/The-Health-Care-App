@@ -18,11 +18,14 @@ import kotlinx.android.synthetic.main.activity_doctor_case_summary.*
 
 class RegisterActivity : BaseActivity(), RegisterView {
 
+    val doctorVO : DoctorVO ? = DoctorVO()
+
     var year = ""
     var month = ""
     var day = ""
     var speciality = ""
     var gender = ""
+    var birthday = ""
     private lateinit var mPresenter: RegisterPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +56,6 @@ class RegisterActivity : BaseActivity(), RegisterView {
 
 
     private fun setUpListener() {
-
 
         spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -134,7 +136,9 @@ class RegisterActivity : BaseActivity(), RegisterView {
 
         }
 
-        var birthday = "$day/$month/$year"
+        birthday = "$year/$month/$day"
+
+
         btnRegister.setOnClickListener {
             mPresenter.onTapRegister(
                 email = etDoctorPhoneNumber.text.toString(),
@@ -142,12 +146,27 @@ class RegisterActivity : BaseActivity(), RegisterView {
                 password = etDoctorPassword.text.toString(),
                 phoneNumber = etDoctorPhoneNumber.text.toString(),
                 speciality = speciality.toString(),
-                degree = etDegree.toString(),
+                degree = etDegree.text.toString(),
                 biography = etBio.text.toString(),
                 experience = etExperience.text.toString(),
-                DOB = birthday.toString(),
+                DOB = "$year/$month/$day",
                 photo = "",
                 address = etAddress.text.toString())
+
+            DoctorVO(
+                id = etDoctorPhoneNumber.text.toString(),
+                email = etDoctorPhoneNumber.text.toString(),
+                name = etDoctorName.text.toString(),
+                password = etDoctorPassword.text.toString(),
+                phoneNumber = etDoctorPhoneNumber.text.toString(),
+                specialityName = speciality.toString(),
+                degree = etDegree.text.toString(),
+                biography = etBio.text.toString(),
+                experience = etExperience.text.toString(),
+                DOB = "$year/$month/$day",
+                photo = "",
+                address = etAddress.text.toString())
+
         }
         }
 

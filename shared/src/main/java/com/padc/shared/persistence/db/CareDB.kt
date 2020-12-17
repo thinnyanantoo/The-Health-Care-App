@@ -11,7 +11,7 @@ import com.padc.shared.persistence.typeConverters.*
 
 
 @Database(
-    entities = [SpecialityVO::class, DoctorVO::class, PatientVO::class, CheckOutVO::class, MedicineVO::class, GeneralQuestionVO::class, SpecialQuestionVO::class, CaseSummaryVO::class],
+    entities = [SpecialityVO::class, DoctorVO::class, PatientVO::class, CheckOutVO::class, MedicineVO::class, GeneralQuestionVO::class, ConsultationRequestVO::class,SpecialQuestionVO::class, CaseSummaryVO::class],
     version = 5, exportSchema = false
 )
 @TypeConverters(
@@ -58,6 +58,7 @@ abstract class CareDB : RoomDatabase() {
     abstract fun specialQuestionDao(): SpecialQuestionDao
     abstract fun generalDao(): GeneralQuestonDao
     abstract fun caseSummaryDao(): CaseSummaryDao
+    abstract fun consultationRequestDao(): ConsultationRequestDao
 
 }
 

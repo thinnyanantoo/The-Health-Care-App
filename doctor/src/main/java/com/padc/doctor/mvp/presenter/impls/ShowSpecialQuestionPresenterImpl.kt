@@ -11,8 +11,16 @@ import com.padc.shared.mvp.presenters.AbstractBasePresenter
 
 class ShowSpecialQuestionPresenterImpl : ShowSpecialQuestionPresenter, AbstractBasePresenter<ShowSpecialQuestionView> () {
     var mModel : HealthCareModel = HealthCareModelImpl
-    override fun onUiReady(specialityVO: SpecialityVO,lifecycleOwner: LifecycleOwner) {
-
-        }
+    override fun onUiReady(speicalityName: String,speicalityId : String,lifecycleOwner: LifecycleOwner) {
+        mModel.getSpecialQuestionBySpecialityNameFromFirebaseAndSaveToDatabase(speicalityId,{},{})
+        mModel.getSpecialQuestionBySpecialityNameFromDatabase().observe(lifecycleOwner, Observer {
+            mView?.displaySpecialQuestion(it)
+        })
     }
+
+    override fun onTapQuestionItem() {
+
+    }
+
+}
 

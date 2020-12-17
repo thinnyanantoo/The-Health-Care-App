@@ -218,10 +218,11 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
 
     override fun getDoctorFromFirestore(
+        email : String,
         onSuccess: (doctors: List<DoctorVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("doctor").addSnapshotListener { value, error ->
+        db.collection("doctor").whereEqualTo("email" ,email).addSnapshotListener { value, error ->
 
             error?.let {
                 onFailure(it.message ?: "Please Check connection")
@@ -247,6 +248,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
+        specialityId: String,
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     ) {
@@ -255,7 +257,8 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             "id" to id,
             "case-summary" to caseSummaryVO,
             "patient" to patientVO,
-            "speciality-name" to specialityName
+            "speciality-name" to specialityName,
+            "speciality-id" to specialityId
         )
         id?.let {
             db.collection("consultation-request")
@@ -286,8 +289,8 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
                     val result = value?.documents ?: arrayListOf()
 
                     for (document in result) {
-                        val data = document.data.convertToConsultationRequestVo()
-                        data.let { List.add(it) }
+                        val data = document.data?.convertToConsultationRequestVo()
+                        data.let { it?.let { it1 -> List.add(it1) } }
                     }
                     onSuccess(List)
 
@@ -295,90 +298,155 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             }
     }
 
-//    override fun addToCaseSummaryToBroadCastRequest(
-//        question: String,
-//        answer: String
-//    ) {
-//        val caseSummaryMap = hashMapOf(
-//            "question" to question,
-//            "answer" to answer
-//        )
-//
-//        val String = UUID.randomUUID().toString()
-//        db.collection("consultation-request")
-//            .document(String)
-//            .collection("caseSummary")
-//            .add(caseSummaryMap)
-//            .addOnSuccessListener {
-//                Log.d(
-//                    "Success",
-//                    "Successfully added to caseSummary"
-//                )
-//            }
-//            .addOnFailureListener { Log.d("Failure", "failed to CaseSummary") }
-//    }
-
-
-    override fun startConsultation(
-        caseSummaryVO: CaseSummaryVO,
+    override fun getConsultationByDoctor(
         id: String,
-        patientVO: PatientVO,
-        doctorVO: DoctorVO,
-        onSuccess: (ConsultationVO: ConsultationVO) -> Unit,
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
+        db.collection("consultation").addSnapshotListener { value, error ->
+            error?.let {
+                onFailure(it.message ?: "Please check connection")
+            } ?: run {
+                val List: MutableList<ConsultationVO> = arrayListOf()
+                val result = value?.documents ?: arrayListOf()
+                for (document in result) {
+                    val consultation = document.data?.convertToConsultationVO()
+                    consultation?.let { List.add(it) }
+                }
+                onSuccess(List)
+            }
+        }
+    }
+
+    override fun getConsultationByPatient(
+        id: String,
+        onSuccess: (consultation: List<ConsultationVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation/${id}/patient")
+            .addSnapshotListener { value, error ->
+                error?.let {
+
+                    onFailure(it.message ?: "Please check connection")
+                } ?: run {
+                    val List: MutableList<ConsultationVO> = arrayListOf()
+
+                    val result = value?.documents ?: arrayListOf()
+
+                    for (document in result) {
+                        val consultation = document.data?.convertToConsultationVO()
+                        consultation?.let { List.add(it) }
+                    }
+                    onSuccess(List)
+                }
+            }
+    }
+
+    override fun getConfirmConsultationRequest(
+        id: String,
+        onSuccess: (ConsultationRequestVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation-request").whereEqualTo("status", "accept")
+            .whereEqualTo("id", id)
+            .addSnapshotListener { value, error ->
+
+                error?.let { onFailure(it.message ?: "Please Check Connection") } ?: run {
+                    val request: ConsultationRequestVO = ConsultationRequestVO()
+                    if (value?.documents?.isNotEmpty()!!) {
+                        val result = value?.documents?.first()
+
+                        val data = result?.data?.convertToConsultationRequestVo()
+                        data?.let { onSuccess(it) }
+                    }
+                }
+            }
+    }
+
+    override fun startConsultation(
+        caseSummaryVO: List<CaseSummaryVO>,
+        id: String,
+        dataTime: String,
+        patientVO: PatientVO,
+        doctorVO: DoctorVO,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+
+        val id = UUID.randomUUID().toString()
+        val ref = db.collection("consultation-id").document("${id}")
+
+        db.runTransaction { transaction ->
+            val snapShot = transaction.get(ref)
+
+            transaction.update(ref, "status", "accept")
+            transaction.update(ref, "id", id)
+            transaction.update(ref, "doctor", doctorVO)
+        }.addOnSuccessListener { result ->
+            Log.d("Status Update", "Transaction success: $result")
+        }.addOnFailureListener { e ->
+            Log.w("Status Update", "Transaction failure", e)
+        }
         val consultationMap = hashMapOf(
             "id" to id,
+            "status" to "start",
+            "speciality" to doctorVO.specialityName,
+            "create-at" to dataTime,
             "patient" to patientVO,
             "doctor" to doctorVO,
             "case-summary" to caseSummaryVO
         )
         db.collection("consultation")
-            .document(UUID.randomUUID().toString())
+            .document(id)
             .set(consultationMap)
-            .addOnSuccessListener { Log.d("Success", "Success added to consultation") }
-            .addOnFailureListener { Log.d("Failed", "Failed added to consultation") }
-
-    }
-
-    override fun addMessageInConsultation(
-        documentkey: String,
-        imageMessage: String,
-        sendAt: String,
-        sendByVO: SendByVO,
-        textMessage: String,
-        onSuccess: () -> Unit,
-        onFailure: (String) -> Unit
-    ) {
-        val chatMessage = hashMapOf(
-            "image-message" to imageMessage,
-            "send-at" to sendAt,
-            "send-by" to sendByVO,
-            "text-message" to textMessage
-        )
-        db.collection("consultation/$documentkey/chat-message")
-            .document(UUID.randomUUID().toString())
-            .set(chatMessage)
             .addOnSuccessListener {
-                Log.d(
-                    "Success",
-                    "Successfully chat message added to consultation"
-                )
+                Log.d("Success", "Success added to consultation")
+                onSuccess(id)
             }
             .addOnFailureListener {
-                Log.d(
-                    "Failure",
-                    "failed to add chat message added to consultation"
-                )
+                Log.d("Failed", "Failed added to consultation")
             }
+
     }
+
+//    override fun addMessageInConsultation(
+//        documentkey: String,
+//        imageMessage: String,
+//        sendAt: String,
+//        sendByVO: SendByVO,
+//        textMessage: String,
+//        onSuccess: () -> Unit,
+//        onFailure: (String) -> Unit
+//    ) {
+//        val chatMessage = hashMapOf(
+//            "image-message" to imageMessage,
+//            "send-at" to sendAt,
+//            "send-by" to sendByVO,
+//            "text-message" to textMessage
+//        )
+//        db.collection("consultation/$documentkey/chat-message")
+//            .document(UUID.randomUUID().toString())
+//            .set(chatMessage)
+//            .addOnSuccessListener {
+//                Log.d(
+//                    "Success",
+//                    "Successfully chat message added to consultation"
+//                )
+//            }
+//            .addOnFailureListener {
+//                Log.d(
+//                    "Failure",
+//                    "failed to add chat message added to consultation"
+//                )
+//            }
+//    }
 
     override fun getMessageChart(
         documentId: String,
         onSuccess: (messageVO: List<ChatMessageVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation/${documentId}/chart-message")
+        db.collection("consultation/${documentId}/chat-message")
             .addSnapshotListener { value, error ->
                 error?.let {
                     onFailure(it.message ?: "Please Check connection")
@@ -424,6 +492,35 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
                     "Failure",
                     "failed to add prescription added to prescription"
                 )
+            }
+    }
+
+    override fun sendMessage(
+        id: String,
+        message: ChatMessageVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        val messageMap = hashMapOf(
+            "text-message" to message.textMessage,
+            "image-message" to message.imagemessage,
+            "send-by" to message.sendBy,
+            "send-at" to message.sendAt,
+            "id" to message.id
+        )
+
+        db.collection("consultation")
+            .document(id)
+            .collection("chat-message")
+            .document(message.id!!)
+            .set(messageMap)
+            .addOnSuccessListener {
+                Log.d("success", "Successfully add messages")
+                onSuccess()
+            }
+            .addOnFailureListener {
+                Log.d("onFailure", "Failed to add messages")
+                onFailure("Failed to add messages")
             }
     }
 

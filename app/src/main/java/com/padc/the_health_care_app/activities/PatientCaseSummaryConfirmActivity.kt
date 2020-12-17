@@ -76,7 +76,7 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
     private fun setUpListener() {
         btnConfirmRequest.setOnClickListener {
             mPresenter.onTapStartConsultationRequest(
-                pVO, caseSummaryList, sName
+                pVO, caseSummaryList, sName,sId
             )
 
         }

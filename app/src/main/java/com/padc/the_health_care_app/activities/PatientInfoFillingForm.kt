@@ -216,7 +216,6 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
     }
 
     override fun navigateToConfirmRequestScreen() {
-       // startActivity(PatientCaseSummaryConfirmActivity.newIntent(this,id, patientid))
         mPresenter.onTapConfirmConsultation()
     }
 

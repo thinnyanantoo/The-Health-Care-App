@@ -8,21 +8,6 @@ interface HealthCareModel {
 
     var mFirebaseApi: FirebaseApi
 
-    fun getDoctorFromFirebaseApiAndSaveToDatabase(
-        onSuccess: (List<DoctorVO>) -> Unit,
-        onError: (String) -> Unit
-    )
-
-    fun getDoctorbyEmail(email: String): LiveData<DoctorVO>
-
-   // fun addPatient(patientVO: PatientVO, onSuccess: () -> Unit, onError: (String) -> Unit)
-
-    fun registerNewDoctor(
-        doctorVO: DoctorVO,
-        onSuccess: (doctorVo : DoctorVO) -> Unit,
-        onFailure: (String) -> Unit
-    )
-
     fun registerNewPatient(
         patientVO: PatientVO,
         onSuccess: (patientVo: PatientVO) -> Unit,
@@ -63,29 +48,66 @@ interface HealthCareModel {
         onError: (String) -> Unit
     )
 
+    fun addOneTimeGeneralQuestionToPatient(id: String, question: String, answer: String)
+
+    fun getSpecialQuestionBySpecialityNameFromDatabase(): LiveData<List<SpecialQuestionVO>>
+
+
+    fun getAllGeneralQuestion(onError: (String) -> Unit): LiveData<GeneralQuestionVO>
+
+    fun getGeneralQuestionFromFirebaseApiAndSaveToDataBase(
+        onSuccess: (generalQuestionVO: List<GeneralQuestionVO>) -> Unit,
+        onError: (String) -> Unit
+    )
+
 
     fun addBroadCastConsultationRequest(
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
+        specialityId: String,
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     )
 
-    fun getBroadCastConsultationRequest(
+    fun getConsultationByPatient(
+        id: String,
+        onSuccess: (List<ConsultationVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultationConfirmByPatient(
+        id: String,
+        onSuccess: (consultationRequest: ConsultationRequestVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+////////////////////////////////////////////////////////////////////////////DOCTOR
+
+
+    fun getDoctorFromFirebaseApiAndSaveToDatabase(
+        email: String,
+        onSuccess: (List<DoctorVO>) -> Unit,
+        onError: (String) -> Unit
+    )
+
+    fun getDoctorbyEmail(email: String): LiveData<DoctorVO>
+
+    fun registerNewDoctor(
+        doctorVO: DoctorVO,
+        onSuccess: (doctorVo: DoctorVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(
         specialityName: String,
         onSuccess: (consultationRequestVO: List<ConsultationRequestVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 
+    fun getRequestFromDatabase(onError: (String) -> Unit): LiveData<List<ConsultationRequestVO>>
 
-
-
-    fun addOneTimeGeneralQuestionToPatient(id: String, question: String, answer: String)
-
-    fun addCaseSummaryToConsultationRequestToBroadCase(question: String, answer: String)
-
-    fun getSpecialQuestionBySpecialityNameFromDatabase(): LiveData<List<SpecialQuestionVO>>
+    fun getRequestCaseSummaryById(requestID: String): LiveData<ConsultationRequestVO>
 
 
     fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>)
@@ -99,17 +121,26 @@ interface HealthCareModel {
         address: String
     )
 
-    fun getAllGeneralQuestion(onError: (String) -> Unit): LiveData<GeneralQuestionVO>
-
-    fun getGeneralQuestionFromFirebaseApiAndSaveToDataBase(
-        onSuccess: (generalQuestionVO: List<GeneralQuestionVO>) -> Unit,
-        onError: (String) -> Unit
-    )
-
 
     fun getConsultation(
         onSuccess: (consultation: List<ConsultationVO>) -> Unit,
         onError: (String) -> Unit
+    )
+
+    fun getConsultationByDoctor(
+        id: String,
+        onSuccess: (consultationVo: List<ConsultationVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun addConsultation(
+        consultationId: String,
+        dateTime: String,
+        caseSummary: List<CaseSummaryVO>,
+        patientVO: PatientVO,
+        doctorVO: DoctorVO,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
     )
 
 
@@ -118,6 +149,19 @@ interface HealthCareModel {
         specialityName: String,
         onSuccesss: (medicineVO: MedicineVO) -> Unit,
         onError: (String) -> Unit
+    )
+
+    fun sendMessageBySender(
+        id: String,
+        messageVO: ChatMessageVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+      fun getAllChatMessage(
+        consultationId : String,
+        onSuccess: (message: List<ChatMessageVO>) -> Unit,
+        onFailure: (String) -> Unit
     )
 
 

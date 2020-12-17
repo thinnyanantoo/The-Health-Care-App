@@ -1,18 +1,30 @@
 package com.padc.shared.data.vos
 
-class ConsultationRequestVO (
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.firebase.firestore.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+@Entity(tableName = "consultationRequestTable")
+data class ConsultationRequestVO (
     var caseSummaryVO: ArrayList<CaseSummaryVO>? = arrayListOf(),
-    var doctorVO: DoctorVO ? = null,
+  //  var doctorVO: DoctorVO ? = null,
     var patientVO: PatientVO ? = null,
     var specialityName : String ? = null,
+    var specialityId : String ? = null,
+    var status : String? = null,
+    @PrimaryKey
     var id : String = ""
 )
 
-fun MutableMap<String,Any>?.convertToConsultationRequestVo() : ConsultationRequestVO{
+fun MutableMap<String,Any>.convertToConsultationRequestVo() : ConsultationRequestVO{
     var consultationRequestVO = ConsultationRequestVO()
-    consultationRequestVO.id= this?.get("id")as String
+    consultationRequestVO.id= this.get("id")as String
+    consultationRequestVO.status = this?.get("status")as String?
+    consultationRequestVO.specialityName = this?.get("speciality-name")as String
+    consultationRequestVO.specialityId = this?.get("speciality-id")as String
     consultationRequestVO.caseSummaryVO = this?.get("case-summary")as ArrayList<CaseSummaryVO>
-    consultationRequestVO.doctorVO= toConvertDoctor((this?.get("doctor") as HashMap<String, String>?))
+  // consultationRequestVO.doctorVO= toConvertDoctor((this?.get("doctor") as HashMap<String, String>?))
     consultationRequestVO.patientVO = toConvertPatient((this?.get("patient")  as  HashMap<String, String>))
     return consultationRequestVO
 
@@ -29,7 +41,7 @@ fun toConvertPatient(data: HashMap<String, String>?): PatientVO? {
         patient.weight = data.get("weight").toString()
         patient.height = data.get("height").toString()
         patient.allergicMedicine = data.get("allegicMedicine").toString()
-        patient.DOB = data.get("DOB").toString()
+        patient.DOB = data.get("dob").toString()
         patient.deviceId = data.get("deviceId").toString()
         patient.bloodPressure = data.get("bloodPressure").toString()
         patient.bloodType = data.get("bloodType").toString()
@@ -43,7 +55,6 @@ fun toConvertDoctor(data : HashMap<String, String>?) : DoctorVO?{
     data?.let{
         val doctor = DoctorVO()
         doctor.name = data.get("name").toString()
-        doctor.id = data.get("id").toString()
         doctor.photo = data.get("photo").toString()
         doctor.biography = data.get("biography").toString()
         doctor.specialityName = data.get("specialityName").toString()
