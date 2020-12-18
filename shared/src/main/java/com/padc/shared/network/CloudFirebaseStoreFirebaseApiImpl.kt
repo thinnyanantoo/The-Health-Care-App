@@ -245,6 +245,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
     }
 
     override fun broadCastConsultationRequest(
+        documentId: String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
@@ -252,12 +253,13 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     ) {
-        val id = UUID.randomUUID().toString()
+        var id = UUID.randomUUID().toString()
         val consultationrequestMap = hashMapOf(
             "id" to id,
             "case-summary" to caseSummaryVO,
             "patient" to patientVO,
             "speciality-name" to specialityName,
+            "status" to "new",
             "speciality-id" to specialityId
         )
         id?.let {
@@ -274,12 +276,37 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         }
     }
 
+    override fun getConsultationRequestByIdAndAddDoctor(
+        id: String,
+        onSuccess: (ConsultationRequestVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation-request").whereEqualTo("id", id)
+            .addSnapshotListener { value, error ->
+                error?.let {
+
+                    onFailure(it.message ?: "Please check connection")
+                } ?: run {
+                    val List: MutableList<ConsultationRequestVO> = arrayListOf()
+
+                    val result = value?.documents ?: arrayListOf()
+
+
+                    result.isNotEmpty().let {
+                        val data = result.first().data?.convertToConsultationRequestVo()
+                        data?.let { it1 -> onSuccess(it1) }
+                    }
+
+                }
+            }
+    }
+
     override fun getBrodaCastConsultationRequest(
         specialityName: String,
         onSuccess: (consultationrequest: List<ConsultationRequestVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation-request").whereEqualTo("speciality-name", specialityName)
+        db.collection("consultation-request").whereEqualTo("status","new").whereEqualTo("speciality-name", specialityName)
             .addSnapshotListener { value, error ->
 
                 error?.let {
@@ -373,8 +400,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onFailure: (String) -> Unit
     ) {
 
-        val id = UUID.randomUUID().toString()
-        val ref = db.collection("consultation-id").document("${id}")
+        val ref = db.collection("consultation-request").document("${id}")
 
         db.runTransaction { transaction ->
             val snapShot = transaction.get(ref)
@@ -409,37 +435,6 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
     }
 
-//    override fun addMessageInConsultation(
-//        documentkey: String,
-//        imageMessage: String,
-//        sendAt: String,
-//        sendByVO: SendByVO,
-//        textMessage: String,
-//        onSuccess: () -> Unit,
-//        onFailure: (String) -> Unit
-//    ) {
-//        val chatMessage = hashMapOf(
-//            "image-message" to imageMessage,
-//            "send-at" to sendAt,
-//            "send-by" to sendByVO,
-//            "text-message" to textMessage
-//        )
-//        db.collection("consultation/$documentkey/chat-message")
-//            .document(UUID.randomUUID().toString())
-//            .set(chatMessage)
-//            .addOnSuccessListener {
-//                Log.d(
-//                    "Success",
-//                    "Successfully chat message added to consultation"
-//                )
-//            }
-//            .addOnFailureListener {
-//                Log.d(
-//                    "Failure",
-//                    "failed to add chat message added to consultation"
-//                )
-//            }
-//    }
 
     override fun getMessageChart(
         documentId: String,

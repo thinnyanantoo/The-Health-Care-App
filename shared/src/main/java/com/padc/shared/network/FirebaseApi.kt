@@ -77,6 +77,7 @@ interface FirebaseApi {
 
 
     fun broadCastConsultationRequest(
+        documentId: String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
@@ -85,9 +86,16 @@ interface FirebaseApi {
         onFailure: (String) -> Unit
     )
 
+
     fun getBrodaCastConsultationRequest(
         specialityName: String,
         onSuccess: (consultationrequest: List<ConsultationRequestVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultationRequestByIdAndAddDoctor(
+        id: String,
+        onSuccess: (ConsultationRequestVO) -> Unit,
         onFailure: (String) -> Unit
     )
 

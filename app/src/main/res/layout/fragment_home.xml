@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f6f6f6"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.HomeFragment">
     <include
@@ -12,6 +13,12 @@
         layout="@layout/layout_recently_doctor"
         android:id="@+id/recentlyLayout"
         android:visibility="gone"/>
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        layout="@layout/layout_start_consultation_confirm_from_doctor"
+        android:id="@+id/confirmConsultationlayout"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,4 +41,4 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
-</RelativeLayout>
+</LinearLayout>

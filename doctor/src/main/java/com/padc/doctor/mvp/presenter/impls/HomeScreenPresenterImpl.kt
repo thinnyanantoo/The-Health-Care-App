@@ -23,7 +23,6 @@ class HomeScreenPresenterImpl : HomeScreenPresenter, AbstractBasePresenter<HomeS
             )
         }
 
-
     override fun onTapButtonAcceptInRequest(consultationRequestVO: ConsultationRequestVO) {
         mView?.navigateToPatientCaseSummaryInfo(consultationRequestVO)
     }

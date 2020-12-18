@@ -62,6 +62,7 @@ interface HealthCareModel {
 
 
     fun addBroadCastConsultationRequest(
+        documentId: String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
@@ -105,6 +106,8 @@ interface HealthCareModel {
         onFailure: (String) -> Unit
     )
 
+    fun deleteRequestFromDatabase()
+
     fun getRequestFromDatabase(onError: (String) -> Unit): LiveData<List<ConsultationRequestVO>>
 
     fun getRequestCaseSummaryById(requestID: String): LiveData<ConsultationRequestVO>
@@ -133,6 +136,13 @@ interface HealthCareModel {
         onFailure: (String) -> Unit
     )
 
+    fun getConsultationRequestByIdAndAddDoctor(
+        id: String,
+        doctor: DoctorVO,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
     fun addConsultation(
         consultationId: String,
         dateTime: String,
@@ -151,6 +161,7 @@ interface HealthCareModel {
         onError: (String) -> Unit
     )
 
+
     fun sendMessageBySender(
         id: String,
         messageVO: ChatMessageVO,
@@ -158,8 +169,8 @@ interface HealthCareModel {
         onFailure: (String) -> Unit
     )
 
-      fun getAllChatMessage(
-        consultationId : String,
+    fun getAllChatMessage(
+        consultationId: String,
         onSuccess: (message: List<ChatMessageVO>) -> Unit,
         onFailure: (String) -> Unit
     )

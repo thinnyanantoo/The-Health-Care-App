@@ -29,6 +29,8 @@ import kotlinx.android.synthetic.main.activity_stepper.*
 import kotlinx.android.synthetic.main.fragment_special_question.*
 import kotlinx.android.synthetic.main.fragment_special_question.rvSpecialQuestion
 import kotlinx.android.synthetic.main.spcialquestion_from.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
@@ -130,6 +132,7 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         btnConfirmInSpecialQuestion.setOnClickListener {
             Log.d("PATIENTIDINFILLINGFORM",patientid)
             mModel.deleteCaseSummary()
+            val id = UUID.randomUUID().toString()
             mModel.insertCaseSummary(caseSummaryVoList)
             startActivity(PatientCaseSummaryConfirmActivity.newIntent(this,id,sName, patientid))
         }

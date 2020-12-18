@@ -7,6 +7,8 @@ import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.vos.*
 import com.padc.shared.network.CloudFirebaseStoreFirebaseApiImpl
 import com.padc.shared.network.FirebaseApi
+import java.text.SimpleDateFormat
+import java.util.*
 
 object HealthCareModelImpl : HealthCareModel, BaseModel() {
 
@@ -129,14 +131,22 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
     }
 
     override fun addBroadCastConsultationRequest(
+        documentId: String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
-        speicalityId : String,
+        speicalityId: String,
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.broadCastConsultationRequest(patientVO, caseSummaryVO, specialityName,speicalityId, {}, {})
+        mFirebaseApi.broadCastConsultationRequest(
+            documentId,
+            patientVO,
+            caseSummaryVO,
+            specialityName,
+            speicalityId,
+            {},
+            {})
     }
 
     override fun getConsultationByPatient(
@@ -144,7 +154,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (List<ConsultationVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        return mFirebaseApi.getConsultationByPatient(id,onSuccess,onFailure)
+        return mFirebaseApi.getConsultationByPatient(id, onSuccess, onFailure)
     }
 
     override fun getConsultationConfirmByPatient(
@@ -152,7 +162,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (consultationRequest: ConsultationRequestVO) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.getConfirmConsultationRequest(id,onSuccess,onFailure)
+        mFirebaseApi.getConfirmConsultationRequest(id, onSuccess, onFailure)
     }
 
     ////////////////////////////////////////////////////////////////////////////DOCTOR
@@ -162,7 +172,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (List<DoctorVO>) -> Unit,
         onError: (String) -> Unit
     ) {
-        mFirebaseApi.getDoctorFromFirestore(email,onSuccess = {
+        mFirebaseApi.getDoctorFromFirestore(email, onSuccess = {
             mTheDB.doctorDao().deleteAll()
             mTheDB.doctorDao().insetDoctor(it)
         }, onFailure = {
@@ -179,7 +189,35 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (message: List<ChatMessageVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.getMessageChart(consultationId,onSuccess,onFailure)
+        mFirebaseApi.getMessageChart(consultationId, onSuccess, onFailure)
+    }
+
+    override fun getConsultationRequestByIdAndAddDoctor(
+        id: String,
+        doctor: DoctorVO,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        return mFirebaseApi.getConsultationRequestByIdAndAddDoctor(id, onSuccess = { consultation ->
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss: a")
+            val currentDate: String = dateFormat.format(Date())
+            consultation.patientVO?.let { patient ->
+                consultation.caseSummaryVO?.toList()?.let { caseSummary ->
+                    mFirebaseApi.startConsultation(
+                        caseSummary,
+                        id,
+                        currentDate,
+                        patient,
+                        doctor,
+                        onSuccess = {
+                            onSuccess(it)
+                        },
+                        onFailure = {
+                            onFailure(it)
+                        })
+                }
+            }
+        },onFailure = {})
     }
 
     override fun getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(
@@ -188,10 +226,13 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onFailure: (String) -> Unit
     ) {
         mFirebaseApi.getBrodaCastConsultationRequest(specialityName, onSuccess = {
-            mTheDB.consultationRequestDao().deleteAll()
-          mTheDB.consultationRequestDao().insertConsultationRequest(it)
-            Log.d("Succcess","SuccessgetFromFirebase")
+            mTheDB.consultationRequestDao().insertConsultationRequest(it)
+            Log.d("Succcess", "SuccessgetFromFirebase")
         }, onFailure = {})
+    }
+
+    override fun deleteRequestFromDatabase() {
+        mTheDB.consultationRequestDao().deleteAll()
     }
 
     override fun getRequestFromDatabase(onError: (String) -> Unit): LiveData<List<ConsultationRequestVO>> {
@@ -265,15 +306,6 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         })
     }
 
-//    override fun getGeneralOneTimeQuestion(question : String):LiveData<GeneralQuestionVO> {
-//        return mTheDB.generalDao().getGeneralQuestionType("one-time")
-//    }
-//
-//    override fun getGeneralAlwaysQuestion(
-//        question: String
-//    ): LiveData<GeneralQuestionVO> {
-//        return mTheDB.generalDao().getGeneralQuestionType("always")
-//    }
 
     override fun getConsultation(
         onSuccess: (consultation: List<ConsultationVO>) -> Unit,
@@ -287,7 +319,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (consultationVo: List<ConsultationVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        return mFirebaseApi.getConsultationByDoctor(id,onSuccess,onFailure)
+        return mFirebaseApi.getConsultationByDoctor(id, onSuccess, onFailure)
     }
 
     override fun addConsultation(
@@ -299,7 +331,15 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.startConsultation(caseSummary,consultationId,dateTime,patientVO,doctorVO,onSuccess,onFailure)
+        mFirebaseApi.startConsultation(
+            caseSummary,
+            consultationId,
+            dateTime,
+            patientVO,
+            doctorVO,
+            onSuccess,
+            onFailure
+        )
     }
 
     override fun getMedicineToPrescribe(
@@ -321,7 +361,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.sendMessage(id,messageVO,onSuccess,onFailure)
+        mFirebaseApi.sendMessage(id, messageVO, onSuccess, onFailure)
     }
 
 

@@ -9,11 +9,12 @@ import com.padc.shared.mvp.presenters.BasePresenter
 import com.padc.the_health_care_app.mvp.views.ConfirmPatientDataView
 
 interface PatientCaseSummaryConfirmationPresenter : BasePresenter<ConfirmPatientDataView> {
-    fun onUiReady(lifecycleOwner: LifecycleOwner)
+    fun onUiReady(id : String,lifecycleOwner: LifecycleOwner)
 
     fun onReadyForPatient(id: String,lifecycleOwner: LifecycleOwner)
 
     fun onTapStartConsultationRequest(
+        documentId : String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         speciality: String,

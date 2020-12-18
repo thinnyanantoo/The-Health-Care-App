@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.dynamic.SupportFragmentWrapper
+import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.DoctorVO
 import com.padc.shared.data.vos.PatientVO
 import com.padc.shared.data.vos.SpecialityVO
 import com.padc.shared.fragments.BaseFragment
 import com.padc.the_health_care_app.R
+import com.padc.the_health_care_app.activities.ChatPatientActivity
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTID
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTNAME
 import com.padc.the_health_care_app.activities.PatientInfoFillingForm
@@ -30,6 +32,7 @@ import kotlinx.android.synthetic.main.fragment_confirm_consultation_dialog.*
 import kotlinx.android.synthetic.main.fragment_confirm_consultation_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_recently_doctor.*
+import kotlinx.android.synthetic.main.layout_start_consultation_confirm_from_doctor.*
 import org.mmtextview.components.MMTextView
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,14 +48,18 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
     private lateinit var mAdapter: SpecialityAdapter
     private lateinit var mPresenter: SpecialityPresenter
-    private lateinit var mRecentlyAdapter : RecentlyAdapter
+    private lateinit var mRecentlyAdapter: RecentlyAdapter
     var patientId = ""
     var patientName = ""
+
+    var consultationId = ""
+
+    var consultationrequestVO: ConsultationRequestVO? = null
 
 
     // TODO: Rename and change types of parameters
     private var idOfPatient: String? = ""
-    private var nameOfPatient : String? = ""
+    private var nameOfPatient: String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +69,8 @@ class HomeFragment : BaseFragment(), SpecialityView {
             nameOfPatient = it.getString(PATIENTNAME)
         }
 
-        Log.d("pIdInHome",idOfPatient.toString())
-        Log.d("pNameInHome",nameOfPatient.toString())
+        Log.d("pIdInHome", idOfPatient.toString())
+        Log.d("pNameInHome", nameOfPatient.toString())
     }
 
     override fun onCreateView(
@@ -78,14 +85,17 @@ class HomeFragment : BaseFragment(), SpecialityView {
         super.onViewCreated(view, savedInstanceState)
         setUpPresenter()
         setUpRecyclerView()
-            patientId = idOfPatient.toString()
-            patientName = nameOfPatient.toString()
+
+        setUpListener()
+        patientId = idOfPatient.toString()
+        patientName = nameOfPatient.toString()
 
 
-        Log.d("PatientIdInHomeSecond" ,patientId)
-        Log.d("PatientNameInHomeSecond",patientName)
+        Log.d("PatientIdInHomeSecond", patientId)
+        Log.d("PatientNameInHomeSecond", patientName)
 
-        mPresenter.onUiReady(this,patientId)
+
+        mPresenter.onUiReady(this, patientId)
     }
 
     private fun setUpRecyclerView() {
@@ -105,6 +115,13 @@ class HomeFragment : BaseFragment(), SpecialityView {
         mPresenter.initPresenter(this)
     }
 
+    private fun setUpListener() {
+        btnStartConsult.setOnClickListener {
+            mPresenter.onTapStartConsultation(consultationrequestVO!!.id, consultationrequestVO!!)
+        }
+    }
+
+
     companion object {
 
         /**
@@ -117,11 +134,11 @@ class HomeFragment : BaseFragment(), SpecialityView {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(id: String,name: String) =
+        fun newInstance(id: String, name: String) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
                     putString(PATIENTID, id)
-                    putString(PATIENTNAME,name)
+                    putString(PATIENTNAME, name)
                 }
             }
     }
@@ -138,9 +155,17 @@ class HomeFragment : BaseFragment(), SpecialityView {
         TODO("Not yet implemented")
     }
 
-    override fun displayFormToFillPatientInfo(specialityVO: SpecialityVO,patientId : String) {
+    override fun displayFormToFillPatientInfo(specialityVO: SpecialityVO, patientId: String) {
         context?.let {
-            startActivity(PatientInfoFillingForm.newIntent(it,specialityVO.id,specialityVO.specialityName,patientId,patientName))
+            startActivity(
+                PatientInfoFillingForm.newIntent(
+                    it,
+                    specialityVO.id,
+                    specialityVO.specialityName,
+                    patientId,
+                    patientName
+                )
+            )
         }
     }
 
@@ -164,10 +189,40 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
         view.btnSureDialog.setOnClickListener {
             context?.let {
-                startActivity(PatientInfoFillingForm.newIntent(it,specialityVO.id,specialityVO.specialityName,patientId = patientId,patientName = patientName))
+                startActivity(
+                    PatientInfoFillingForm.newIntent(
+                        it,
+                        specialityVO.id,
+                        specialityVO.specialityName,
+                        patientId = patientId,
+                        patientName = patientName
+                    )
+                )
             }
             dialog?.dismiss()
         }
         dialog?.show()
+    }
+
+    override fun showConsultationRequestReceived(consultation: ConsultationRequestVO) {
+
+        tvDoctorName.text = consultation.doctorVO?.name
+        tvDoctorSpeciality.text = consultation.specialityName
+        tvHistory.text = consultation.doctorVO?.biography
+
+        consultationId = consultation.id
+        consMessage.text =
+            getString(R.string.consultatioin_received) + consultation.doctorVO?.name + getString(R.string.consultatioin_receivedTwo)
+       confirmConsultationlayout.visibility = View.VISIBLE
+
+    }
+
+    override fun navigateToChartActivity(
+        consultationId: String,
+        consultationRequestVO: ConsultationRequestVO
+    ) {
+        Log.d("consultationId", consultationId)
+        consultationrequestVO = consultationRequestVO
+        startActivity(ChatPatientActivity.newIntent(requireContext(), consultationId))
     }
 }

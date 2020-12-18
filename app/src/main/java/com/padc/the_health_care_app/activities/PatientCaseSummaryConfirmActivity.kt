@@ -18,24 +18,32 @@ import com.padc.the_health_care_app.mvp.presenters.PatientCaseSummaryConfirmatio
 import com.padc.the_health_care_app.mvp.presenters.impls.PatientCaseSummaryPresenterImpl
 import com.padc.the_health_care_app.mvp.presenters.impls.PatientQuestionPresenterImpl
 import com.padc.the_health_care_app.mvp.views.ConfirmPatientDataView
+import com.padc.the_health_care_app.utils.SessionManager
 import kotlinx.android.synthetic.main.activity_patient_case_summary_confirm.*
 import kotlinx.android.synthetic.main.fragment_special_question.*
 
 class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView {
 
-    var pVO= PatientVO()
+    var pVO = PatientVO()
     var sId: String = ""
     var pId: String = ""
-    var sName : String = ""
+    var sName: String = ""
+    var documentId: String = ""
 
     companion object {
         private val SID = "ID"
         private val SNAME = "SNAME"
         private val PATIENTID = "PATIENTID"
-        fun newIntent(context: Context, sId: String,sName : String, pId: String): Intent {
+        private val DOCUMENTID = "DOCUMENTID"
+        fun newIntent(
+            context: Context,
+            sId: String,
+            sName: String,
+            pId: String
+        ): Intent {
             val intent = Intent(context, PatientCaseSummaryConfirmActivity::class.java)
             intent.putExtra(SID, sId)
-            intent.putExtra(SNAME,sName)
+            intent.putExtra(SNAME, sName)
             intent.putExtra(PATIENTID, pId)
             return intent
         }
@@ -57,11 +65,11 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
 
         Log.d("SpecialityId", sId)
         Log.d("patientID", pId)
-        Log.d("SNAME",sName)
+        Log.d("SNAME", sName)
 
 
 
-        mPresenter.onUiReady(this)
+        mPresenter.onUiReady(documentId, this)
         mPresenter.onReadyForPatient(pId, this)
         setUpListener()
 
@@ -75,8 +83,9 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
 
     private fun setUpListener() {
         btnConfirmRequest.setOnClickListener {
+            startActivity(MainActivity.newIntent(this, "", ""))
             mPresenter.onTapStartConsultationRequest(
-                pVO, caseSummaryList, sName,sId
+                documentId, pVO, caseSummaryList, sName, sId
             )
 
         }
@@ -96,12 +105,11 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
         mAdapter.setNewData(caseSummaryVO.toMutableList())
     }
 
-    override fun navigateToHomeScreen(patientVo: PatientVO) {
+    override fun navigateToHomeScreen(id : String) {
+        SessionManager.request_id = id
         startActivity(
-            MainActivity.newIntent(
-                this,
-                patientName = patientVo.pname.toString(),
-                patientId = patientVo.id.toString()
+            MainActivity.newIntentTwo(
+                this
             )
         )
     }
@@ -126,7 +134,6 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
             DOB = tvbdAnswerInConfirm.text.toString(),
             allergicMedicine = etwrongInConfirm.text.toString()
         )
-
 
 
     }

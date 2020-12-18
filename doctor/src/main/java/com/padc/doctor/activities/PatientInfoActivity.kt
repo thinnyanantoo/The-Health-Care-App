@@ -65,14 +65,14 @@ class PatientInfoActivity : BaseActivity(), ShowPatientInfoView {
             doctor = DoctorVO(
                 id = doctor.id
             )
-            mPresenter.onTapStartConsultation(consultationRequestVO = ConsultationRequestVO(
+            mPresenter.onTapStartConsultation(this,lifeconsultationRequestVO = ConsultationRequestVO(
                       id = requestID,
                 patientVO = patient,
                 caseSummaryVO = caseSummary as ArrayList<CaseSummaryVO>?,
                 specialityName = specialityName,
                 specialityId = specialityId
-            )
-            )
+            ))
+            Log.d("requestid",requestID)
         }
     }
 
@@ -113,7 +113,6 @@ class PatientInfoActivity : BaseActivity(), ShowPatientInfoView {
 
     override fun navigateToChat(consultationRequestVO: ConsultationRequestVO) {
         startActivity(ChatActivity.newIntent(this,consultationRequestVO.id,consultationRequestVO.specialityName.toString(),consultationRequestVO.specialityId.toString()))
-        Log.d("PSID",consultationRequestVO.specialityId.toString())
-        Log.d("PSNAME",consultationRequestVO.specialityName.toString())
+        this.finish()
     }
 }

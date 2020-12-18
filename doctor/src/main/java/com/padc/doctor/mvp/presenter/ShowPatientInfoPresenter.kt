@@ -8,5 +8,5 @@ import com.padc.shared.mvp.presenters.BasePresenter
 
 interface ShowPatientInfoPresenter : BasePresenter<ShowPatientInfoView>{
     fun onUiReady(requestId : String,specialityName : String, specialityId : String,lifecycleOwner: LifecycleOwner)
-    fun onTapStartConsultation(consultationRequestVO: ConsultationRequestVO)
+    fun onTapStartConsultation(lifecycleOwner: LifecycleOwner,lifeconsultationRequestVO: ConsultationRequestVO)
 }

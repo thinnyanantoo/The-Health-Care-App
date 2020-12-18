@@ -9,5 +9,5 @@ interface ConfirmPatientDataView : BaseView{
     fun displayCaseSummary(caseSummaryVO: List<CaseSummaryVO>)
 
     fun displayPatient(patientVO: PatientVO)
-    fun navigateToHomeScreen(patientVO: PatientVO)
+    fun navigateToHomeScreen(id : String)
 }

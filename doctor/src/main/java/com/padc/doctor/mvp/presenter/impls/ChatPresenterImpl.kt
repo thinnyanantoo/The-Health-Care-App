@@ -17,11 +17,18 @@ import java.util.*
 
 class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     private var mModel: HealthCareModel = HealthCareModelImpl
+    var documentId = ""
+
     override fun onUiReady(id: String, name: String, sid: String, lifecycleOwner: LifecycleOwner) {
+     //   mModel.getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(name,{
+    //    },{})
         mModel.getRequestCaseSummaryById(id).observe(lifecycleOwner, Observer {
-            mView?.showPatientInfo(it)
-            it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }
+            it.let {
+                mView?.showPatientInfo(it)
+
+            it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
         })
+
 
         mModel.getAllChatMessage(id, onSuccess = {
             mView?.displayPatientChat(it)
@@ -41,7 +48,6 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     override fun onTapSendIcon(id: String, text: String, image: String) {
         val dateformat = SimpleDateFormat(" HH:mm a")
         val currentDatetime : String = dateformat.format(Date())
-
         val messageVO = ChatMessageVO(
             id = UUID.randomUUID().toString(),
             textMessage =  text,

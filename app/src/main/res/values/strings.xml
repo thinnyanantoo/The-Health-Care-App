@@ -21,6 +21,9 @@
     <string name="text_type_of_disease">ရောဂါအမျိုးအစားများ</string>
     <string name="text_confirm_summary">အချက်အလက်များအား အတည်ပြုပေးပါ</string>
     <string name="text_question_special">ရောဂါဆိုင်ရာမေးခွန်းများ</string>
+    <string name="consultatioin_received">ဆွေးနွေးမှု ပြုလုပ်ရန်  </string>
+    <string name="consultatioin_receivedTwo">မှ လက်ခံထား ပါသည်။ </string>
+    <string name="sfd">ဆွေးနွေးမှု ပြုလုပ်နိုင်ပါပြီ</string>
 
     <string-array name="stepsLables">
         <item>အထွေထွေမေးခွန်းများ</item>

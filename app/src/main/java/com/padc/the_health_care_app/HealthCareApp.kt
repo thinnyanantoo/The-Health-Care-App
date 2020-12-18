@@ -6,6 +6,7 @@ import androidx.work.*
 import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.persistence.db.CareDB
 import com.padc.shared.workers.GetCareWorker
+import com.padc.the_health_care_app.utils.SessionManager
 import java.util.concurrent.TimeUnit
 
 class HealthCareApp : Application() {
@@ -13,6 +14,7 @@ class HealthCareApp : Application() {
     override fun onCreate() {
         super.onCreate()
         HealthCareModelImpl.initDatabase(applicationContext)
+        SessionManager.init(applicationContext)
 
         getCareOneTime()
         getCarePeriodically()

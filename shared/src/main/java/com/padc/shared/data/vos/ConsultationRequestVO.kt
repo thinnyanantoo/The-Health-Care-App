@@ -8,7 +8,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 @Entity(tableName = "consultationRequestTable")
 data class ConsultationRequestVO (
     var caseSummaryVO: ArrayList<CaseSummaryVO>? = arrayListOf(),
-  //  var doctorVO: DoctorVO ? = null,
+    var doctorVO: DoctorVO ? = null,
     var patientVO: PatientVO ? = null,
     var specialityName : String ? = null,
     var specialityId : String ? = null,
@@ -17,14 +17,14 @@ data class ConsultationRequestVO (
     var id : String = ""
 )
 
-fun MutableMap<String,Any>.convertToConsultationRequestVo() : ConsultationRequestVO{
+fun MutableMap<String,Any>?.convertToConsultationRequestVo() : ConsultationRequestVO{
     var consultationRequestVO = ConsultationRequestVO()
-    consultationRequestVO.id= this.get("id")as String
-    consultationRequestVO.status = this?.get("status")as String?
+    consultationRequestVO.id= this?.get("id")as String
+    consultationRequestVO.status = this?.get("status")as String
     consultationRequestVO.specialityName = this?.get("speciality-name")as String
     consultationRequestVO.specialityId = this?.get("speciality-id")as String
     consultationRequestVO.caseSummaryVO = this?.get("case-summary")as ArrayList<CaseSummaryVO>
-  // consultationRequestVO.doctorVO= toConvertDoctor((this?.get("doctor") as HashMap<String, String>?))
+   consultationRequestVO.doctorVO= toConvertDoctor((this?.get("doctor") as HashMap<String, String>? ))
     consultationRequestVO.patientVO = toConvertPatient((this?.get("patient")  as  HashMap<String, String>))
     return consultationRequestVO
 
@@ -58,14 +58,11 @@ fun toConvertDoctor(data : HashMap<String, String>?) : DoctorVO?{
         doctor.photo = data.get("photo").toString()
         doctor.biography = data.get("biography").toString()
         doctor.specialityName = data.get("specialityName").toString()
-        doctor.gender = data.get("gender").toString()
-        doctor.address = data.get("address").toString()
         doctor.degree = data.get("degree").toString()
         doctor.email = data.get("email").toString()
         doctor.phoneNumber = data.get("phoneNumber").toString()
         doctor.password = data.get("password").toString()
         doctor.experience = data.get("experience").toString()
-        doctor.DOB = data.get("DOB").toString()
         return doctor
     }
     return null

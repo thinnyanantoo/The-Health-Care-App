@@ -12,12 +12,13 @@ import com.padc.shared.network.CloudFirebaseStoreFirebaseApiImpl
 import com.padc.shared.network.FirebaseApi
 import com.padc.the_health_care_app.mvp.presenters.PatientCaseSummaryConfirmationPresenter
 import com.padc.the_health_care_app.mvp.views.ConfirmPatientDataView
+import java.util.*
 
 class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     AbstractBasePresenter<ConfirmPatientDataView>() {
     private val mModel: HealthCareModel = HealthCareModelImpl
     private val mFirebase: FirebaseApi = CloudFirebaseStoreFirebaseApiImpl
-    override fun onUiReady(lifecycleOwner: LifecycleOwner) {
+    override fun onUiReady(id : String,lifecycleOwner: LifecycleOwner) {
         mModel.getCaseSummaryFromDb(onError = {
         }).observe(lifecycleOwner, Observer {
             mView?.displayCaseSummary(it)
@@ -34,13 +35,15 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     }
 
     override fun onTapStartConsultationRequest(
+        documentId : String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         speciality: String,
     specialityId : String
     ) {
-        mModel.addBroadCastConsultationRequest(patientVO, caseSummaryVO, speciality,specialityId, onSuccess = {
-            mView?.navigateToHomeScreen(patientVO)
+        var id = UUID.randomUUID().toString()
+        mModel.addBroadCastConsultationRequest(id,patientVO, caseSummaryVO, speciality,specialityId, onSuccess = {
+            mView?.navigateToHomeScreen(id)
         }, onFailure = {
 
         })

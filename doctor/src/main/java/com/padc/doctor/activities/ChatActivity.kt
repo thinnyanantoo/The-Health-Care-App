@@ -16,6 +16,8 @@ import com.padc.doctor.mvp.presenter.ChatPresenter
 import com.padc.doctor.mvp.presenter.impls.ChatPresenterImpl
 import com.padc.doctor.mvp.views.ChatView
 import com.padc.shared.activity.BaseActivity
+import com.padc.shared.data.models.HealthCareModel
+import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.data.vos.*
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home_screen.*
@@ -26,7 +28,8 @@ class ChatActivity : BaseActivity() , ChatView{
     private lateinit var mPresenter : ChatPresenter
     private lateinit var mAdapter : SpcialQuestionPatientInfoAdapter
     private lateinit var mChatAdapter : ChatAdapter
-    var id : String = ""
+    private var mModel : HealthCareModel = HealthCareModelImpl
+    var Cid : String = ""
     var name : String = ""
     var sid : String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,19 +39,21 @@ class ChatActivity : BaseActivity() , ChatView{
         setUpAdapter()
         setUpListener()
 
-        id = intent.getStringExtra(CONSULTATIONREQUESTID).toString()
+        Cid = intent.getStringExtra(CONSULTATIONREQUESTID).toString()
         name = intent.getStringExtra(SPECIALITYNAME).toString()
         sid = intent.getStringExtra(SPECIALITYID).toString()
         Log.d("sid",sid)
         Log.d("sname",name)
-        mPresenter.onUiReady(id,name,sid,this)
+        Log.d("CID", Cid)
+        mPresenter.onUiReady(Cid,name,sid,this)
+      //  mModel.deleteRequestFromDatabase()
     }
 
     companion object {
         var CONSULTATIONREQUESTID =  "CONSULTATIONREQUESTID"
         var SPECIALITYNAME = " SPECIALITYNAME"
         var SPECIALITYID = " SPECIALITYID"
-        fun newIntent(context : Context,id: String,specialityName : String,specialityId : String) : Intent {
+        fun newIntent(context : Context,id: String,specialityName: String,specialityId: String) : Intent {
             val intent = Intent(context,ChatActivity::class.java)
             intent.putExtra(CONSULTATIONREQUESTID,id)
             intent.putExtra(SPECIALITYNAME,specialityName)
@@ -73,7 +78,7 @@ class ChatActivity : BaseActivity() , ChatView{
         btnSendMessageInChat.setOnClickListener {
             if (!etMessage.text?.equals("")!!) {
                 val text = etMessage.text.toString()
-                mPresenter.onTapSendIcon(id, text, "")
+                mPresenter.onTapSendIcon(Cid, text, "")
                 etMessage.text = Editable.Factory.getInstance().newEditable("")
             }
         }

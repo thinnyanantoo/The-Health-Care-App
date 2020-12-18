@@ -31,6 +31,13 @@ class MainActivity : BaseActivity() , MainView {
             intent.putExtra(PATIENTNAME,patientName)
                 return intent
         }
+
+
+        val CONSULTANTID = "CONSULTANTID"
+        fun newIntentTwo(context: Context) : Intent {
+            val intent = Intent(context,MainActivity::class.java)
+            return intent
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
