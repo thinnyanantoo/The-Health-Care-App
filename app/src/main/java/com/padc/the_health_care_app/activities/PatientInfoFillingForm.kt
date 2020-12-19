@@ -37,8 +37,9 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
 
     var patientid : String = ""
     var patientName : String = ""
-    var id : String = ""
+    var sid : String = ""
     var sName : String = ""
+    var documentId : String = ""
     private lateinit var mPresenter: PatientQuestionPresenter
     private lateinit var mAdapter: SpecialQuestionAdapter
     private var mModel: HealthCareModel = HealthCareModelImpl
@@ -50,14 +51,14 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         setUpListener()
         stepIndicator.currentStep = 1
 
-          id = intent.getStringExtra(SID).toString()
+          sid = intent.getStringExtra(SID).toString()
         sName = intent.getStringExtra(SNAME).toString()
         patientid = intent.getStringExtra(PATIENTID).toString()
         patientName = intent.getStringExtra(PATIENTNAME).toString()
 
 
 
-        mPresenter.onUiReadyForSpecialQuestion(id, this)
+        mPresenter.onUiReadyForSpecialQuestion(sid,documentId,  this)
 
     }
 
@@ -113,7 +114,7 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
 
 
             val patientVO  = PatientVO(
-                id = id,
+                id = patientid,
                 pname = pNameInSecond.text.toString(),
                 weight = etWeightInTwo.text.toString(),
                 height = etAnswerHeight.text.toString(),
@@ -132,9 +133,10 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         btnConfirmInSpecialQuestion.setOnClickListener {
             Log.d("PATIENTIDINFILLINGFORM",patientid)
             mModel.deleteCaseSummary()
-            val id = UUID.randomUUID().toString()
+         //   val id = UUID.randomUUID().toString()
             mModel.insertCaseSummary(caseSummaryVoList)
-            startActivity(PatientCaseSummaryConfirmActivity.newIntent(this,id,sName, patientid))
+            startActivity(PatientCaseSummaryConfirmActivity.newIntent(this,sid,sName, patientid, documentId))
+
         }
 
         spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -218,8 +220,11 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         Log.e("CaseSummaryList",caseSummaryVoList.size.toString())
     }
 
-    override fun navigateToConfirmRequestScreen() {
-        mPresenter.onTapConfirmConsultation()
+    override fun navigateToConfirmRequestScreen(id: String) {
+        Log.d("idsdf",id)
+        documentId = id
+      //  mPresenter.onTapConfirmConsultation(id)
+        startActivity(PatientCaseSummaryConfirmActivity.newIntent(this, sid, sName,patientid,documentId))
     }
 
     override fun replaceAnswerList(position: Int, caseSummaryVO: CaseSummaryVO) {

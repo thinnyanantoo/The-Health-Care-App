@@ -15,6 +15,7 @@ class PatientQuestionPresenterImpl : PatientQuestionPresenter,
     private val mModel: HealthCareModel = HealthCareModelImpl
     override fun onUiReadyForSpecialQuestion(
         specialityId : String,
+        documentId : String,
         lifecycleOwner: LifecycleOwner
     ) {
         mModel.getSpecialQuestionBySpecialityNameFromFirebaseAndSaveToDatabase(specialityId,{},{})
@@ -62,8 +63,9 @@ class PatientQuestionPresenterImpl : PatientQuestionPresenter,
         mView?.showSpecialQuestion(specialityQuestion)
     }
 
-    override fun onTapConfirmConsultation() {
-        mView?.navigateToConfirmRequestScreen()
+    override fun onTapConfirmConsultation(list: ArrayList<CaseSummaryVO>) {
+        Log.d("SDSD",mModel.insertCaseSummary(list))
+        mView?.navigateToConfirmRequestScreen(mModel.insertCaseSummary(list))
     }
 
     override fun onAnswerChange(position: Int, caseSummaryVO: CaseSummaryVO) {

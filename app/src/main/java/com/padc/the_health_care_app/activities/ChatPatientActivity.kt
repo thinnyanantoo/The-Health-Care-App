@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import com.padc.shared.activity.BaseActivity
 import com.padc.the_health_care_app.R
@@ -24,6 +25,7 @@ class ChatPatientActivity : BaseActivity(), PatientChatView {
         fun newIntent(context: Context,id : String) : Intent {
             var intent = Intent(context,ChatPatientActivity::class.java)
             intent.putExtra(ID , id)
+            Log.d("IdForRequest",id)
             return intent
         }
     }

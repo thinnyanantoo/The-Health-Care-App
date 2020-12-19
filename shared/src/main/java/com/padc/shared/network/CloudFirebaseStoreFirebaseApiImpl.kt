@@ -1,8 +1,6 @@
 package com.padc.shared.network
 
-import android.provider.ContactsContract
 import android.util.Log
-import com.google.android.gms.common.util.DataUtils
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -11,8 +9,6 @@ import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.data.vos.*
 import java.util.*
-import kotlin.system.measureTimeMillis
-import kotlin.time.measureTime
 
 object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
     private val db = Firebase.firestore
@@ -218,11 +214,11 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
 
     override fun getDoctorFromFirestore(
-        email : String,
+        email: String,
         onSuccess: (doctors: List<DoctorVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("doctor").whereEqualTo("email" ,email).addSnapshotListener { value, error ->
+        db.collection("doctor").whereEqualTo("email", email).addSnapshotListener { value, error ->
 
             error?.let {
                 onFailure(it.message ?: "Please Check connection")
@@ -244,13 +240,14 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         }
     }
 
+
     override fun broadCastConsultationRequest(
         documentId: String,
         patientVO: PatientVO,
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
         specialityId: String,
-        onSuccess: () -> Unit,
+        onSuccess: (id: String) -> Unit,
         onFailure: (String) -> Unit
     ) {
         var id = UUID.randomUUID().toString()
@@ -263,25 +260,27 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             "speciality-id" to specialityId
         )
         id?.let {
-            db.collection("consultation-request")
+            db.collection("consultation_request")
                 .document(it)
                 .set(consultationrequestMap)
                 .addOnSuccessListener {
-                    Log.d(
-                        "Success",
-                        "Successfully added to consultation request"
-                    )
+                    Log.d("success", "Successfully add doctor")
+                    onSuccess(id)
                 }
-                .addOnFailureListener { Log.d("Failure", "failed to add consultation request") }
+                .addOnFailureListener {
+                    Log.d("onFailure", "Failed to add doctor")
+                    onFailure("Failed to add doctor")
+                }
         }
     }
+
 
     override fun getConsultationRequestByIdAndAddDoctor(
         id: String,
         onSuccess: (ConsultationRequestVO) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation-request").whereEqualTo("id", id)
+        db.collection("consultation_request").whereEqualTo("id", id)
             .addSnapshotListener { value, error ->
                 error?.let {
 
@@ -306,8 +305,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onSuccess: (consultationrequest: List<ConsultationRequestVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation-request").whereEqualTo("status","new").whereEqualTo("speciality-name", specialityName)
-            .addSnapshotListener { value, error ->
+        db.collection("consultation_request").whereEqualTo("status","new").whereEqualTo("speciality-name", specialityName).addSnapshotListener { value, error ->
 
                 error?.let {
                     onFailure(it.message ?: "Please Check connection")
@@ -323,6 +321,125 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
                 }
             }
+    }
+
+
+    override fun getCaseSummaryFromRequest(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation_request/${requestid}/case-summary")
+            .addSnapshotListener { value, error ->
+                error?.let {
+                    onFailure(it.message ?: "Please Check connection")
+                } ?: run {
+                    val patientList: MutableList<CaseSummaryVO> = arrayListOf()
+                    val result = value?.documents ?: arrayListOf()
+
+                    for (document in result) {
+                        val hashmap = document.data
+                        hashmap?.put("id", document.id)
+                        val data = Gson().toJson(hashmap)
+                        val dataVo = Gson().fromJson<CaseSummaryVO>(data, CaseSummaryVO::class.java)
+                        patientList.add(dataVo)
+                    }
+                    onSuccess(patientList)
+                }
+            }
+    }
+
+    override fun getPatientFromRequest(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation_request/${requestid}/patient")
+            .addSnapshotListener { value, error ->
+                error?.let {
+                    onFailure(it.message ?: "Please Check connection")
+                } ?: run {
+//                val patientList: MutableList<PatientVO> = arrayListOf()
+//                val result = value?.documents ?: arrayListOf()
+//
+//                for (document in result) {
+//                    val hashmap = document.data
+//                    hashmap?.put("id", document.id)
+//                    val data = Gson().toJson(hashmap)
+//                    val dataVo = Gson().fromJson<PatientVO>(data, PatientVO::class.java)
+//                    patientList.add(dataVo)
+
+                    val List: MutableList<PatientVO> = arrayListOf()
+
+                    val result = value?.documents ?: arrayListOf()
+
+
+                    result.isNotEmpty().let {
+                        val data = result.first().data?.convertToPatientVo()
+                        data?.let { it1 -> onSuccess(it1) }
+                    }
+
+                }
+            }
+    }
+
+
+    override fun getCaseSummaryFromConsultation(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation/${requestid}/case-summary")
+            .addSnapshotListener { value, error ->
+                error?.let {
+                    onFailure(it.message ?: "Please Check connection")
+                } ?: run {
+                    val patientList: MutableList<CaseSummaryVO> = arrayListOf()
+                    val result = value?.documents ?: arrayListOf()
+
+                    for (document in result) {
+                        val hashmap = document.data
+                        hashmap?.put("id", document.id)
+                        val data = Gson().toJson(hashmap)
+                        val dataVo = Gson().fromJson<CaseSummaryVO>(data, CaseSummaryVO::class.java)
+                        patientList.add(dataVo)
+                    }
+                    onSuccess(patientList)
+                }
+            }
+    }
+
+    override fun getPatientFromConsultation(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("consultation/${requestid}/patient").addSnapshotListener { value, error ->
+            error?.let {
+                onFailure(it.message ?: "Please Check connection")
+            } ?: run {
+//                val patientList: MutableList<PatientVO> = arrayListOf()
+//                val result = value?.documents ?: arrayListOf()
+//
+//                for (document in result) {
+//                    val hashmap = document.data
+//                    hashmap?.put("id", document.id)
+//                    val data = Gson().toJson(hashmap)
+//                    val dataVo = Gson().fromJson<PatientVO>(data, PatientVO::class.java)
+//                    patientList.add(dataVo)
+
+                val List: MutableList<PatientVO> = arrayListOf()
+
+                val result = value?.documents ?: arrayListOf()
+
+
+                result.isNotEmpty().let {
+                    val data = result.first().data?.convertToPatientVo()
+                    data?.let { it1 -> onSuccess(it1) }
+                }
+
+            }
+        }
     }
 
     override fun getConsultationByDoctor(
@@ -374,8 +491,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onSuccess: (ConsultationRequestVO) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation-request").whereEqualTo("status", "accept")
-            .whereEqualTo("id", id)
+        db.collection("consultation_request").whereEqualTo("id", id)
             .addSnapshotListener { value, error ->
 
                 error?.let { onFailure(it.message ?: "Please Check Connection") } ?: run {
@@ -390,7 +506,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             }
     }
 
-    override fun startConsultation(
+        override fun startConsultation(
         caseSummaryVO: List<CaseSummaryVO>,
         id: String,
         dataTime: String,
@@ -400,7 +516,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onFailure: (String) -> Unit
     ) {
 
-        val ref = db.collection("consultation-request").document("${id}")
+        val ref = db.collection("consultation_request").document("${id}")
 
         db.runTransaction { transaction ->
             val snapShot = transaction.get(ref)

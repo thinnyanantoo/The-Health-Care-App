@@ -17,18 +17,23 @@ import java.util.*
 
 class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     private var mModel: HealthCareModel = HealthCareModelImpl
-    var documentId = ""
+
 
     override fun onUiReady(id: String, name: String, sid: String, lifecycleOwner: LifecycleOwner) {
-     //   mModel.getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(name,{
-    //    },{})
-        mModel.getRequestCaseSummaryById(id).observe(lifecycleOwner, Observer {
-            it.let {
-                mView?.showPatientInfo(it)
+//        mModel.getPatientFromRequest(id,onSuccess = {
+//            mView?.showPatientInfo(it)
+//        },onFailure = {})
+//
+//        mModel.getCaseSummaryFromRequst(id,onSuccess = {
+//            mView?.showSpecialQuestionAnswer(it)
+//        },onFailure = {})
 
-            it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
-        })
 
+            mModel.getRequestCaseSummaryById(id).observe(lifecycleOwner, Observer {
+                it?.let {
+                    mView?.showPatientInfo(it)
+                    it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
+            })
 
         mModel.getAllChatMessage(id, onSuccess = {
             mView?.displayPatientChat(it)
@@ -61,4 +66,6 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     override fun onTapChatToCheckOut() {
         TODO("Not yet implemented")
     }
+
+
 }

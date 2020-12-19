@@ -7,7 +7,7 @@ import com.padc.the_health_care_app.delegates.SpecialQuestionDelegate
 import com.padc.the_health_care_app.mvp.views.PatientQuestionView
 
 interface PatientQuestionPresenter :BasePresenter<PatientQuestionView>,SpecialQuestionDelegate{
-    fun onUiReadyForSpecialQuestion(specialityId : String, lifecycleOwner: LifecycleOwner)
+    fun onUiReadyForSpecialQuestion(specialityId : String, documentId: String,lifecycleOwner: LifecycleOwner)
 
     fun onUiReadyForGeneralOneTimeQuestion(question : String,lifecycleOwner: LifecycleOwner)
     fun onUiReadyForGeneralAlwaysQuestion(question: String,lifecycleOwner: LifecycleOwner)
@@ -15,5 +15,5 @@ interface PatientQuestionPresenter :BasePresenter<PatientQuestionView>,SpecialQu
 
     fun onTapContinueOnFirstGeneralQuestion(patientVO: PatientVO)
     fun onTapContinueOnSecondGeneralQuestion(specialityQuestion : List<SpecialQuestionVO>)
-    fun onTapConfirmConsultation()
+    fun onTapConfirmConsultation(list: ArrayList<CaseSummaryVO>)
 }

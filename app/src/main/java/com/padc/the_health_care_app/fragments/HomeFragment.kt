@@ -20,8 +20,10 @@ import com.padc.shared.data.vos.SpecialityVO
 import com.padc.shared.fragments.BaseFragment
 import com.padc.the_health_care_app.R
 import com.padc.the_health_care_app.activities.ChatPatientActivity
+import com.padc.the_health_care_app.activities.MainActivity
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTID
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTNAME
+import com.padc.the_health_care_app.activities.MainActivity.Companion.newIntentTwo
 import com.padc.the_health_care_app.activities.PatientInfoFillingForm
 import com.padc.the_health_care_app.adapters.RecentlyAdapter
 import com.padc.the_health_care_app.adapters.SpecialityAdapter
@@ -53,6 +55,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
     var patientName = ""
 
     var consultationId = ""
+    var consultId = ""
 
     var consultationrequestVO: ConsultationRequestVO? = null
 
@@ -87,15 +90,19 @@ class HomeFragment : BaseFragment(), SpecialityView {
         setUpRecyclerView()
 
         setUpListener()
+
+
         patientId = idOfPatient.toString()
         patientName = nameOfPatient.toString()
+       // consultId = newIntentTwo(requireContext(),MainActivity.CONSULTANTID.toString()).toString()
 
-
+        hideConsultationReceived()
         Log.d("PatientIdInHomeSecond", patientId)
         Log.d("PatientNameInHomeSecond", patientName)
 
 
         mPresenter.onUiReady(this, patientId)
+        mPresenter.onUiReadyForConsultatinConfrim(this)
     }
 
     private fun setUpRecyclerView() {
@@ -117,7 +124,8 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
     private fun setUpListener() {
         btnStartConsult.setOnClickListener {
-            mPresenter.onTapStartConsultation(consultationrequestVO!!.id, consultationrequestVO!!)
+        //    mPresenter.onTapStartConsultation(consultationrequestVO!!.id, consultationrequestVO!!)
+            startActivity(activity?.let { it1 -> ChatPatientActivity.newIntent(it1, consultationId) })
         }
     }
 
@@ -167,7 +175,10 @@ class HomeFragment : BaseFragment(), SpecialityView {
                 )
             )
         }
-    }
+        Log.d("SpecialityId ", specialityVO.id)
+
+        }
+
 
     override fun showDialog(specialityVO: SpecialityVO) {
         val view = layoutInflater.inflate(R.layout.fragment_confirm_consultation_dialog, null)
@@ -210,7 +221,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
         tvDoctorSpeciality.text = consultation.specialityName
         tvHistory.text = consultation.doctorVO?.biography
 
-        consultationId = consultation.id
+        consultationId = consultation.id.toString()
         consMessage.text =
             getString(R.string.consultatioin_received) + consultation.doctorVO?.name + getString(R.string.consultatioin_receivedTwo)
        confirmConsultationlayout.visibility = View.VISIBLE
@@ -224,5 +235,10 @@ class HomeFragment : BaseFragment(), SpecialityView {
         Log.d("consultationId", consultationId)
         consultationrequestVO = consultationRequestVO
         startActivity(ChatPatientActivity.newIntent(requireContext(), consultationId))
+    }
+
+
+    private fun hideConsultationReceived(){
+        confirmConsultationlayout.visibility = View.GONE
     }
 }

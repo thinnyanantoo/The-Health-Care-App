@@ -16,12 +16,13 @@ class ShowPatientInfoPresenterImpl : ShowPatientInfoPresenter, AbstractBasePrese
     var rId = ""
     override fun onUiReady(requestId : String,specialityName: String, specialityId : String,lifecycleOwner: LifecycleOwner) {
         rId = requestId
-       // mModel.getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(specialityName,{},{})
-        mModel.getRequestCaseSummaryById(requestId).observe(lifecycleOwner, Observer {
-           it?.let{
-               mView?.showPatientInfoFromConsultationRequest(it)
-               it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }
-           }
+        mModel.getConsultationRequestWhenStatusNew("new").observe(lifecycleOwner, Observer {
+            mModel.getRequestCaseSummaryById(requestId).observe(lifecycleOwner, Observer {
+                it?.let{
+                    mView?.showPatientInfoFromConsultationRequest(it)
+                       it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }
+                }
+            })
         })
 
     }

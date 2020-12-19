@@ -17,8 +17,16 @@ class SpecialityPresenterImpl : SpecialityPresenter, AbstractBasePresenter<Speci
     var mModel: HealthCareModel = HealthCareModelImpl
     override fun onUiReady(lifeCycleOwner: LifecycleOwner,patientId : String) {
         requestSpecialityData(lifeCycleOwner)
-        confrimConsultation(lifeCycleOwner)
 
+    }
+
+    override fun onUiReadyForConsultatinConfrim(lifeCycleOwner: LifecycleOwner) {
+        mModel.getConsultationConfirmByPatient(
+            id = SessionManager.request_id_for_patient.toString(),
+            onSuccess = {
+                it.doctorVO?.let { it1 -> mView?.showConsultationRequestReceived(it) }
+            },onFailure = {}
+        )
     }
 
     override fun onTapCancelInDialog(lifeCycleOwner: LifecycleOwner) {
@@ -52,13 +60,19 @@ class SpecialityPresenterImpl : SpecialityPresenter, AbstractBasePresenter<Speci
     }
 
     private fun confrimConsultation(lifeCycleOwner: LifecycleOwner){
-        mModel.getConsultationConfirmByPatient(SessionManager.request_id.toString(),onSuccess = {consultationRequest->
-            consultationRequest.doctorVO?.let {
-                mView?.showConsultationRequestReceived(consultationRequest)
-            }
-        },
-        onFailure = {
-            Log.e("ERROR FOR DOCTOR","NO DOCTOR")
-        })
+//        mModel.getConsultationConfirmByPatient(SessionManager.request_id.toString(),onSuccess = {consultationRequest->
+////            consultationRequest.doctorVO?.let {
+////                mView?.showConsultationRequestReceived(consultationRequest)
+////            }
+////        },
+////        onFailure = {
+////            Log.e("ERROR FOR DOCTOR","NO DOCTOR")
+////        })
+//        mModel.getConsultationConfirmByPatient(
+//            SessionManager.request_id.toString(),
+//            onSuccess = {
+//                it.doctorVO?.let { it1 -> mView?.showConsultationRequestReceived(it) }
+//            },onFailure = {}
+//        )
     }
-}
+    }

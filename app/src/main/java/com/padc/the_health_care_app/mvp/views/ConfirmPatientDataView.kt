@@ -10,4 +10,6 @@ interface ConfirmPatientDataView : BaseView{
 
     fun displayPatient(patientVO: PatientVO)
     fun navigateToHomeScreen(id : String)
+
+    fun navigateToChatScreen(requestId : String)
 }

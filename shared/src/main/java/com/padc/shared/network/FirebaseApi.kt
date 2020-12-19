@@ -43,6 +43,18 @@ interface FirebaseApi {
         onFailure: (String) -> Unit
     )
 
+    fun getPatientFromConsultation(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getCaseSummaryFromConsultation(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
     fun startConsultation(
         caseSummaryVO: List<CaseSummaryVO>,
         id: String,
@@ -52,6 +64,10 @@ interface FirebaseApi {
         onSuccess: (String) -> Unit,
         onFailure: (String) -> Unit
     )
+
+    fun getPatientFromRequest(requestid: String,onSuccess: (PatientVO) -> Unit,onFailure: (String) -> Unit)
+
+    fun getCaseSummaryFromRequest(requestid: String,onSuccess: (caseSummary : List<CaseSummaryVO>) -> Unit,onFailure: (String) -> Unit)
 
 
     fun addedRecentlyDoctor(
@@ -82,7 +98,7 @@ interface FirebaseApi {
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
         specialityId: String,
-        onSuccess: () -> Unit,
+        onSuccess: (id : String) -> Unit,
         onFailure: (String) -> Unit
     )
 

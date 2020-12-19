@@ -13,8 +13,7 @@ interface SpecialityView : BaseView {
     fun showError(message : String)
     fun displayFormToFillPatientInfo(speciality: SpecialityVO,patientId : String)
     fun showDialog(speciality: SpecialityVO)
-
-    fun showConsultationRequestReceived(consultation :ConsultationRequestVO)
+    fun showConsultationRequestReceived(consultation: ConsultationRequestVO)
 
     fun navigateToChartActivity(consultationId: String, consultationRequestVO: ConsultationRequestVO)
     

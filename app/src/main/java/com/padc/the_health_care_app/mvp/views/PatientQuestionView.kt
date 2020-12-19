@@ -11,6 +11,6 @@ interface PatientQuestionView : BaseView {
     fun replaceAnswerList(position : Int, caseSummaryVO: CaseSummaryVO)
     fun showSpecialQuestion(speicalQuestion : List<SpecialQuestionVO>)
 
-    fun navigateToConfirmRequestScreen()
+    fun navigateToConfirmRequestScreen(id : String)
 
 }

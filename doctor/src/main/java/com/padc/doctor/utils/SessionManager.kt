@@ -106,4 +106,11 @@ object SessionManager {
         set(value) = preferences.edit {
             it.putString(sharePreferencePhoto, value)
         }
+
+
+
+
+    //////////////////////////
+
+
 }

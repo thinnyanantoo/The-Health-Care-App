@@ -20,4 +20,6 @@ interface PatientCaseSummaryConfirmationPresenter : BasePresenter<ConfirmPatient
         speciality: String,
         specialityId : String
     )
+
+
 }

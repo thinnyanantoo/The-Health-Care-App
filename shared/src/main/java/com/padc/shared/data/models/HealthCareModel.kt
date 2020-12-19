@@ -19,7 +19,7 @@ interface HealthCareModel {
         onError: (String) -> Unit
     )
 
-    fun insertCaseSummary(caseSummaryVO: List<CaseSummaryVO>)
+    fun insertCaseSummary(caseSummaryVO: List<CaseSummaryVO>) : String
 
     fun deleteCaseSummary()
 
@@ -67,7 +67,7 @@ interface HealthCareModel {
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
         specialityId: String,
-        onSuccess: () -> Unit,
+        onSuccess: (id : String) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -83,7 +83,7 @@ interface HealthCareModel {
         onFailure: (String) -> Unit
     )
 
-////////////////////////////////////////////////////////////////////////////DOCTOR
+////////////////////////////////////////////////////////////////////////////
 
 
     fun getDoctorFromFirebaseApiAndSaveToDatabase(
@@ -111,6 +111,8 @@ interface HealthCareModel {
     fun getRequestFromDatabase(onError: (String) -> Unit): LiveData<List<ConsultationRequestVO>>
 
     fun getRequestCaseSummaryById(requestID: String): LiveData<ConsultationRequestVO>
+
+    fun getConsultationRequestWhenStatusNew(status: String): LiveData<ConsultationRequestVO>
 
 
     fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>)
@@ -150,6 +152,30 @@ interface HealthCareModel {
         patientVO: PatientVO,
         doctorVO: DoctorVO,
         onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getPatientFromConsultation(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getCaseSummaryFromConsultation(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getCaseSummaryFromRequst(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getPatientFromRequest(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
         onFailure: (String) -> Unit
     )
 

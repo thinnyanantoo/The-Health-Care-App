@@ -28,4 +28,21 @@ data class PatientVO(
 //    var recentlyDoctor: RecentlyDoctorVo? = null
 )
 
+fun MutableMap<String,Any>?.convertToPatientVo() : PatientVO{
 
+        val patient = PatientVO()
+        patient.photo = this?.get("photo").toString()
+        patient.id = this?.get("id").toString()
+        patient.pname = this?.get("pname").toString()
+        patient.email = this?.get("email").toString()
+        patient.password = this?.get("password").toString()
+        patient.weight = this?.get("weight").toString()
+        patient.height = this?.get("height").toString()
+        patient.allergicMedicine = this?.get("allegicMedicine").toString()
+        patient.DOB = this?.get("dob").toString()
+        patient.deviceId = this?.get("deviceId").toString()
+        patient.bloodPressure = this?.get("bloodPressure").toString()
+        patient.bloodType = this?.get("bloodType").toString()
+    return patient
+
+    }

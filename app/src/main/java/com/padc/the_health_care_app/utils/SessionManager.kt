@@ -54,12 +54,12 @@ object SessionManager {
             it.putString(sharePreferencePatientID, value)
         }
 
-    var request_id: String?
+    var request_id_for_patient: String?
 
-        get() = preferences.getString(sharePreferenceRequestID, "request000")
+        get() = preferences.getString(sharePreferenceRequestIDforPatient, "request01000")
 
         set(value) = preferences.edit {
-            it.putString(sharePreferenceRequestID, value)
+            it.putString(sharePreferenceRequestIDforPatient, value)
         }
 
     var patient_device_token: String?

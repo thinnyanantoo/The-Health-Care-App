@@ -39,12 +39,14 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
             context: Context,
             sId: String,
             sName: String,
-            pId: String
+            pId: String,
+            dcoumentID : String
         ): Intent {
             val intent = Intent(context, PatientCaseSummaryConfirmActivity::class.java)
             intent.putExtra(SID, sId)
             intent.putExtra(SNAME, sName)
             intent.putExtra(PATIENTID, pId)
+            intent.putExtra(DOCUMENTID,dcoumentID)
             return intent
         }
     }
@@ -62,6 +64,7 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
         sId = intent.getStringExtra(SID).toString()
         sName = intent.getStringExtra(SNAME).toString()
         pId = intent.getStringExtra(PATIENTID).toString()
+        documentId = intent.getStringExtra(DOCUMENTID).toString()
 
         Log.d("SpecialityId", sId)
         Log.d("patientID", pId)
@@ -69,7 +72,7 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
 
 
 
-        mPresenter.onUiReady(documentId, this)
+        mPresenter.onUiReady(sId, this)
         mPresenter.onReadyForPatient(pId, this)
         setUpListener()
 
@@ -83,10 +86,11 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
 
     private fun setUpListener() {
         btnConfirmRequest.setOnClickListener {
-            startActivity(MainActivity.newIntent(this, "", ""))
             mPresenter.onTapStartConsultationRequest(
-                documentId, pVO, caseSummaryList, sName, sId
+                 documentId,pVO, caseSummaryList, sName, sId
             )
+
+            Log.d("Docskdjsd",documentId)
 
         }
     }
@@ -106,12 +110,14 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
     }
 
     override fun navigateToHomeScreen(id : String) {
-        SessionManager.request_id = id
+        SessionManager.request_id_for_patient = id
         startActivity(
-            MainActivity.newIntentTwo(
-                this
-            )
+            MainActivity.newIntentTwo(this)
         )
+    }
+
+    override fun navigateToChatScreen(requestId: String) {
+        startActivity(ChatPatientActivity.newIntent(this,requestId))
     }
 
     override fun displayPatient(patientVO: PatientVO) {
@@ -134,7 +140,5 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
             DOB = tvbdAnswerInConfirm.text.toString(),
             allergicMedicine = etwrongInConfirm.text.toString()
         )
-
-
     }
 }

@@ -13,6 +13,7 @@ import com.padc.doctor.adapters.SpcialQuestionPatientInfoAdapter
 import com.padc.doctor.mvp.presenter.ShowPatientInfoPresenter
 import com.padc.doctor.mvp.presenter.impls.ShowPatientInfoPresenterImpl
 import com.padc.doctor.mvp.views.ShowPatientInfoView
+import com.padc.doctor.utils.SessionManager
 import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.vos.CaseSummaryVO
 import com.padc.shared.data.vos.ConsultationRequestVO

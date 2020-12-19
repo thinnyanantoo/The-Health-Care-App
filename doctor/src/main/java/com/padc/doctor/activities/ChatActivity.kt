@@ -15,6 +15,7 @@ import com.padc.doctor.adapters.SpcialQuestionPatientInfoAdapter
 import com.padc.doctor.mvp.presenter.ChatPresenter
 import com.padc.doctor.mvp.presenter.impls.ChatPresenterImpl
 import com.padc.doctor.mvp.views.ChatView
+import com.padc.doctor.utils.SessionManager
 import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.HealthCareModelImpl
@@ -114,6 +115,17 @@ class ChatActivity : BaseActivity() , ChatView{
         etBloodPressureinChat.text = consultationRequestVO.patientVO?.bloodPressure
         etNameInChat.text = consultationRequestVO.patientVO?.pname
         etBdInChat.text = consultationRequestVO.patientVO?.DOB
+
+//        SessionManager.patient_nametwo = consultationRequestVO.patientVO?.pname
+//        SessionManager.patient_heighttwo = consultationRequestVO.patientVO?.height
+//        SessionManager.patient_bloodTypetwo = consultationRequestVO.patientVO?.bloodType
+//        SessionManager.patient_weighttwo = consultationRequestVO.patientVO?.weight
+//        SessionManager.patient_allegictwo = consultationRequestVO.patientVO?.allergicMedicine
+//        SessionManager.patient_bloodPressuretwo = consultationRequestVO.patientVO?.bloodPressure
+//        SessionManager.patient_nametwo = consultationRequestVO.patientVO?.pname
+//        SessionManager.patient_dateOfBirthtwo = consultationRequestVO.patientVO?.DOB
+
+
     }
 
     override fun navigateToQuestionActivity(specialityName: String,specialityId: String) {

@@ -15,12 +15,13 @@ class HomeScreenPresenterImpl : HomeScreenPresenter, AbstractBasePresenter<HomeS
     override fun onUiReady(specialityName : String, lifecycleOwner: LifecycleOwner) {
 
         mModel.getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase(specialityName,{},{})
+    //    mModel.getConsultationRequestWhenStatusNew("new").observe(lifecycleOwner, Observer {
             mModel.getRequestFromDatabase(onError = {}).observe(
                 lifecycleOwner, Observer {
                     mView?.showConsultationRequest(it)
-
                 }
             )
+   //     })
         }
 
     override fun onTapButtonAcceptInRequest(consultationRequestVO: ConsultationRequestVO) {

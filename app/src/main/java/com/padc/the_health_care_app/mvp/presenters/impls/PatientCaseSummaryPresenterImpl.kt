@@ -12,7 +12,9 @@ import com.padc.shared.network.CloudFirebaseStoreFirebaseApiImpl
 import com.padc.shared.network.FirebaseApi
 import com.padc.the_health_care_app.mvp.presenters.PatientCaseSummaryConfirmationPresenter
 import com.padc.the_health_care_app.mvp.views.ConfirmPatientDataView
+import com.padc.the_health_care_app.utils.SessionManager
 import java.util.*
+import kotlin.collections.ArrayList
 
 class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     AbstractBasePresenter<ConfirmPatientDataView>() {
@@ -23,7 +25,6 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
         }).observe(lifecycleOwner, Observer {
             mView?.displayCaseSummary(it)
         })
-
     }
 
     override fun onReadyForPatient(id: String, lifecycleOwner: LifecycleOwner) {
@@ -34,6 +35,7 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
             })
     }
 
+
     override fun onTapStartConsultationRequest(
         documentId : String,
         patientVO: PatientVO,
@@ -41,11 +43,11 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
         speciality: String,
     specialityId : String
     ) {
-        var id = UUID.randomUUID().toString()
-        mModel.addBroadCastConsultationRequest(id,patientVO, caseSummaryVO, speciality,specialityId, onSuccess = {
-            mView?.navigateToHomeScreen(id)
+        mModel.addBroadCastConsultationRequest(documentId,patientVO, caseSummaryVO, speciality,specialityId,
+            onSuccess = {
+            mView?.navigateToChatScreen(it)
         }, onFailure = {
-
+              Log.e("Error in id","Error in id")
         })
     }
 }

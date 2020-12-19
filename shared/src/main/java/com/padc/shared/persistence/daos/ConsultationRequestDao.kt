@@ -15,6 +15,9 @@ interface ConsultationRequestDao {
     @ColumnInfo
     fun getConsultationRequestByID(type : String) : LiveData<ConsultationRequestVO>
 
+    @Query("SELECT * FROM consultationRequestTable WHERE status = :status")
+    fun getConsultationByStatus(status: String) : LiveData<ConsultationRequestVO>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @ColumnInfo
     fun insertConsultationRequest(generalQuestionVO: List<ConsultationRequestVO>)

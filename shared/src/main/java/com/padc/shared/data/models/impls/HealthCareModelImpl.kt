@@ -51,8 +51,10 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         })
     }
 
-    override fun insertCaseSummary(caseSummaryVO: List<CaseSummaryVO>) {
+    override fun insertCaseSummary(caseSummaryVO: List<CaseSummaryVO>) : String {
+        val id = UUID.randomUUID().toString()
         mTheDB.caseSummaryDao().insertCaseSummary(caseSummaryVO)
+        return id
     }
 
     override fun deleteCaseSummary() {
@@ -136,7 +138,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
         speicalityId: String,
-        onSuccess: () -> Unit,
+        onSuccess: (id : String) -> Unit,
         onFailure: (String) -> Unit
     ) {
         mFirebaseApi.broadCastConsultationRequest(
@@ -226,13 +228,18 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onFailure: (String) -> Unit
     ) {
         mFirebaseApi.getBrodaCastConsultationRequest(specialityName, onSuccess = {
+            mTheDB.consultationRequestDao().deleteAll()
             mTheDB.consultationRequestDao().insertConsultationRequest(it)
             Log.d("Succcess", "SuccessgetFromFirebase")
         }, onFailure = {})
     }
 
     override fun deleteRequestFromDatabase() {
-        mTheDB.consultationRequestDao().deleteAll()
+     //   mTheDB.consultationRequestDao().deleteAll()
+    }
+
+    override fun getConsultationRequestWhenStatusNew(status: String): LiveData<ConsultationRequestVO> {
+        return mTheDB.consultationRequestDao().getConsultationByStatus(status)
     }
 
     override fun getRequestFromDatabase(onError: (String) -> Unit): LiveData<List<ConsultationRequestVO>> {
@@ -245,6 +252,38 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
 
     override fun addOneTimeGeneralQuestionToPatient(id: String, question: String, answer: String) {
         mFirebaseApi.addOneTimeGeneralQuestionToPatient(id, question, answer)
+    }
+
+    override fun getCaseSummaryFromConsultation(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        mFirebaseApi.getCaseSummaryFromConsultation(requestid,onSuccess = onSuccess,onFailure = onFailure)
+    }
+
+    override fun getPatientFromConsultation(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        mFirebaseApi.getPatientFromConsultation(requestid,onSuccess, onFailure)
+    }
+
+    override fun getCaseSummaryFromRequst(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+       mFirebaseApi.getCaseSummaryFromRequest(requestid,onSuccess, onFailure)
+    }
+
+    override fun getPatientFromRequest(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        mFirebaseApi.getPatientFromRequest(requestid, onSuccess, onFailure)
     }
 
 

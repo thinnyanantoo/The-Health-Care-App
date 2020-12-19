@@ -15,6 +15,7 @@ import com.padc.the_health_care_app.fragments.ThirdFragment
 import com.padc.the_health_care_app.mvp.presenters.MainPresenter
 import com.padc.the_health_care_app.mvp.presenters.impls.MainPresenterImpl
 import com.padc.the_health_care_app.mvp.views.MainView
+import com.padc.the_health_care_app.utils.SessionManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() , MainView {
@@ -36,6 +37,7 @@ class MainActivity : BaseActivity() , MainView {
         val CONSULTANTID = "CONSULTANTID"
         fun newIntentTwo(context: Context) : Intent {
             val intent = Intent(context,MainActivity::class.java)
+           // intent.putExtra(CONSULTANTID)
             return intent
         }
     }
