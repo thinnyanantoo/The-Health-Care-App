@@ -48,6 +48,14 @@ interface HealthCareModel {
         onError: (String) -> Unit
     )
 
+    fun getMedicineBySpecialityIdFromFirebaseAndSaveToDatabase(
+        specialityId: String,
+        onSuccess: (List<MedicineVO>) -> Unit,
+        onError: (String) -> Unit
+    )
+
+    fun getMedicineBySpeciaityIdFromDatabase(): LiveData<List<MedicineVO>>
+
     fun addOneTimeGeneralQuestionToPatient(id: String, question: String, answer: String)
 
     fun getSpecialQuestionBySpecialityNameFromDatabase(): LiveData<List<SpecialQuestionVO>>
@@ -179,13 +187,14 @@ interface HealthCareModel {
         onFailure: (String) -> Unit
     )
 
+//
+//    fun getMedicineToPrescribe(
+//        specialityVO: SpecialityVO,
+//        specialityName: String,
+//        onSuccesss: (medicineVO: MedicineVO) -> Unit,
+//        onError: (String) -> Unit
+//    )
 
-    fun getMedicineToPrescribe(
-        specialityVO: SpecialityVO,
-        specialityName: String,
-        onSuccesss: (medicineVO: MedicineVO) -> Unit,
-        onError: (String) -> Unit
-    )
 
 
     fun sendMessageBySender(

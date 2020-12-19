@@ -42,12 +42,13 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
 
     }
 
-    override fun onTapMedicineButton(specialityName: String, id: String) {
-        mView?.navigateToMedicineActivity(specialityName, id)
+
+    override fun onTapMedicineButton(specialityName: String, id: String,consultId: String) {
+        mView?.navigateToMedicineActivity(specialityName, id,consultId)
     }
 
-    override fun onTapQuestionButton(specialityName: String, id: String) {
-        mView?.navigateToQuestionActivity(specialityName, id)
+    override fun onTapQuestionButton(specialityName: String, id: String,consultId: String) {
+        mView?.navigateToQuestionActivity(specialityName, id,consultId =consultId )
     }
 
     override fun onTapSendIcon(id: String, text: String, image: String) {

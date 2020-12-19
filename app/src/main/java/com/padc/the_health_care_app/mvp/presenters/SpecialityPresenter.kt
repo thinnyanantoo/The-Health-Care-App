@@ -11,7 +11,7 @@ import com.padc.the_health_care_app.mvp.views.SpecialityView
 interface SpecialityPresenter : BasePresenter<SpecialityView>,SpecialityItemDelegate {
     fun onUiReady(lifeCycleOwner : LifecycleOwner,patientId : String)
 
-    fun onUiReadyForConsultatinConfrim(lifeCycleOwner: LifecycleOwner)
+    fun onUiReadyForConsultatinConfrim(consultationId: String,lifeCycleOwner: LifecycleOwner)
     fun onTapCancelInDialog(lifeCycleOwner: LifecycleOwner)
     fun onTapSureInDialog(specialityVO: SpecialityVO,patientId: String)
 

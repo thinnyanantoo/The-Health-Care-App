@@ -185,6 +185,27 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             }
     }
 
+    override fun getMedicineBySpecialityId(
+        specialityId: String,
+        onSuccess: (MedicineVO: List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        db.collection("specialities/$specialityId/medicine").get()
+            .addOnSuccessListener { result ->
+                val List: MutableList<MedicineVO> = arrayListOf()
+
+                for (document in result) {
+                    val hashmap = document.data
+                    hashmap?.put("id", document.id)
+                    val data = Gson().toJson(hashmap)
+                    val dataVo =
+                        Gson().fromJson<MedicineVO>(data, MedicineVO::class.java)
+                    List.add(dataVo)
+                }
+                onSuccess(List)
+
+            }
+    }
     override fun addDoctors(
         doctorVO: DoctorVO,
         onSuccess: () -> Unit,
@@ -293,7 +314,9 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
                     result.isNotEmpty().let {
                         val data = result.first().data?.convertToConsultationRequestVo()
-                        data?.let { it1 -> onSuccess(it1) }
+                        data?.let { it1 ->
+                            onSuccess(it1)
+                        }
                     }
 
                 }
@@ -491,16 +514,17 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onSuccess: (ConsultationRequestVO) -> Unit,
         onFailure: (String) -> Unit
     ) {
-        db.collection("consultation_request").whereEqualTo("id", id)
+        db.collection("consultation_request").whereEqualTo("id", id).whereEqualTo("status","new")
             .addSnapshotListener { value, error ->
 
                 error?.let { onFailure(it.message ?: "Please Check Connection") } ?: run {
                     val request: ConsultationRequestVO = ConsultationRequestVO()
                     if (value?.documents?.isNotEmpty()!!) {
-                        val result = value?.documents?.first()
+                        val result = value.documents.first()
 
                         val data = result?.data?.convertToConsultationRequestVo()
-                        data?.let { onSuccess(it) }
+                        data?.let {
+                            onSuccess(it) }
                     }
                 }
             }
@@ -672,7 +696,7 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
                     hashmap?.put("id", document.id)
                     val medicine = MedicineVO()
                     medicine.id = hashmap["id"] as String
-                    medicine.name = hashmap["name"] as String
+                    medicine.mname = hashmap["mname"] as String
                     medicine.price = hashmap["price"] as String
                     medicineList.add(medicine)
                 }

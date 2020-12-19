@@ -6,5 +6,5 @@ import com.padc.shared.data.vos.SpecialityVO
 import com.padc.shared.mvp.views.BaseView
 
 interface PrescriptionMedicineView : BaseView {
-    fun showPrescriptionMedicine(medicine: MedicineVO)
+    fun showPrescriptionMedicine(medicine: List<MedicineVO>)
 }

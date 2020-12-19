@@ -1,17 +1,21 @@
 package com.padc.the_health_care_app.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.data.vos.CaseSummaryVO
+import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.PatientVO
+import com.padc.shared.data.vos.SpecialityVO
 import com.padc.the_health_care_app.R
 import com.padc.the_health_care_app.adapters.CaseSummaryAdapter
 import com.padc.the_health_care_app.mvp.presenters.PatientCaseSummaryConfirmationPresenter
@@ -20,6 +24,8 @@ import com.padc.the_health_care_app.mvp.presenters.impls.PatientQuestionPresente
 import com.padc.the_health_care_app.mvp.views.ConfirmPatientDataView
 import com.padc.the_health_care_app.utils.SessionManager
 import kotlinx.android.synthetic.main.activity_patient_case_summary_confirm.*
+import kotlinx.android.synthetic.main.activity_patient_case_summary_confirm.view.*
+import kotlinx.android.synthetic.main.fragment_confirm_consultation_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_special_question.*
 
 class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView {
@@ -29,6 +35,8 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
     var pId: String = ""
     var sName: String = ""
     var documentId: String = ""
+
+    val iddd = ""
 
     companion object {
         private val SID = "ID"
@@ -86,14 +94,59 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
 
     private fun setUpListener() {
         btnConfirmRequest.setOnClickListener {
+            var iddd = ""
             mPresenter.onTapStartConsultationRequest(
                  documentId,pVO, caseSummaryList, sName, sId
             )
-
-            Log.d("Docskdjsd",documentId)
-
         }
     }
+
+//    override fun showDialog(consultationRequestVO: ConsultationRequestVO) {
+//        val view = layoutInflater.inflate(R.layout.layout_start_consultation_confirm_from_doctor, null)
+//        val dialog = this?.let { Dialog(it) }
+//        val name = view?.findViewById<TextView>(R.id.tvDoctorName)
+//        val history = view?.findViewById<TextView>(R.id.tvHistory)
+//        val speciality = view?.findViewById<TextView>(R.id.tvDoctorSpeciality)
+//
+//        var vid = ""
+//        mModel.getConsultationConfirmByPatient(id = consultationRequestVO.id,onSuccess = {
+//            vid = consultationRequestVO.id
+//            name?.let {
+//                name.text =
+//                    consultationRequestVO?.doctorVO?.name
+//            }
+//
+//            history?.let {
+//                history.text = resources.getString(R.string.consultatioin_received) + consultationRequestVO.doctorVO?.biography+resources.getString(R.string.consultatioin_receivedTwo)
+//            }
+//
+//            speciality?.let {
+//                speciality.text = consultationRequestVO.specialityName
+//            }
+//        },onFailure = {})
+//
+//
+//        dialog?.apply {
+//            setContentView(view)
+//        }
+//
+////        view.btnCancelDialog.setOnClickListener {
+////            dialog?.dismiss()
+////        }
+//
+//        view.btnConfirmRequest.setOnClickListener {
+//            this?.let {
+//                startActivity(
+//                    ChatPatientActivity.newIntent(
+//                        it,
+//                        consultationRequestVO.id
+//                    )
+//                )
+//            }
+//            dialog?.dismiss()
+//        }
+//        dialog?.show()
+//    }
 
     private fun setUpRecycler() {
         mAdapter = CaseSummaryAdapter()
@@ -110,9 +163,8 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
     }
 
     override fun navigateToHomeScreen(id : String) {
-        SessionManager.request_id_for_patient = id
         startActivity(
-            MainActivity.newIntentTwo(this)
+            MainActivity.newIntentTwo(this,id)
         )
     }
 

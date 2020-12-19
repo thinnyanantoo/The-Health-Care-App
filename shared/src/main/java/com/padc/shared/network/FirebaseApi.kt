@@ -195,6 +195,12 @@ interface FirebaseApi {
         onFailure: (String) -> Unit
     )
 
+    fun getMedicineBySpecialityId(
+        specialityId: String,
+        onSuccess: (MedicineVO : List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
 
     //CheckOut
 

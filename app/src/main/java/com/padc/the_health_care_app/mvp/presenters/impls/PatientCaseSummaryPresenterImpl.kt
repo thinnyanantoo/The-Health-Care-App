@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.data.vos.CaseSummaryVO
+import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.PatientVO
 import com.padc.shared.mvp.presenters.AbstractBasePresenter
 import com.padc.shared.network.CloudFirebaseStoreFirebaseApiImpl
@@ -36,6 +37,7 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     }
 
 
+    var id = ""
     override fun onTapStartConsultationRequest(
         documentId : String,
         patientVO: PatientVO,
@@ -45,10 +47,13 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     ) {
         mModel.addBroadCastConsultationRequest(documentId,patientVO, caseSummaryVO, speciality,specialityId,
             onSuccess = {
-            mView?.navigateToChatScreen(it)
+                id = it
+                mView?.navigateToHomeScreen(id)
         }, onFailure = {
               Log.e("Error in id","Error in id")
         })
+       // mView?.showDialog(consultationRequestVO = ConsultationRequestVO(id = id))
+
     }
 }
 

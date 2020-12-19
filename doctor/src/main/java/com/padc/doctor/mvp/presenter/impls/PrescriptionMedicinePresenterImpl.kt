@@ -1,6 +1,7 @@
 package com.padc.doctor.mvp.presenter.impls
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.padc.doctor.mvp.presenter.PrescriptionMedicinePresenter
 import com.padc.doctor.mvp.views.PrescriptionMedicineView
 import com.padc.shared.data.models.HealthCareModel
@@ -11,15 +12,22 @@ import com.padc.shared.mvp.presenters.AbstractBasePresenter
 
 class PrescriptionMedicinePresenterImpl : PrescriptionMedicinePresenter,
     AbstractBasePresenter<PrescriptionMedicineView>() {
+    var conId =""
     private val mModel: HealthCareModel = HealthCareModelImpl
-    override fun onUiReady(specialityVO: SpecialityVO, lifecycleOwner: LifecycleOwner) {
-        mModel.getMedicineToPrescribe(specialityVO, specialityVO.specialityName, onSuccesss = {
-            mView?.showPrescriptionMedicine(medicine = specialityVO.medicine)
-        }, onError = {})
+    override fun onUiReady(speicalityName: String,speicalityId : String,consultId: String,lifecycleOwner: LifecycleOwner) {
+        conId = consultId
+        mModel.getMedicineBySpecialityIdFromFirebaseAndSaveToDatabase(speicalityId,{},{})
+        mModel.getMedicineBySpeciaityIdFromDatabase().observe(lifecycleOwner, Observer {
+            mView?.showPrescriptionMedicine(it)
+        })
 
     }
 
     override fun onTapConfirmPrescription(documentId: String, prescription: PresriptionVO) {
         mModel.addedToPrescription(documentId, prescription)
+    }
+
+    override fun onTapMedicine(medicine: String) {
+
     }
 }

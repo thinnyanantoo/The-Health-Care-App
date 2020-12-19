@@ -13,8 +13,8 @@ import java.util.*
 interface ChatPresenter : BasePresenter<ChatView> ,ChatDelegate{
     fun onUiReady(id: String,name : String,sid : String,lifecycleOwner: LifecycleOwner)
 
-    fun onTapMedicineButton(specialityName: String,id: String)
-    fun onTapQuestionButton(specialityName: String,id: String)
+    fun onTapMedicineButton(specialityName: String,id: String,consultId: String)
+    fun onTapQuestionButton(specialityName: String,id: String,consultId: String)
 
     fun onTapSendIcon(id : String, text : String, image : String){
     }

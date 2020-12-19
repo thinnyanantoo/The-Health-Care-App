@@ -6,4 +6,6 @@ import com.padc.shared.mvp.views.BaseView
 
 interface ShowSpecialQuestionView : BaseView {
     fun displaySpecialQuestion(question : List<SpecialQuestionVO>)
+
+    fun navigateToChat()
 }

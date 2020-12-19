@@ -8,7 +8,7 @@ import com.padc.shared.data.vos.MedicineVO
 interface MedicineDao {
     @Query("SELECT * FROM medicine")
     @ColumnInfo
-    fun getMedicine(): LiveData<MedicineVO>
+    fun getMedicine(): LiveData<List<MedicineVO>>
 
     @Query("SELECT * FROM medicine WHERE id = :medicineID")
     @ColumnInfo

@@ -94,7 +94,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
         patientId = idOfPatient.toString()
         patientName = nameOfPatient.toString()
-       // consultId = newIntentTwo(requireContext(),MainActivity.CONSULTANTID.toString()).toString()
+        consultId = newIntentTwo(requireContext(),MainActivity.CONSULTANTID.toString()).toString()
 
         hideConsultationReceived()
         Log.d("PatientIdInHomeSecond", patientId)
@@ -102,7 +102,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
 
         mPresenter.onUiReady(this, patientId)
-        mPresenter.onUiReadyForConsultatinConfrim(this)
+        mPresenter.onUiReadyForConsultatinConfrim(consultId,this)
     }
 
     private fun setUpRecyclerView() {
@@ -123,11 +123,11 @@ class HomeFragment : BaseFragment(), SpecialityView {
     }
 
     private fun setUpListener() {
-        btnStartConsult.setOnClickListener {
+     //   btnStartConsult.setOnClickListener {
         //    mPresenter.onTapStartConsultation(consultationrequestVO!!.id, consultationrequestVO!!)
-            startActivity(activity?.let { it1 -> ChatPatientActivity.newIntent(it1, consultationId) })
+        //    startActivity(activity?.let { it1 -> ChatPatientActivity.newIntent(it1, consultationId) })
         }
-    }
+
 
 
     companion object {
@@ -224,7 +224,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
         consultationId = consultation.id.toString()
         consMessage.text =
             getString(R.string.consultatioin_received) + consultation.doctorVO?.name + getString(R.string.consultatioin_receivedTwo)
-       confirmConsultationlayout.visibility = View.VISIBLE
+        confirmConsultationlayout.visibility = View.VISIBLE
 
     }
 
@@ -239,6 +239,6 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
 
     private fun hideConsultationReceived(){
-        confirmConsultationlayout.visibility = View.GONE
+         confirmConsultationlayout.visibility = View.GONE
     }
 }

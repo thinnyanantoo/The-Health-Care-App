@@ -1,5 +1,5 @@
 package com.padc.doctor.delegates
 
 interface QuestionDelegate {
-    fun onTapQuestionItem()
+    fun onTapQuestionItem(question : String)
 }

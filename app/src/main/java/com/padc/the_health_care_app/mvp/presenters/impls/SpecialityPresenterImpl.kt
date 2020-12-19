@@ -20,9 +20,9 @@ class SpecialityPresenterImpl : SpecialityPresenter, AbstractBasePresenter<Speci
 
     }
 
-    override fun onUiReadyForConsultatinConfrim(lifeCycleOwner: LifecycleOwner) {
+    override fun onUiReadyForConsultatinConfrim(consultationId: String,lifeCycleOwner: LifecycleOwner) {
         mModel.getConsultationConfirmByPatient(
-            id = SessionManager.request_id_for_patient.toString(),
+            consultationId,
             onSuccess = {
                 it.doctorVO?.let { it1 -> mView?.showConsultationRequestReceived(it) }
             },onFailure = {}

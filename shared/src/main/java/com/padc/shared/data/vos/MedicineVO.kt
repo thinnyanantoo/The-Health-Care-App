@@ -9,6 +9,6 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 class MedicineVO(
     @PrimaryKey
     var id: String = "",
-    var name: String = "",
+    var mname: String = "",
     var price: String = ""
 )

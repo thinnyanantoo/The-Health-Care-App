@@ -22,6 +22,7 @@ class ShowQuestionActivity : BaseActivity() ,ShowSpecialQuestionView{
     private lateinit var mAdapter : ShowQuestionAdapter
     var name= ""
     var id= ""
+    var cid = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_question)
@@ -29,9 +30,11 @@ class ShowQuestionActivity : BaseActivity() ,ShowSpecialQuestionView{
         setUpAdapter()
         name = intent.getStringExtra(SPECIALITYNAME).toString()
         id = intent.getStringExtra(SPECIALITYID).toString()
-        mPresenter.onUiReady(name,id,this)
+        cid = intent.getStringExtra(CONSULTID).toString()
+        mPresenter.onUiReady(name,id,cid,this)
         Log.d("SSSID",id)
         Log.d("SSSNAME",name)
+        Log.d("CCCCIDD",cid)
     }
 
 
@@ -53,15 +56,21 @@ class ShowQuestionActivity : BaseActivity() ,ShowSpecialQuestionView{
     companion object {
         val SPECIALITYNAME = "SPECIALITYNAME"
         val SPECIALITYID = "SPECIALITYID"
-        fun newIntent(context: Context,name : String,id : String): Intent {
+        val CONSULTID = "CONSULTID"
+        fun newIntent(context: Context,name : String,id : String,consultId : String): Intent {
             var intent = Intent(context,ShowQuestionActivity::class.java)
                 intent.putExtra(SPECIALITYNAME,name)
                 intent.putExtra(SPECIALITYID,id)
+                intent.putExtra(CONSULTID, consultId)
             return intent
         }
     }
 
     override fun displaySpecialQuestion(question: List<SpecialQuestionVO>) {
         mAdapter.setNewData(question)
+    }
+
+    override fun navigateToChat() {
+        startActivity(ChatActivity.newIntent(this,id,name,cid))
     }
 }

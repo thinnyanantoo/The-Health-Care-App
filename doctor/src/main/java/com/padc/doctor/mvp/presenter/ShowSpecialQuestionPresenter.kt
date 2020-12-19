@@ -10,6 +10,6 @@ import com.padc.shared.mvp.presenters.AbstractBasePresenter
 import com.padc.shared.mvp.presenters.BasePresenter
 
 interface ShowSpecialQuestionPresenter : BasePresenter<ShowSpecialQuestionView> , QuestionDelegate{
-    fun onUiReady(speicalityName : String,specialityId : String,lifecycleOwner: LifecycleOwner)
+    fun onUiReady(speicalityName : String,specialityId : String,consultId: String,lifecycleOwner: LifecycleOwner)
 
 }

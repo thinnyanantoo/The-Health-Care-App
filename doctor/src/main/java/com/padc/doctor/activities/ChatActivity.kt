@@ -70,10 +70,10 @@ class ChatActivity : BaseActivity() , ChatView{
 
     private fun setUpListener(){
         btnMedicine.setOnClickListener {
-           mPresenter.onTapMedicineButton(name,sid)
+           mPresenter.onTapMedicineButton(name,sid,Cid)
         }
         btnQuestion.setOnClickListener {
-            mPresenter.onTapQuestionButton(name,sid)
+            mPresenter.onTapQuestionButton(name,sid,Cid)
         }
 
         btnSendMessageInChat.setOnClickListener {
@@ -116,24 +116,14 @@ class ChatActivity : BaseActivity() , ChatView{
         etNameInChat.text = consultationRequestVO.patientVO?.pname
         etBdInChat.text = consultationRequestVO.patientVO?.DOB
 
-//        SessionManager.patient_nametwo = consultationRequestVO.patientVO?.pname
-//        SessionManager.patient_heighttwo = consultationRequestVO.patientVO?.height
-//        SessionManager.patient_bloodTypetwo = consultationRequestVO.patientVO?.bloodType
-//        SessionManager.patient_weighttwo = consultationRequestVO.patientVO?.weight
-//        SessionManager.patient_allegictwo = consultationRequestVO.patientVO?.allergicMedicine
-//        SessionManager.patient_bloodPressuretwo = consultationRequestVO.patientVO?.bloodPressure
-//        SessionManager.patient_nametwo = consultationRequestVO.patientVO?.pname
-//        SessionManager.patient_dateOfBirthtwo = consultationRequestVO.patientVO?.DOB
-
-
     }
 
-    override fun navigateToQuestionActivity(specialityName: String,specialityId: String) {
-        startActivity(ShowQuestionActivity.newIntent(this,specialityName,specialityId))
+    override fun navigateToQuestionActivity(specialityName: String,specialityId: String,consultId: String) {
+        startActivity(ShowQuestionActivity.newIntent(this,specialityName,specialityId,consultId))
     }
 
-    override fun navigateToMedicineActivity(specialityName: String, specialityId: String) {
-
+    override fun navigateToMedicineActivity(specialityName: String, specialityId: String,consultId: String) {
+         startActivity(ShowMedicineActivity.newIntent(this,specialityName,specialityId,consultId))
     }
 
     override fun displayPatientChat(chat: List<ChatMessageVO>) {

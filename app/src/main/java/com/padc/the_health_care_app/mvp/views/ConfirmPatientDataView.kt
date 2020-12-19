@@ -1,6 +1,7 @@
 package com.padc.the_health_care_app.mvp.views
 
 import com.padc.shared.data.vos.CaseSummaryVO
+import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.PatientVO
 import com.padc.shared.data.vos.SpecialQuestionVO
 import com.padc.shared.mvp.views.BaseView
@@ -12,4 +13,6 @@ interface ConfirmPatientDataView : BaseView{
     fun navigateToHomeScreen(id : String)
 
     fun navigateToChatScreen(requestId : String)
+
+   // fun showDialog(consultationRequestVO: ConsultationRequestVO)
 }

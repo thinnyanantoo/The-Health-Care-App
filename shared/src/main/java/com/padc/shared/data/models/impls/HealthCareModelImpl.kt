@@ -295,6 +295,24 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         return mTheDB.specialQuestionDao().getSpecialQuestion()
     }
 
+    override fun getMedicineBySpecialityIdFromFirebaseAndSaveToDatabase(
+        specialityId: String,
+        onSuccess: (List<MedicineVO>) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        mFirebaseApi.getMedicineBySpecialityId(specialityId,
+            onSuccess = {
+                mTheDB.medicineDao().deleteAll()
+                mTheDB.medicineDao().insertMedicine(it)
+            }, onFailure = {
+                onError(it)
+            })
+    }
+
+    override fun getMedicineBySpeciaityIdFromDatabase(): LiveData<List<MedicineVO>> {
+        return mTheDB.medicineDao().getMedicine()
+    }
+
     override fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>) {
         mFirebaseApi.getPrescription(documentId, onSuccess = {
             it
@@ -381,18 +399,18 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         )
     }
 
-    override fun getMedicineToPrescribe(
-        specialityVO: SpecialityVO,
-        specialityName: String,
-        onSuccesss: (medicineVO: MedicineVO) -> Unit,
-        onError: (String) -> Unit
-    ) {
-        mFirebaseApi.getMedicinetoPrescribe(
-            specialityVO,
-            specialityName,
-            onSuccess = {},
-            onFailure = {})
-    }
+//    override fun getMedicineToPrescribe(
+//        specialityVO: SpecialityVO,
+//        specialityName: String,
+//        onSuccesss: (medicineVO: MedicineVO) -> Unit,
+//        onError: (String) -> Unit
+//    ) {
+//        mFirebaseApi.getMedicinetoPrescribe(
+//            specialityVO,
+//            specialityName,
+//            onSuccess = {},
+//            onFailure = {})
+//    }
 
     override fun sendMessageBySender(
         id: String,
