@@ -7,15 +7,16 @@ class PresriptionVO(
     var id: String = "",
     var mname: String = "",
     var price : String = "",
-    var routine : RoutineVO = RoutineVO()
+    var count : String? = "",
+    var routine : ArrayList<RoutineVO> = arrayListOf()
 )
 
-fun MutableMap<String,Any>?.convertToPrescriptionVO() : PresriptionVO {
-    val prescriptionVO = PresriptionVO()
-    prescriptionVO.id = this?.get("id") as String
-    prescriptionVO.mname = this?.get("mname") as String
-    prescriptionVO.price = this?.get("price") as String
-    prescriptionVO.routine = this?.get("routine") as RoutineVO
-    return prescriptionVO
-}
+//fun MutableMap<String,Any>?.convertToPrescriptionVO() : PresriptionVO {
+////    val prescriptionVO = PresriptionVO()
+////    prescriptionVO.id = this?.get("id") as String
+////    prescriptionVO.mname = this?.get("mname") as String
+////    prescriptionVO.price = this?.get("price") as String
+////    prescriptionVO.routine = this?.get("routine") as RoutineVO
+////    return prescriptionVO
+//}
 

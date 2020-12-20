@@ -41,7 +41,7 @@ fun toConvertPatient(data: HashMap<String, String>?): PatientVO? {
         patient.weight = data.get("weight").toString()
         patient.height = data.get("height").toString()
         patient.allergicMedicine = data.get("allegicMedicine").toString()
-        patient.DOB = data.get("dob").toString()
+        patient.DOB = data.get("DOB").toString()
         patient.deviceId = data.get("deviceId").toString()
         patient.bloodPressure = data.get("bloodPressure").toString()
         patient.bloodType = data.get("bloodType").toString()

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.padc.doctor.R
@@ -12,6 +13,8 @@ import com.padc.doctor.adapters.RequestAdapter
 import com.padc.doctor.mvp.presenter.HomeScreenPresenter
 import com.padc.doctor.mvp.presenter.impls.HomeScreenPresenterImpl
 import com.padc.doctor.mvp.views.HomeScreenView
+import com.padc.doctor.utils.SessionManager
+import com.padc.doctor.viewpods.EmptyViewPod
 import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.DoctorVO
@@ -22,6 +25,8 @@ class HomeScreenActivity : BaseActivity(), HomeScreenView {
     private lateinit var mPresenter: HomeScreenPresenter
     private lateinit var mRequestAdapter: RequestAdapter
 
+    private lateinit var mViewPodEmpty : EmptyViewPod
+
     var doctorId: String = ""
     var specialityName: String = ""
     var dName: String = ""
@@ -31,6 +36,10 @@ class HomeScreenActivity : BaseActivity(), HomeScreenView {
         setContentView(R.layout.activity_home_screen)
         setUpPresenter()
         setUpAdapter()
+
+        hideEmptyViw()
+        setUpViewPods()
+
 
         doctorId = intent.getStringExtra(DID).toString()
         specialityName = intent.getStringExtra(DSPECIALITY).toString()
@@ -71,7 +80,7 @@ class HomeScreenActivity : BaseActivity(), HomeScreenView {
     private fun setUpAdapter() {
         mRequestAdapter = RequestAdapter(mPresenter)
         val linearLayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvRequest.layoutManager = linearLayoutManager
         rvRequest.adapter = mRequestAdapter
     }
@@ -80,6 +89,25 @@ class HomeScreenActivity : BaseActivity(), HomeScreenView {
     override fun showConsultationRequest(consultationRequestVO: List<ConsultationRequestVO>) {
         mRequestAdapter.setNewData(consultationRequestVO.toMutableList())
 
+    }
+
+    private fun setUpViewPods(){
+        mViewPodEmpty = vpEmpty as EmptyViewPod
+        mViewPodEmpty.setEmptyData("", "EMPTY_IMAGE_URL")
+        mViewPodEmpty.setDeledate(mPresenter)
+    }
+
+    private fun showEmptyView()
+    {
+        vpEmpty.visibility = View.VISIBLE
+    }
+
+    override fun displayEmptyView() {
+        showEmptyView()
+    }
+
+    private fun hideEmptyViw(){
+        vpEmpty.visibility = View.GONE
     }
 
     override fun navigateToPatientCaseSummaryInfo(consultationrequestId: ConsultationRequestVO) {

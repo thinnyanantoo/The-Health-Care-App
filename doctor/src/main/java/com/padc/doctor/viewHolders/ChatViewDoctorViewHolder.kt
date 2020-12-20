@@ -14,5 +14,9 @@ class ChatViewDoctorViewHolder(itemView: View, val delegate : ChatDelegate) : Ba
                 itemView.tvSendTime?.text = it.sendAt
             } ?: "enter message"
         }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
     }
+}
 

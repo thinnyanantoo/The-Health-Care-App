@@ -18,6 +18,9 @@ class HomeScreenPresenterImpl : HomeScreenPresenter, AbstractBasePresenter<HomeS
     //    mModel.getConsultationRequestWhenStatusNew("new").observe(lifecycleOwner, Observer {
             mModel.getRequestFromDatabase(onError = {}).observe(
                 lifecycleOwner, Observer {
+                if(it.isEmpty())
+                    mView?.displayEmptyView()
+                    else
                     mView?.showConsultationRequest(it)
                 }
             )
@@ -29,6 +32,10 @@ class HomeScreenPresenterImpl : HomeScreenPresenter, AbstractBasePresenter<HomeS
     }
 
     override fun onTapButtonDeclineInRequest() {
+    }
+
+    override fun onTapTryAgain() {
+
     }
 
 }

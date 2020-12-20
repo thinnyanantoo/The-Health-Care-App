@@ -8,34 +8,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.dynamic.SupportFragmentWrapper
 import com.padc.shared.data.vos.ConsultationRequestVO
 import com.padc.shared.data.vos.DoctorVO
-import com.padc.shared.data.vos.PatientVO
 import com.padc.shared.data.vos.SpecialityVO
 import com.padc.shared.fragments.BaseFragment
 import com.padc.the_health_care_app.R
 import com.padc.the_health_care_app.activities.ChatPatientActivity
-import com.padc.the_health_care_app.activities.MainActivity
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTID
 import com.padc.the_health_care_app.activities.MainActivity.Companion.PATIENTNAME
-import com.padc.the_health_care_app.activities.MainActivity.Companion.newIntentTwo
 import com.padc.the_health_care_app.activities.PatientInfoFillingForm
 import com.padc.the_health_care_app.adapters.RecentlyAdapter
 import com.padc.the_health_care_app.adapters.SpecialityAdapter
 import com.padc.the_health_care_app.mvp.presenters.SpecialityPresenter
 import com.padc.the_health_care_app.mvp.presenters.impls.SpecialityPresenterImpl
 import com.padc.the_health_care_app.mvp.views.SpecialityView
-import kotlinx.android.synthetic.main.fragment_confirm_consultation_dialog.*
+import com.padc.the_health_care_app.utils.SessionManager
 import kotlinx.android.synthetic.main.fragment_confirm_consultation_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_recently_doctor.*
 import kotlinx.android.synthetic.main.layout_start_consultation_confirm_from_doctor.*
-import org.mmtextview.components.MMTextView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,7 +49,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
     var patientName = ""
 
     var consultationId = ""
-    var consultId = ""
+    var requestAcceptyId = ""
 
     var consultationrequestVO: ConsultationRequestVO? = null
 
@@ -94,7 +88,9 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
         patientId = idOfPatient.toString()
         patientName = nameOfPatient.toString()
-        consultId = newIntentTwo(requireContext(),MainActivity.CONSULTANTID.toString()).toString()
+
+        SessionManager.patient_id = patientId
+
 
         hideConsultationReceived()
         Log.d("PatientIdInHomeSecond", patientId)
@@ -102,7 +98,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
 
         mPresenter.onUiReady(this, patientId)
-        mPresenter.onUiReadyForConsultatinConfrim(consultId,this)
+        mPresenter.onUiReadyForConsultatinConfrim(this)
     }
 
     private fun setUpRecyclerView() {
@@ -123,11 +119,21 @@ class HomeFragment : BaseFragment(), SpecialityView {
     }
 
     private fun setUpListener() {
-     //   btnStartConsult.setOnClickListener {
+        //   btnStartConsult.setOnClickListener {
         //    mPresenter.onTapStartConsultation(consultationrequestVO!!.id, consultationrequestVO!!)
         //    startActivity(activity?.let { it1 -> ChatPatientActivity.newIntent(it1, consultationId) })
-        }
 
+
+        btnStartConsult.setOnClickListener {
+            SessionManager.request_id_for_patient?.let { it1 ->
+                mPresenter.onTapStartConsultation(
+                    it1,
+                    toString(),
+                    SessionManager.patient_id.toString()
+                )
+            }
+        }
+    }
 
 
     companion object {
@@ -219,7 +225,7 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
         tvDoctorName.text = consultation.doctorVO?.name
         tvDoctorSpeciality.text = consultation.specialityName
-        tvHistory.text = consultation.doctorVO?.biography
+        tvHistory.text = consultation.doctorVO?.name+  getString(R.string.varb)+ consultation.doctorVO?.biography
 
         consultationId = consultation.id.toString()
         consMessage.text =
@@ -228,13 +234,12 @@ class HomeFragment : BaseFragment(), SpecialityView {
 
     }
 
+
     override fun navigateToChartActivity(
-        consultationId: String,
-        consultationRequestVO: ConsultationRequestVO
+        consultationId: String
     ) {
         Log.d("consultationId", consultationId)
-        consultationrequestVO = consultationRequestVO
-        startActivity(ChatPatientActivity.newIntent(requireContext(), consultationId))
+        startActivity(ChatPatientActivity.newIntent(requireContext(), SessionManager.request_id_for_patient.toString()))
     }
 
 

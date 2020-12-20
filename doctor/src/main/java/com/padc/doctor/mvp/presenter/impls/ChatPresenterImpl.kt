@@ -1,5 +1,6 @@
 package com.padc.doctor.mvp.presenter.impls
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.padc.doctor.mvp.presenter.ChatPresenter
@@ -19,7 +20,34 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     private var mModel: HealthCareModel = HealthCareModelImpl
 
 
-    override fun onUiReady(id: String, name: String, sid: String, lifecycleOwner: LifecycleOwner) {
+        //Log.d("IDDDDDD",id)
+
+//        mModel.getConsultationFromDB(id).observe(lifecycleOwner, Observer {
+//            data ->
+//            data?.let{
+//                mView?.showPatientInfo(data)
+//            }
+//        })
+
+
+//        mModel.getPatientFromRequest(id,onSuccess = {
+//            mView?.showPatientInfo(it)
+//        },onFailure = {})
+//
+//        mModel.getCaseSummaryFromRequst(id,onSuccess = {
+//            mView?.showSpecialQuestionAnswer(it)
+//        },onFailure = {})
+
+//        mModel.getPatientFromConsultation(id,onSuccess = {
+//            mView?.showPatientInfo(it)
+//        },onFailure = {})
+//
+//        mModel.getCaseSummaryFromConsultation(id,onSuccess = {
+//            mView?.showSpecialQuestionAnswer(it)
+//        },onFailure = {})
+
+
+        override fun onUiReady(id: String, name: String, sid: String, lifecycleOwner: LifecycleOwner) {
 //        mModel.getPatientFromRequest(id,onSuccess = {
 //            mView?.showPatientInfo(it)
 //        },onFailure = {})
@@ -29,21 +57,31 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
 //        },onFailure = {})
 
 
-            mModel.getRequestCaseSummaryById(id).observe(lifecycleOwner, Observer {
-                it?.let {
-                    mView?.showPatientInfo(it)
-                    it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
-            })
+//            mModel.getRequestCaseSummaryById(id).observe(lifecycleOwner, Observer {
+//                it?.let {
+//                    mView?.showPatientInfo(it)
+//                    it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
+//            })
 
-        mModel.getAllChatMessage(id, onSuccess = {
-            mView?.displayPatientChat(it)
-        },onFailure = {})
+            mModel.getConsultationById(id,onSuccess = {consultation ->
+//                mView?.showSpeciality(consultation.spciality.toString())
+                //  mView?.showSendMessageLayout()
+
+                mView?.showSpecialQuestionAnswer(consultation.caseSummaryVO)
+                consultation.patient?.let { mView?.showPatientInfo(it) }
+            },onFailure = {})
 
 
-    }
+            mModel.getAllChatMessage(id, onSuccess = {
+                mView?.displayPatientChat(it)
+            },onFailure = {})
 
 
-    override fun onTapMedicineButton(specialityName: String, id: String,consultId: String) {
+        }
+
+
+
+        override fun onTapMedicineButton(specialityName: String, id: String,consultId: String) {
         mView?.navigateToMedicineActivity(specialityName, id,consultId)
     }
 
@@ -52,6 +90,7 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
     }
 
     override fun onTapSendIcon(id: String, text: String, image: String) {
+        SessionManager.con_id = id
         val dateformat = SimpleDateFormat(" HH:mm a")
         val currentDatetime : String = dateformat.format(Date())
         val messageVO = ChatMessageVO(

@@ -20,5 +20,9 @@ class ShowQuestionViewHolder(itemView: View,var delegate : QuestionDelegate) : B
         }
     }
 
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
+
 
 }

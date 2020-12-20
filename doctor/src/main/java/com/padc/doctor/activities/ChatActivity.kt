@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.padc.doctor.R
+import com.padc.doctor.activities.ChatActivity.Companion.newIntent
 import com.padc.doctor.adapters.ChatAdapter
 import com.padc.doctor.adapters.RequestAdapter
 import com.padc.doctor.adapters.SpcialQuestionPatientInfoAdapter
@@ -45,7 +46,8 @@ class ChatActivity : BaseActivity() , ChatView{
         sid = intent.getStringExtra(SPECIALITYID).toString()
         Log.d("sid",sid)
         Log.d("sname",name)
-        Log.d("CID", Cid)
+        Log.d("CCNNNXXXBBID", Cid)
+        SessionManager.con_id = Cid
         mPresenter.onUiReady(Cid,name,sid,this)
       //  mModel.deleteRequestFromDatabase()
     }
@@ -83,7 +85,6 @@ class ChatActivity : BaseActivity() , ChatView{
                 etMessage.text = Editable.Factory.getInstance().newEditable("")
             }
         }
-
         }
 
     private fun setUpAdapter(){
@@ -103,20 +104,50 @@ class ChatActivity : BaseActivity() , ChatView{
     }
 
     override fun showSpecialQuestionAnswer(caseSummaryVO: List<CaseSummaryVO>) {
-        mAdapter.setNewData(caseSummaryVO.toMutableList())
+        mAdapter.setNewData(caseSummaryVO)
     }
 
-    override fun showPatientInfo(consultationRequestVO: ConsultationRequestVO) {
-        tvpatientname.text = consultationRequestVO.patientVO?.pname
-        etHeightInChat.text = consultationRequestVO.patientVO?.height
-        etbloodTypeInChat.text = consultationRequestVO.patientVO?.bloodType
-        etWeightInChat.text = consultationRequestVO.patientVO?.weight
-        etwrongInChat.text = consultationRequestVO.patientVO?.allergicMedicine
-        etBloodPressureinChat.text = consultationRequestVO.patientVO?.bloodPressure
-        etNameInChat.text = consultationRequestVO.patientVO?.pname
-        etBdInChat.text = consultationRequestVO.patientVO?.DOB
+    var caseSummaryVOList : List<CaseSummaryVO> = listOf()
+    override fun showPatientInfo(patientVO: PatientVO) {
+//        tvpatientname.text = consultationVO.patientVO?.pname
+//        etHeightInChat.text = consultationVO.patientVO?.height
+//        etbloodTypeInChat.text = consultationVO.patientVO?.bloodType
+//        etWeightInChat.text = consultationVO.patientVO?.weight
+//        etwrongInChat.text = consultationVO.patientVO?.allergicMedicine
+//        etBloodPressureinChat.text = consultationVO.patientVO?.bloodPressure
+//        etNameInChat.text = consultationVO.patientVO?.pname
+//        etBdInChat.text = consultationVO.patientVO?.DOB
+
+        tvpatientname.text = patientVO?.pname
+        etHeightInChat.text = patientVO?.height
+        etbloodTypeInChat.text = patientVO?.bloodType
+        etWeightInChat.text = patientVO?.weight
+        etwrongInChat.text = patientVO?.allergicMedicine
+        etBloodPressureinChat.text = patientVO?.bloodPressure
+        etNameInChat.text = patientVO?.pname
+        etBdInChat.text = patientVO?.DOB
+
+//        consultationVO.caseSummary?.let {
+//            caseSummaryVOList[0].question = consultationVO.caseSummary?.get(0)?.question
+//            caseSummaryVOList[0].answer = consultationVO.caseSummary?.get(0)?.answer
+//
+//            caseSummaryVOList[1].question = consultationVO.caseSummary?.get(1)?.question
+//            caseSummaryVOList[1].answer = consultationVO.caseSummary?.get(1)?.answer
+//        }
 
     }
+
+//    override fun showPatientInfo(consultationRequestVO: ConsultationRequestVO) {
+//        tvpatientname.text = consultationRequestVO.patientVO?.pname
+//        etHeightInChat.text = consultationRequestVO.patientVO?.height
+//        etbloodTypeInChat.text = consultationRequestVO.patientVO?.bloodType
+//        etWeightInChat.text = consultationRequestVO.patientVO?.weight
+//        etwrongInChat.text = consultationRequestVO.patientVO?.allergicMedicine
+//        etBloodPressureinChat.text = consultationRequestVO.patientVO?.bloodPressure
+//        etNameInChat.text = consultationRequestVO.patientVO?.pname
+//        etBdInChat.text = consultationRequestVO.patientVO?.DOB
+//
+//    }
 
     override fun navigateToQuestionActivity(specialityName: String,specialityId: String,consultId: String) {
         startActivity(ShowQuestionActivity.newIntent(this,specialityName,specialityId,consultId))
@@ -127,7 +158,8 @@ class ChatActivity : BaseActivity() , ChatView{
     }
 
     override fun displayPatientChat(chat: List<ChatMessageVO>) {
-         mChatAdapter.setNewData(chat)
+         mChatAdapter.setNewData(
+             chat)
     }
 
 

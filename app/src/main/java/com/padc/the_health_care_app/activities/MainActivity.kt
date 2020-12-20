@@ -34,10 +34,9 @@ class MainActivity : BaseActivity() , MainView {
         }
 
 
-        val CONSULTANTID = "CONSULTANTID"
-        fun newIntentTwo(context: Context, id:String) : Intent {
+        val REQUESTACCEPTID = "REQUESTACCEPTID"
+        fun newIntentTwo(context: Context) : Intent {
             val intent = Intent(context,MainActivity::class.java)
-            intent.putExtra(CONSULTANTID,id)
             return intent
         }
     }

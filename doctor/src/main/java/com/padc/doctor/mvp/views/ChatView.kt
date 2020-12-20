@@ -7,7 +7,7 @@ import com.padc.shared.mvp.views.BaseView
 
 interface ChatView : BaseView {
     fun showSpecialQuestionAnswer(caseSummaryVO: List<CaseSummaryVO>)
-    fun showPatientInfo(consultationRequestVO: ConsultationRequestVO)
+    fun showPatientInfo(patientVO: PatientVO)
 
     fun navigateToQuestionActivity(specialityName : String,specialityId : String,consultId: String)
     fun navigateToMedicineActivity(specialityName: String,specialityId: String,consultId: String)

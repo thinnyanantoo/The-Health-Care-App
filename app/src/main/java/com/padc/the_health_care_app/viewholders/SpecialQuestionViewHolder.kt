@@ -51,4 +51,8 @@ class SpecialQuestionViewHolder (itemView: View, var mCaseSummaryList : List<Cas
 //            }
 //        })
     }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
 }

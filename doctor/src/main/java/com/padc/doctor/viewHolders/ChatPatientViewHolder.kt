@@ -13,4 +13,8 @@ class ChatPatientViewHolder(itemView: View, val delegate : ChatDelegate) : BaseV
         itemView.patientMessage.text = data.textMessage
         itemView.patientSendTime.text = data.sendAt
     }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
 }

@@ -147,7 +147,11 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
             caseSummaryVO,
             specialityName,
             speicalityId,
-            {},
+            {
+               onSuccess(
+                   it
+               )
+            },
             {})
     }
 
@@ -235,7 +239,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
     }
 
     override fun deleteRequestFromDatabase() {
-     //   mTheDB.consultationRequestDao().deleteAll()
+        //   mTheDB.consultationRequestDao().deleteAll()
     }
 
     override fun getConsultationRequestWhenStatusNew(status: String): LiveData<ConsultationRequestVO> {
@@ -275,7 +279,7 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
-       mFirebaseApi.getCaseSummaryFromRequest(requestid,onSuccess, onFailure)
+        mFirebaseApi.getCaseSummaryFromRequest(requestid,onSuccess, onFailure)
     }
 
     override fun getPatientFromRequest(
@@ -321,15 +325,15 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         })
     }
 
-    override fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO) {
-        mFirebaseApi.addToPrescription(
-            documentId,
-            presriptionVO.id,
-            presriptionVO.mname,
-            presriptionVO.price,
-            presriptionVO.routine
-        )
-    }
+//    override fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO) {
+//        mFirebaseApi.addToPrescription(
+//            documentId,
+//            presriptionVO.id,
+//            presriptionVO.mname,
+//            presriptionVO.price,
+//            presriptionVO.routine
+//        )
+//    }
 
     override fun addToCheckOut(
         prescription: List<PresriptionVO>,
@@ -421,5 +425,44 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         mFirebaseApi.sendMessage(id, messageVO, onSuccess, onFailure)
     }
 
+
+//    override fun getConsultationChat(consulationId: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+//        mFirebaseApi.getConsulationChatById(consulationId,
+//            onSuccess = {
+//                mTheDB.consultationChatDao().deleteAllConsultationChatData()
+//                mTheDB.consultationChatDao().insertConsultationChatData(it)
+//            }, onFailure = { onError(it) })
+//    }
+//
+//    override fun getConsultationChatFromDB(consulationId: String): LiveData<ConsultationChatVO> {
+//        return mTheDB.consultationChatDao().getAllConsultationChatDataBy(consulationId)
+//    }
+
+
+    override fun finishConsultation(
+        consultationVO : ConsultationVO,
+        prescriptionList: List<PresriptionVO>,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
+        mFirebaseApi.finishConsultation(consultationVO,prescriptionList,onSuccess,onError)
+    }
+
+    override fun getMedicineBySpeciality(
+        speciality: String,
+        onSuccess: (medicine: List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        mFirebaseApi.getMedicineBySpeciality(speciality,onSuccess,onFailure)
+    }
+
+
+    override fun getConsultationById(
+        id: String,
+        onSuccess: (ConsultationVO) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        return mFirebaseApi.getConsultationById(id,onSuccess,onFailure)
+    }
 
 }

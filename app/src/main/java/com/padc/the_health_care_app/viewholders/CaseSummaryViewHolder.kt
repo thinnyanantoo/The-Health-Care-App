@@ -16,4 +16,8 @@ class CaseSummaryViewHolder (itemView: View) : BaseViewHolder<CaseSummaryVO>(ite
         }
     }
 
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
+
 }

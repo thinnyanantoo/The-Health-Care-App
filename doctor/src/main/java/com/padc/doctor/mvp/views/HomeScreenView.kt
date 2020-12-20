@@ -8,4 +8,5 @@ import com.padc.shared.persistence.daos.ConsultationRequestDao
 interface HomeScreenView : BaseView{
     fun showConsultationRequest(consultationRequestVO: List<ConsultationRequestVO>)
     fun navigateToPatientCaseSummaryInfo(consultationrequestId : ConsultationRequestVO)
+    fun displayEmptyView()
 }

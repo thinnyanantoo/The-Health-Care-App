@@ -56,10 +56,7 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         patientid = intent.getStringExtra(PATIENTID).toString()
         patientName = intent.getStringExtra(PATIENTNAME).toString()
 
-
-
         mPresenter.onUiReadyForSpecialQuestion(sid,documentId,  this)
-
     }
 
 
@@ -104,8 +101,8 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
         }
 
         btnContinueInTwo.setOnClickListener {
-         //   mModel.addOneTimeGeneralQuestionToPatient(patientid,pNameQuestionINSecond.text.toString(),patientName)
-            mModel.addOneTimeGeneralQuestionToPatient(patientid,tvbirthdayQuestionInSecond.text.toString(),tvbdAnswerInSecond.text.toString())
+            mModel.addOneTimeGeneralQuestionToPatient(patientid,pNameQauestionINSecond.text.toString(),patientName)
+            mModel.addOneTimeGeneralQuestionToPatient(patientid,tvbirthdayQuestionInSecond.text.toString(),"$year/$month/$day".toString())
             mModel.addOneTimeGeneralQuestionToPatient(patientid,tvheightQuestionInSecond.text.toString(),etheigtAnswerInSecond.text.toString())
             mModel.addOneTimeGeneralQuestionToPatient(patientid,tvbloodTypeQuestionInSecond.text.toString(),etbloodTypeAnswerInSecond.text.toString())
             mModel.addOneTimeGeneralQuestionToPatient(patientid,tvWrngQuestionInSecond.text.toString(),etwrongInSecond.text.toString())
@@ -118,7 +115,7 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
                 pname = pNameInSecond.text.toString(),
                 weight = etWeightInTwo.text.toString(),
                 height = etAnswerHeight.text.toString(),
-                DOB = "$year/$month/$day",
+                DOB = "$year/$month/$day".toString(),
                 allergicMedicine = etwrongInSecond.text.toString(),
                 bloodType = etbloodTypeAnswerInSecond.text.toString(),
                 bloodPressure = etAnswerBloodPressure.text.toString()

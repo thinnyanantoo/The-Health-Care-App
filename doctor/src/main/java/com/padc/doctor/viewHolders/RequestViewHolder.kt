@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.rv_request_list.view.*
 class RequestViewHolder(itemView : View, val delegate : RequestDelegate) : BaseViewHolder<ConsultationRequestVO>(itemView){
     override fun bindData(data: ConsultationRequestVO) {
         mData = data
-        itemView.tvPatientName.text = data.patientVO?.pname
-        itemView.tvBirthday.text = data.patientVO?.DOB
+        itemView.tvPatientName.text = data.patientVO?.pname.toString()
+        itemView.tvBirthday.text = data.patientVO?.DOB.toString()
 
     }
 
@@ -24,6 +24,10 @@ class RequestViewHolder(itemView : View, val delegate : RequestDelegate) : BaseV
             }
 
         }
+    }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
     }
 
 }

@@ -24,6 +24,7 @@
     <string name="consultatioin_received">ဆွေးနွေးမှု ပြုလုပ်ရန်  </string>
     <string name="consultatioin_receivedTwo">မှ လက်ခံထား ပါသည်။ </string>
     <string name="sfd">ဆွေးနွေးမှု ပြုလုပ်နိုင်ပါပြီ</string>
+    <string name="varb">သည်</string>
 
     <string-array name="stepsLables">
         <item>အထွေထွေမေးခွန်းများ</item>

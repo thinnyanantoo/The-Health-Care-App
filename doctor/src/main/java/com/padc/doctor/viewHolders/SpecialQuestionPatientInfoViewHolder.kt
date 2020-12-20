@@ -14,4 +14,8 @@ class SpecialQuestionPatientInfoViewHolder(itemView: View)  :  BaseViewHolder<Ca
 
     }
 
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
+
 }

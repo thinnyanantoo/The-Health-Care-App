@@ -29,5 +29,9 @@ class SpecialityViewHolder(itemView: View, private val mDelegate : SpecialityIte
         }
     }
 
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
+
 
 }

@@ -47,8 +47,10 @@ class PatientCaseSummaryPresenterImpl : PatientCaseSummaryConfirmationPresenter,
     ) {
         mModel.addBroadCastConsultationRequest(documentId,patientVO, caseSummaryVO, speciality,specialityId,
             onSuccess = {
-                id = it
-                mView?.navigateToHomeScreen(id)
+                it
+                mView?.navigateToHomeScreen(
+                    it
+                )
         }, onFailure = {
               Log.e("Error in id","Error in id")
         })

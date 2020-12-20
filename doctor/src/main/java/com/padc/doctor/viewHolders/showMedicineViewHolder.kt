@@ -12,8 +12,29 @@ class showMedicineViewHolder(itemView: View,var delegate : MedicineDelegate) :  
         mData = data
         itemView.tvMedicineName.text = data.mname
 
-        itemView.setOnClickListener {
-           // delegate.onTapQuestionItem(data.name.toString())
+        data?.let {
+           if(!data.isSelect){
+               itemView.iv_add_medicine.visibility = View.VISIBLE
+               itemView.iv_remove_medicine.visibility = View.GONE
+           }
+            else{
+               itemView.iv_add_medicine.visibility = View.GONE
+               itemView.iv_remove_medicine.visibility = View.VISIBLE
+           }
         }
+
+
+        itemView.iv_remove_medicine.setOnClickListener {
+            delegate.onTapRemoveMedicine(data)
+        }
+
+        itemView.iv_add_medicine.setOnClickListener {
+            delegate.onTapAddMedicine(data)
+        }
+
     }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
     }
+}

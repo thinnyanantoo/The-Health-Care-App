@@ -24,26 +24,42 @@ class GetCareWorker(context: Context, workerParams: WorkerParameters) :
 //        )
         mHealthCareModel.getSpecialitiesFromFirebaseApiAndSaveToDatabase(
             onSuccess = {
-                Log.e("KEy","Reach to response")
+                Log.e("KEy", "Reach to response")
                 result = Result.success()
             },
             onError = {
-                Log.e("KEy","Did not reach to response")
+                Log.e("KEy", "Did not reach to response")
                 result = Result.failure()
             }
         )
 
         mHealthCareModel.getGeneralQuestionFromFirebaseApiAndSaveToDataBase(
             onSuccess = {
-                Log.e("KEy","Reach to response")
+                Log.e("KEy", "Reach to response")
                 result = Result.success()
             },
             onError = {
-                Log.e("KEy","Did not reach to response")
+                Log.e("KEy", "Did not reach to response")
                 result = Result.failure()
             }
         )
         return result
 
+
+   //     mHealthCareModel.getBroadCastConsultationRequestFromFireStoreAndSaveToDatabase("",)
+
+//        mHealthCareModel.getConsultation(
+//            onSuccess = {
+//                Log.e("KEy","Reach to response")
+//                result = Result.success()
+//            },
+//            onError = {
+//                Log.e("KEy","Did not reach to response")
+//                result = Result.failure()
+//            }
+//        )
+//        return result
+
+        // }
     }
 }

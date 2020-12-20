@@ -8,4 +8,8 @@ class RecentlyViewHolder(itemView: View) :BaseViewHolder<RecentlyDoctorVo>(itemV
     override fun bindData(data: RecentlyDoctorVo) {
         TODO("Not yet implemented")
     }
+
+    override fun position(id: Long) {
+        TODO("Not yet implemented")
+    }
 }

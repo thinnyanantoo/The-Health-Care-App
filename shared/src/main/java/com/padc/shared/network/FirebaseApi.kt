@@ -65,9 +65,17 @@ interface FirebaseApi {
         onFailure: (String) -> Unit
     )
 
-    fun getPatientFromRequest(requestid: String,onSuccess: (PatientVO) -> Unit,onFailure: (String) -> Unit)
+    fun getPatientFromRequest(
+        requestid: String,
+        onSuccess: (PatientVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
 
-    fun getCaseSummaryFromRequest(requestid: String,onSuccess: (caseSummary : List<CaseSummaryVO>) -> Unit,onFailure: (String) -> Unit)
+    fun getCaseSummaryFromRequest(
+        requestid: String,
+        onSuccess: (caseSummary: List<CaseSummaryVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
 
 
     fun addedRecentlyDoctor(
@@ -84,12 +92,12 @@ interface FirebaseApi {
         onFailure: (String) -> Unit
     )
 
-    fun finishConsultation(
-        consultation: ConsultationVO,
-        documentId: String,
-        onSuccess: () -> Unit,
-        onFailure: (String) -> Unit
-    )
+//    fun finishConsultation(
+//        consultation: ConsultationVO,
+//        documentId: String,
+//        onSuccess: () -> Unit,
+//        onFailure: (String) -> Unit
+//    )
 
 
     fun broadCastConsultationRequest(
@@ -98,7 +106,7 @@ interface FirebaseApi {
         caseSummaryVO: List<CaseSummaryVO>,
         specialityName: String,
         specialityId: String,
-        onSuccess: (id : String) -> Unit,
+        onSuccess: (id: String) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -165,7 +173,7 @@ interface FirebaseApi {
 
     fun getPrescription(
         documentId: String,
-        onSuccess: (prescription: List<PresriptionVO>) -> Unit,
+        onSuccess: (List<PresriptionVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -197,7 +205,7 @@ interface FirebaseApi {
 
     fun getMedicineBySpecialityId(
         specialityId: String,
-        onSuccess: (MedicineVO : List<MedicineVO>) -> Unit,
+        onSuccess: (MedicineVO: List<MedicineVO>) -> Unit,
         onFailure: (String) -> Unit
     )
 
@@ -211,6 +219,31 @@ interface FirebaseApi {
         address: String,
         onSuccess: (checkOutVO: CheckOutVO) -> Unit,
         onFailure: (String) -> Unit
+    )
+
+    fun finishConsultation(
+        consultationVO : ConsultationVO,
+        prescription: List<PresriptionVO>,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getMedicineBySpeciality(
+        speciality: String,
+        onSuccess: (medicine: List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultationById(
+        id: String,
+        onSuccess: (ConsultationVO) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getAcceptRequestByDocotr(
+        id: String,
+        onSuccess: (consultation : List<ConsultationRequestVO>) -> Unit,
+    onFailure: (String) -> Unit
     )
 
 }

@@ -12,6 +12,7 @@
     <string name="txt_blood_pressure">သွေးပေါင်ချိန်</string>
 
 
+
     <string-array name="days">
         <item>1</item>
         <item>2</item>
@@ -99,6 +100,8 @@
         <item>အမျိုးသား</item>
         <item>အမျိုးသမီး</item>
     </string-array>
+
+
     <string-array name="specialities">
         <item>ဦးနှောက်အာရုံကြောအထူးကု</item>
         <item>အစာအိမ်နဲ့အူလမ်းကြောင်း</item>
@@ -119,4 +122,11 @@
         <item>အထွေအထွေအထူးကု</item>
         <item>အာဟာရဆိုင်ရာ</item>
     </string-array>
+
+    <string-array name="medicine_date">
+        <item> Days</item>
+        <item> Week </item>
+    </string-array>
+
+
 </resources>

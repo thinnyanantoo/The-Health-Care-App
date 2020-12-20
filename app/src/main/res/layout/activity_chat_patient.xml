@@ -101,7 +101,7 @@
                                     android:layout_height="wrap_content"
                                     android:nestedScrollingEnabled="false"
                                     android:layout_margin="2dp"
-                                    android:id="@+id/rvSpecialQuestionInChat"/>
+                                    android:id="@+id/rvSpecialQuestionInChatForRview"/>
                             </LinearLayout>
                         </androidx.core.widget.NestedScrollView>
                         <TextView

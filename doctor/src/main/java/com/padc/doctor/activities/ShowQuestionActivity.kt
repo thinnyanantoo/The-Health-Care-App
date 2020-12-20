@@ -12,6 +12,7 @@ import com.padc.doctor.adapters.ShowQuestionAdapter
 import com.padc.doctor.mvp.presenter.ShowSpecialQuestionPresenter
 import com.padc.doctor.mvp.presenter.impls.ShowSpecialQuestionPresenterImpl
 import com.padc.doctor.mvp.views.ShowSpecialQuestionView
+import com.padc.doctor.utils.SessionManager
 import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.vos.SpecialQuestionVO
 import com.padc.shared.data.vos.SpecialityVO
@@ -30,11 +31,11 @@ class ShowQuestionActivity : BaseActivity() ,ShowSpecialQuestionView{
         setUpAdapter()
         name = intent.getStringExtra(SPECIALITYNAME).toString()
         id = intent.getStringExtra(SPECIALITYID).toString()
-        cid = intent.getStringExtra(CONSULTID).toString()
+        cid = SessionManager.con_id.toString()
         mPresenter.onUiReady(name,id,cid,this)
         Log.d("SSSID",id)
         Log.d("SSSNAME",name)
-        Log.d("CCCCIDD",cid)
+        Log.d("CCCCCCCCCCIDD",cid)
     }
 
 
@@ -61,7 +62,7 @@ class ShowQuestionActivity : BaseActivity() ,ShowSpecialQuestionView{
             var intent = Intent(context,ShowQuestionActivity::class.java)
                 intent.putExtra(SPECIALITYNAME,name)
                 intent.putExtra(SPECIALITYID,id)
-                intent.putExtra(CONSULTID, consultId)
+                intent.putExtra(ChatActivity.CONSULTATIONREQUESTID, consultId)
             return intent
         }
     }

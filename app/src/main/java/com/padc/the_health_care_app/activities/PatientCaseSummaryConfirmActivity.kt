@@ -163,9 +163,9 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
     }
 
     override fun navigateToHomeScreen(id : String) {
+        SessionManager.request_id_for_patient = id
         startActivity(
-            MainActivity.newIntentTwo(this,id)
-        )
+            MainActivity.newIntentTwo(this))
     }
 
     override fun navigateToChatScreen(requestId: String) {
@@ -178,8 +178,8 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
         etheigtAnswerInConfirm.text = patientVO.height.toString()
         etbloodTypeAnswerInConfirm.text = patientVO.bloodType.toString()
         etBloodPressureInConfirm.text = patientVO.bloodPressure
-        tvbdAnswerInConfirm.text = patientVO.DOB
-        etwrongInConfirm.text = patientVO.allergicMedicine
+        tvbdAnswerInConfirm.text = patientVO.DOB.toString()
+        etwrongInConfirm.text = patientVO.allergicMedicine.toString()
         Log.d("name", patientVO.pname.toString())
         Log.d("med", patientVO.allergicMedicine.toString())
 

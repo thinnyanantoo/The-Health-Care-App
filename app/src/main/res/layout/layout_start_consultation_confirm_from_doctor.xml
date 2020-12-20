@@ -18,7 +18,7 @@
         android:textColor="#005ccc"
         android:id="@+id/consMessage"
         android:letterSpacing="-0.02"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="36dp"
         android:layout_marginStart="20dp"
         android:lineSpacingExtra="3sp"
         android:drawableLeft="@drawable/information_filled"
@@ -36,6 +36,7 @@
             android:id="@+id/tvReceivedDoctor"
             android:layout_marginTop="13dp"
             android:layout_marginLeft="16dp"
+            android:padding="5dp"
             android:text="@string/consultatioin_received"
             />
         <RelativeLayout
@@ -61,6 +62,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/raleway"
                     android:textStyle="bold"
+                    android:padding="4dp"
                     android:textSize="15sp"
                     android:textColor="#424656"
                     android:letterSpacing="-0.02"
@@ -76,6 +78,7 @@
                     android:textSize="13sp"
                     android:textColor="#00122d"
                     android:letterSpacing="-0.02"
+                    android:padding="4dp"
                     android:lineSpacingExtra="2sp"
                     android:text="ဦးနှောက် နှင့် အာရုံကြောဆိုင်ရာ"
                     />
@@ -92,7 +95,7 @@
             android:letterSpacing="-0.02"
             android:lineSpacingExtra="2sp"
             android:layout_marginTop="13dp"
-            android:layout_marginStart="19dp"
+            android:layout_marginStart="20dp"
             android:text="ပါမောက္ခဦးအောင်ဝင်းသည် 2000 ပြည့်နှစ်တွင် ပါမောက္ခဘွဲ့ကို  ရရှိခဲ့ပြီး
 လက်ရှိတွင်  Bumrungrad International Hospital တွင်  ဦးနှောက် ..."
             />

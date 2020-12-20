@@ -4,7 +4,12 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 class RoutineVO(
-    var id: String = "",
-    var day: String = "",
-    var type: String = ""
+var id: String= "",
+var amount: String? = "",
+var days: String ?="",
+var comment: String? = "",
+var repeat: String ?="",
+var quantity: String? = "",
+var times: String ?=""
+
 )

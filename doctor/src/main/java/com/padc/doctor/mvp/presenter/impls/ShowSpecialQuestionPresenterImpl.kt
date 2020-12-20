@@ -35,7 +35,7 @@ class ShowSpecialQuestionPresenterImpl : ShowSpecialQuestionPresenter, AbstractB
             sendBy = SessionManager.doctor_id.toString(),
             sendAt = currentDatetime
         )
-        mModel.sendMessageBySender(conId,messageVO,onSuccess = {},onFailure = {})
+        mModel.sendMessageBySender(SessionManager.con_id.toString(),messageVO,onSuccess = {},onFailure = {})
       //  mModel.sendMessageBySender(id,messageVO,onSuccess = {},onFailure = {})
         mView?.navigateToChat()
 

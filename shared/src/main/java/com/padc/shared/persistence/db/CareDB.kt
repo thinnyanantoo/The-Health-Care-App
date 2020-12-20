@@ -60,5 +60,6 @@ abstract class CareDB : RoomDatabase() {
     abstract fun caseSummaryDao(): CaseSummaryDao
     abstract fun consultationRequestDao(): ConsultationRequestDao
 
+
 }
 

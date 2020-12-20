@@ -41,6 +41,9 @@ class PatientInfoActivity : BaseActivity(), ShowPatientInfoView {
         specialityName = intent.getStringExtra(SPECIALITYNAME).toString()
         specialityId = intent.getStringExtra(SPECIALITID).toString()
         mPresenter.onUiReady(requestID,specialityName,specialityId,this)
+
+        SessionManager.speciality_id = specialityId
+        Log.d("SSSSSSSSSSSSID", SessionManager.speciality_id.toString())
     }
 
     companion object {
@@ -91,10 +94,10 @@ class PatientInfoActivity : BaseActivity(), ShowPatientInfoView {
         etheigtAnswerInSecond.text = consultationRequestVO.patientVO?.height
         etbloodTypeAnswerInSecond.text = consultationRequestVO.patientVO?.bloodType
         etWeight.text = consultationRequestVO.patientVO?.weight
-        etwrongInSecond.text = consultationRequestVO.patientVO?.allergicMedicine
+        etwrongInSecond.text = consultationRequestVO.patientVO?.allergicMedicine.toString()
         etBloodPressure.text = consultationRequestVO.patientVO?.bloodPressure
         pNameInSecond.text = consultationRequestVO.patientVO?.pname
-        tvbdAnswerInSecond.text = consultationRequestVO.patientVO?.DOB
+        tvbdAnswerInSecond.text = consultationRequestVO.patientVO?.DOB.toString()
 
          patient = PatientVO(
             height = consultationRequestVO.patientVO?.height,

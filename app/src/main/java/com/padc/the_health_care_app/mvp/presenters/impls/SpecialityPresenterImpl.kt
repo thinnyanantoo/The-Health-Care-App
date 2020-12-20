@@ -20,11 +20,14 @@ class SpecialityPresenterImpl : SpecialityPresenter, AbstractBasePresenter<Speci
 
     }
 
-    override fun onUiReadyForConsultatinConfrim(consultationId: String,lifeCycleOwner: LifecycleOwner) {
+    override fun onUiReadyForConsultatinConfrim(lifeCycleOwner: LifecycleOwner) {
         mModel.getConsultationConfirmByPatient(
-            consultationId,
+            SessionManager.request_id_for_patient.toString(),
             onSuccess = {
-                it.doctorVO?.let { it1 -> mView?.showConsultationRequestReceived(it) }
+                it.doctorVO?.let {
+                        it1 ->
+                    mView?.showConsultationRequestReceived(it)
+                }
             },onFailure = {}
         )
     }
@@ -37,17 +40,25 @@ class SpecialityPresenterImpl : SpecialityPresenter, AbstractBasePresenter<Speci
         mView?.displayFormToFillPatientInfo(specialityVO,patientId)
     }
 
+    override fun onTapStartConsultation(
+        consultationId: String,
+        patientId: String,
+        toString: String
+    ) {
+        mView?.navigateToChartActivity(consultationId)
+    }
+
     override fun onTapSpecialityItem(specialityVO: SpecialityVO) {
         mView?.showDialog(specialityVO)
     }
 
-    override fun onTapStartConsultation(
-        consultationId: String,
-        consultationRequestVO: ConsultationRequestVO
-    ) {
-        Log.d("consultationId",consultationId)
-        mView?.navigateToChartActivity(consultationId,consultationRequestVO)
-    }
+//    override fun onTapStartConsultation(
+//        consultationId: String,
+//        consultationRequestVO: ConsultationRequestVO
+//    ) {
+//        Log.d("consultationId",consultationId)
+//        mView?.navigateToChartActivity(consultationId,consultationRequestVO)
+//    }
 
 
     private fun requestSpecialityData(lifeCycleOwner: LifecycleOwner) {

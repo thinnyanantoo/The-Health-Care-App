@@ -4,6 +4,7 @@ const val sharePreferenceDoctor  = "doctor"
 const val sharePreferenceName  = "name"
 const val sharePreferenceEmail  = "email"
 const val sharePreferenceID  = "id"
+const val sharePreferenceConID = "con_id"
 const val sharePreferenceRequestIDforPatient  = "req_id"
 const val sharePreferenceDeviceID  = "device_token"
 const val sharePreferenceDateOfBirth  = "dateofBirth"
@@ -12,6 +13,7 @@ const val sharePreferenceImage  = "image"
 const val sharePreferencePhoto  = "photo"
 const val sharePreferenceSpeciality  = "specialityName"
 const val sharePreferenceRequestID = "req_id"
+const val sharePreferenceSpecialityID  = "specialityID"
 
 
 

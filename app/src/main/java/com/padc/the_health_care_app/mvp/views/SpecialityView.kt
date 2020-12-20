@@ -15,6 +15,6 @@ interface SpecialityView : BaseView {
     fun showDialog(speciality: SpecialityVO)
     fun showConsultationRequestReceived(consultation: ConsultationRequestVO)
 
-    fun navigateToChartActivity(consultationId: String, consultationRequestVO: ConsultationRequestVO)
+    fun navigateToChartActivity(consultationId: String)
     
 }

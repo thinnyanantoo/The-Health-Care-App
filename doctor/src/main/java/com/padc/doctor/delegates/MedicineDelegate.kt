@@ -1,5 +1,8 @@
 package com.padc.doctor.delegates
 
+import com.padc.shared.data.vos.MedicineVO
+
 interface MedicineDelegate {
-    fun onTapMedicine(medicine : String)
+    fun onTapAddMedicine(medicineVO : MedicineVO)
+    fun onTapRemoveMedicine(medicineVO: MedicineVO)
 }

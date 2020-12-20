@@ -59,10 +59,16 @@
         android:textSize="17sp"
         android:textStyle="normal"
         android:layout_marginTop="@dimen/margin_medium_3"/>
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recordOfBookingLayout"-->
-<!--        tools:listitem="@layout/layout_booking_record"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_marginTop="@dimen/margin_medium_2"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRequestHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        tools:listitem="@layout/rv_request_list"
+        />
+    <include
+        android:id="@+id/vpEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/view_pod_empty"/>
 </LinearLayout>

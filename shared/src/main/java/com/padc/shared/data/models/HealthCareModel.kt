@@ -125,7 +125,7 @@ interface HealthCareModel {
 
     fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>)
 
-    fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO)
+  //  fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO)
 
     fun addToCheckOut(
         prescription: List<PresriptionVO>,
@@ -207,6 +207,27 @@ interface HealthCareModel {
     fun getAllChatMessage(
         consultationId: String,
         onSuccess: (message: List<ChatMessageVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+
+    fun finishConsultation(
+        consultationVO : ConsultationVO,
+        prescriptionList: List<PresriptionVO>,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    )
+
+
+    fun getMedicineBySpeciality(
+        speciality: String,
+        onSuccess: (medicine: List<MedicineVO>) -> Unit,
+        onFailure: (String) -> Unit
+    )
+
+    fun getConsultationById(
+        id: String,
+        onSuccess: (ConsultationVO) -> Unit,
         onFailure: (String) -> Unit
     )
 
