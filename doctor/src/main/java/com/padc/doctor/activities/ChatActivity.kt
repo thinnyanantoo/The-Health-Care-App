@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.padc.doctor.R
@@ -21,6 +22,7 @@ import com.padc.shared.activity.BaseActivity
 import com.padc.shared.data.models.HealthCareModel
 import com.padc.shared.data.models.impls.HealthCareModelImpl
 import com.padc.shared.data.vos.*
+import com.padc.shared.viewpods.RecommendMedicineViewPod
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home_screen.*
 import kotlinx.android.synthetic.main.activity_patient_info.*
@@ -34,6 +36,7 @@ class ChatActivity : BaseActivity() , ChatView{
     var Cid : String = ""
     var name : String = ""
     var sid : String = ""
+    private lateinit var mRecommendViewpod : RecommendMedicineViewPod
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -77,6 +80,7 @@ class ChatActivity : BaseActivity() , ChatView{
         btnQuestion.setOnClickListener {
             mPresenter.onTapQuestionButton(name,sid,Cid)
         }
+
 
         btnSendMessageInChat.setOnClickListener {
             if (!etMessage.text?.equals("")!!) {
@@ -161,6 +165,19 @@ class ChatActivity : BaseActivity() , ChatView{
          mChatAdapter.setNewData(
              chat)
     }
+
+    override fun displayPrescription(lists: List<PresriptionVO>) {
+        Log.d("prescriptionLists", lists.size.toString())
+        if(lists.isNotEmpty()) {
+            vpRecommendMedicine.visibility = View.VISIBLE
+            mRecommendViewpod = vpRecommendMedicine as RecommendMedicineViewPod
+            mRecommendViewpod.setPrescriptionData(
+                lists,SessionManager.doctor_id.toString())
+
+        }
+    }
+
+
 
 
 }

@@ -123,7 +123,7 @@ interface HealthCareModel {
     fun getConsultationRequestWhenStatusNew(status: String): LiveData<ConsultationRequestVO>
 
 
-    fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>)
+    fun getPrescription(consultationId: String, onSuccess: (prescription :List<PresriptionVO>) -> Unit,onFailure: (String) -> Unit)
 
   //  fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO)
 
@@ -230,6 +230,7 @@ interface HealthCareModel {
         onSuccess: (ConsultationVO) -> Unit,
         onFailure: (String) -> Unit
     )
+
 
 
 }

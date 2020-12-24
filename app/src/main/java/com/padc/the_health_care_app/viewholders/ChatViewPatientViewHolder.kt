@@ -6,7 +6,7 @@ import com.padc.shared.viewholders.BaseViewHolder
 import com.padc.the_health_care_app.delegates.ChatDelegate
 import kotlinx.android.synthetic.main.rv_item_chat_by_patient.view.*
 
-class ChatViewPatientViewHolder (itemView: View, val delegate : ChatDelegate) : BaseViewHolder<ChatMessageVO>(itemView){
+class ChatViewPatientViewHolder (itemView: View) : BaseViewHolder<ChatMessageVO>(itemView){
     override fun bindData(data: ChatMessageVO) {
         data?.let {
             itemView.patientMessage?.text = it.textMessage

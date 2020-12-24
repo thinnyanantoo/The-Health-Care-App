@@ -35,17 +35,25 @@ class PatientChatPresenterImpl :PatientChatPresenter, AbstractBasePresenter<Pati
            consultation.patient?.let { mView?.displayPatientInfo(it) }
        },onFailure = {})
 
+        mModel.getPrescription(id,onSuccess = {
+            mView?.showPrescription(
+                it
+            )
+        },onFailure = {})
+
 
         mModel.getAllChatMessage(id,onSuccess = {
             mView?.displayPatientChat(it)
         },onFailure = {})
+
     }
 
-    override fun onTapCheckOut(id: String) {
-        TODO("Not yet implemented")
+//    override fun onTapCheckOut(id: String) {
+//        mView?.navigateToOrderPrescription()
+//    }
+
+    override fun onTapOrderPrescription() {
+        mView?.navigateToOrderPrescription()
     }
 
-    override fun onTapChatToCheckOut() {
-        TODO("Not yet implemented")
-    }
 }

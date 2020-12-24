@@ -53,7 +53,8 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
             "allegicMedicine" to patientVO.allergicMedicine,
             "bloodPressure" to patientVO.bloodPressure,
             "bloodType" to patientVO.bloodType,
-            "device-id" to patientVO.deviceId
+            "device-id" to patientVO.deviceId,
+           "address" to patientVO.address
 //            "recently_doctor" to patientVO.recentlyDoctorVo
         )
         db.collection("patient")
@@ -109,8 +110,10 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
         onFailure: (String) -> Unit
     ) {
         val addressMap = hashMapOf(
-            "newAddress" to addressVO.newAddress,
-            "originAddress" to addressVO.originAddress
+            "state" to addressVO.state,
+            "street" to addressVO.street,
+            "townShip" to addressVO.township,
+            "fullAddress" to addressVO.fullAddress
         )
         db.collection("patient/$id/address")
             .add(addressMap)
@@ -133,14 +136,24 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
                 val result = value?.documents ?: arrayListOf()
 
                 for (document in result) {
-                    val hashmap = document.data
-                    hashmap?.put("id", document.id)
-                    val data = Gson().toJson(hashmap)
-                    val dataVo = Gson().fromJson<PatientVO>(data, PatientVO::class.java)
-                    patientList.add(dataVo)
+                //    val hashmap = document.data
+                  //  hashmap?.put("id", document.id)
+                    val data = document.data?.convertToPatientVo()
+                    data.let { it?.let { it1 -> patientList.add(it1) } }
+                 //   val dataVo = Gson().fromJson<PatientVO>(data, PatientVO::class.java)
+                 //   patientList.add(dataVo)
                 }
                 onSuccess(patientList)
             }
+
+//            val List: MutableList<ConsultationRequestVO> = arrayListOf()
+//            val result = value?.documents ?: arrayListOf()
+//
+//            for (document in result) {
+//                val data = document.data?.convertToConsultationRequestVo()
+//                data.let { it?.let { it1 -> List.add(it1) } }
+//            }
+//            onSuccess(List)
         }
     }
 
@@ -726,22 +739,31 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
 
     override fun getPrescription(
         documentId: String,
-        onSuccess: (List<PresriptionVO>) -> Unit,
+        onSuccess: (prescription:List<PresriptionVO>) -> Unit,
         onFailure: (String) -> Unit
     ) {
         db.collection("consultation/${documentId}/prescription")
-            .get()
-            .addOnSuccessListener { result ->
-                val list: MutableList<PresriptionVO> = arrayListOf()
-                for (document in result) {
-                    val hashmap = document.data
-                    hashmap?.put("id", document.id.toString())
-                    val Data = Gson().toJson(hashmap)
-                    val docsData = Gson().fromJson<PresriptionVO>(Data, PresriptionVO::class.java)
-                    list.add(docsData)
+            .addSnapshotListener { value, error ->
+                error?.let {
+                    onFailure(it.message ?: "Please check connection")
+                } ?: run {
+
+                    val list: MutableList<PresriptionVO> = arrayListOf()
+
+                    val result = value?.documents ?: arrayListOf()
+
+                    for (document in result) {
+                        val data = document.data
+                        data?.put("id", document.id)
+                        val dataJson = Gson().toJson(data)
+                        val docsData = Gson().fromJson<PresriptionVO>(dataJson, PresriptionVO::class.java)
+                        list.add(docsData)
+                    }
+
+                    onSuccess(list)
                 }
-                onSuccess(list)
-            }
+                }
+
     }
 
     override fun addedRecentlyDoctor(

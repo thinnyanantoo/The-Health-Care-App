@@ -7,13 +7,13 @@ import com.padc.shared.data.vos.PresriptionVO
 
 class PrescriptionTypeConverter {
     @TypeConverter
-    fun toString(dataList : PresriptionVO): String{
+    fun toString(dataList : ArrayList<PresriptionVO>): String{
         return Gson().toJson(dataList)
     }
 
     @TypeConverter
-    fun toList(JsonStr: String) : PresriptionVO {
-        val dataListType = object  : TypeToken<PresriptionVO>(){}.type
+    fun toList(JsonStr: String) : ArrayList<PresriptionVO> {
+        val dataListType = object  : TypeToken<ArrayList<PresriptionVO>>(){}.type
         return Gson().fromJson(JsonStr,dataListType)
     }
 }

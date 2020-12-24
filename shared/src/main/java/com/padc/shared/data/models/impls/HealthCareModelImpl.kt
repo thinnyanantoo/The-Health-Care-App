@@ -317,12 +317,9 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
         return mTheDB.medicineDao().getMedicine()
     }
 
-    override fun getPrescribtion(documentId: String, presriptionVO: List<PresriptionVO>) {
-        mFirebaseApi.getPrescription(documentId, onSuccess = {
-            it
-        }, onFailure = {
-            error(it)
-        })
+
+    override fun getPrescription(consultationId: String, onSuccess: (prescription : List<PresriptionVO>) -> Unit,onFailure: (String) -> Unit) {
+        mFirebaseApi.getPrescription(consultationId,onSuccess,onFailure)
     }
 
 //    override fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO) {

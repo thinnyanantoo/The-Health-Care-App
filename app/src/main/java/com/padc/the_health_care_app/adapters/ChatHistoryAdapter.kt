@@ -11,7 +11,7 @@ import com.padc.the_health_care_app.utils.SessionManager
 import com.padc.the_health_care_app.viewholders.ChatDoctorViewholder
 import com.padc.the_health_care_app.viewholders.ChatViewPatientViewHolder
 
-class ChatHistoryAdapter (private val delegate: ChatDelegate) : BaseRecyclerAdapter<BaseViewHolder<ChatMessageVO>,ChatMessageVO>() {
+class ChatHistoryAdapter () : BaseRecyclerAdapter<BaseViewHolder<ChatMessageVO>,ChatMessageVO>() {
     var doctorViewType = 1
     var patientViewType = 2
 
@@ -20,12 +20,12 @@ class ChatHistoryAdapter (private val delegate: ChatDelegate) : BaseRecyclerAdap
             doctorViewType-> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.rv_item_chat_by_patient, parent, false)
-                return ChatViewPatientViewHolder(view, delegate)
+                return ChatViewPatientViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.rv_item_chat_by_doctor, parent, false)
-                return ChatDoctorViewholder(view, delegate)
+                return ChatDoctorViewholder(view)
             }
         }
     }

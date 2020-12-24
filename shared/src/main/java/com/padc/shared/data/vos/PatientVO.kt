@@ -22,8 +22,8 @@ data class PatientVO(
     var allergicMedicine: String? = "",
     var bloodPressure : String? = "",
     var bloodType : String? = "",
-    var deviceId : String ? = ""
-  //  var address: AddressVO ? = null
+    var deviceId : String ? = "",
+     var address: ArrayList<AddressVO> = arrayListOf()
   //  var oneTimeGeneralQuestion: OnetimeGeneralQuestionVO = OnetimeGeneralQuestionVO()
 //    var recentlyDoctor: RecentlyDoctorVo? = null
 )
@@ -43,6 +43,22 @@ fun MutableMap<String,Any>?.convertToPatientVo() : PatientVO{
         patient.deviceId = this?.get("deviceId").toString()
         patient.bloodPressure = this?.get("bloodPressure").toString()
         patient.bloodType = this?.get("bloodType").toString()
+    val que : ArrayList<AddressVO>? = arrayListOf()
+    val value = this?.get("case-summary") as ArrayList<HashMap<String,Any>>?
+    value?.forEach{
+        it.convertToAddress()?.let { it1 -> que?.add (it1) }
+    }
+    patient.address = que!!
     return patient
 
     }
+
+
+fun MutableMap<String,Any>?.convertToAddress(): AddressVO?{
+    val question = AddressVO()
+    question.state = this?.get("question")as String
+    question.street = this?.get("answer")as String
+    question.township = this?.get("id")as String
+    question.fullAddress = this?.get("fullAddress")as String
+    return question
+}

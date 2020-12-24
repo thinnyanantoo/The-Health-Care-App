@@ -77,6 +77,13 @@ object SessionManager {
         set(value) = preferences.edit {
             it.putString(sharePreferencePatientDateOfBirth, value)
         }
+    var patient_dateAllegic: String?
+
+        get() = preferences.getString(sharePreferencePatientAllgicMedicine, "")
+
+        set(value) = preferences.edit {
+            it.putString(sharePreferencePatientAllgicMedicine, value)
+        }
 
     var patient_height: String?
 

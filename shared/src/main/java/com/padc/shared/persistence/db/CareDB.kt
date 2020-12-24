@@ -27,7 +27,7 @@ import com.padc.shared.persistence.typeConverters.*
     DeliveryRoutineTypeConverter::class,
     PrescriptionTypeConverter::class,
     SendByVOTypeConverter::class,
-    AddressTypeConverters::class,
+     AddressTypeConverters::class,
     OneTimeGeneralQuestionTypeConverter::class
 )
 abstract class CareDB : RoomDatabase() {

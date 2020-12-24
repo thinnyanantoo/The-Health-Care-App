@@ -190,7 +190,8 @@ class PatientCaseSummaryConfirmActivity : BaseActivity(), ConfirmPatientDataView
             weight = etWeightInConfirm.text.toString(),
             height = etheigtAnswerInConfirm.text.toString(),
             DOB = tvbdAnswerInConfirm.text.toString(),
-            allergicMedicine = etwrongInConfirm.text.toString()
+            allergicMedicine = etwrongInConfirm.text.toString(),
+            address = arrayListOf()
         )
     }
 }

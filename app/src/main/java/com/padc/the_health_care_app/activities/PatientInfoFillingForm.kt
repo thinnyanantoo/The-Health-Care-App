@@ -3,6 +3,7 @@ package com.padc.the_health_care_app.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.se.omapi.Session
 import android.text.Editable
 import android.util.Log
 import android.view.View
@@ -23,6 +24,7 @@ import com.padc.the_health_care_app.fragments.HomeFragment
 import com.padc.the_health_care_app.mvp.presenters.PatientQuestionPresenter
 import com.padc.the_health_care_app.mvp.presenters.impls.PatientQuestionPresenterImpl
 import com.padc.the_health_care_app.mvp.views.PatientQuestionView
+import com.padc.the_health_care_app.utils.SessionManager
 import kotlinx.android.synthetic.main.activity_patient_info_filling_form.*
 import kotlinx.android.synthetic.main.activity_patient_register.*
 import kotlinx.android.synthetic.main.activity_stepper.*
@@ -118,9 +120,24 @@ class PatientInfoFillingForm : BaseActivity(), PatientQuestionView {
                 DOB = "$year/$month/$day".toString(),
                 allergicMedicine = etwrongInSecond.text.toString(),
                 bloodType = etbloodTypeAnswerInSecond.text.toString(),
-                bloodPressure = etAnswerBloodPressure.text.toString()
+                bloodPressure = etAnswerBloodPressure.text.toString(),
+                address = arrayListOf()
             )
+
+            SessionManager.patient_id = patientid
+            SessionManager.patient_name = pNameInSecond.text.toString()
+            SessionManager.patient_weight = etWeightInTwo.text.toString()
+            SessionManager.patient_height = etAnswerHeight.text.toString()
+            SessionManager.patient_dateOfBirth = "$year/$month/$day"
+            SessionManager.patient_dateAllegic = etwrongInSecond.text.toString()
+            SessionManager.patient_bloodPressure = etAnswerBloodPressure.text.toString()
+            SessionManager.patient_bloodType = etbloodTypeAnswerInSecond.text.toString()
            mModel.insertDatatoPatientVO(patientVO = patientVO)
+
+            Log.d("SessionId", SessionManager.patient_id.toString())
+            Log.d("SessionName",SessionManager.patient_name.toString())
+            Log.d("SessionWeight",SessionManager.patient_weight.toString())
+            Log.d("SessionHeight",SessionManager.patient_height.toString())
 
             linearLayoutTwo.visibility = View.GONE
             linearLayoutThree.visibility = View.VISIBLE

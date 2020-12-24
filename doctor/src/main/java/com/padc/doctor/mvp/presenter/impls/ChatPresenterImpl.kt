@@ -63,16 +63,25 @@ class ChatPresenterImpl : ChatPresenter, AbstractBasePresenter<ChatView>() {
 //                    it.caseSummaryVO?.toMutableList()?.let { it1 -> mView?.showSpecialQuestionAnswer(it1) }}
 //            })
 
+            mModel.getPrescription(consultationId = SessionManager.con_id.toString(),onSuccess = {
+                Log.d("SIze",it.size.toString())
+                mView?.displayPrescription(
+                    it
+
+                )
+            },onFailure = {
+                it
+            })
+
             mModel.getConsultationById(id,onSuccess = {consultation ->
 //                mView?.showSpeciality(consultation.spciality.toString())
                 //  mView?.showSendMessageLayout()
-
                 mView?.showSpecialQuestionAnswer(consultation.caseSummaryVO)
                 consultation.patient?.let { mView?.showPatientInfo(it) }
             },onFailure = {})
 
 
-            mModel.getAllChatMessage(id, onSuccess = {
+            mModel.getAllChatMessage(SessionManager.con_id.toString(), onSuccess = {
                 mView?.displayPatientChat(it)
             },onFailure = {})
 

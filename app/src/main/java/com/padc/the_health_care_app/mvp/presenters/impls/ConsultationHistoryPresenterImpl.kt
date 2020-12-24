@@ -8,14 +8,14 @@ import com.padc.shared.mvp.presenters.AbstractBasePresenter
 import com.padc.the_health_care_app.mvp.presenters.ConsultationHistoryPresenter
 import com.padc.the_health_care_app.mvp.views.ConsultationHistoryView
 
-class ConsultationHistoryPresenterImpl : ConsultationHistoryPresenter,AbstractBasePresenter<ConsultationHistoryView>(){
-    private val mModel : HealthCareModel = HealthCareModelImpl
-    override fun onUiReady(consultation: ConsultationVO,lifecycleOwner: LifecycleOwner) {
-        mModel.getConsultation(onSuccess = {
-            mView?.showConsultatioHistory(consultation)
-        },onError = {
-
-        })
-    }
-
-}
+//class ConsultationHistoryPresenterImpl : ConsultationHistoryPresenter,AbstractBasePresenter<ConsultationHistoryView>(){
+//    private val mModel : HealthCareModel = HealthCareModelImpl
+//    override fun onUiReady(consultation: ConsultationVO,lifecycleOwner: LifecycleOwner) {
+//        mModel.getConsultation(onSuccess = {
+//            mView?.showConsultatioHistory(consultation)
+//        },onError = {
+//
+//        })
+//    }
+//
+//}

@@ -10,7 +10,10 @@ class CheckOutVO(
     @PrimaryKey
     var id: String = "",
     var address: String = "",
-    var prescription: PresriptionVO = PresriptionVO(),
-    var deliveryRoutine: DeliveryRoutineVO = DeliveryRoutineVO()
+    var prescription: ArrayList<PresriptionVO> = arrayListOf(),
+    var deliveryRoutine: DeliveryRoutineVO ?= null,
+    var patientVO: PatientVO? = null,
+    var doctorVO: DoctorVO?  = null,
+    var totalPrice : String = ""
 
 )

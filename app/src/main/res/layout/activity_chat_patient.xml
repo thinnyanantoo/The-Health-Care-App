@@ -122,8 +122,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rvChatHistory"
-                    android:layout_marginBottom="70dp"
                     android:nestedScrollingEnabled="true"/>
+                <include
+                    layout="@layout/layout_recommend_medicine_view_pods"
+                    android:id="@+id/vpRecommend"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="60dp"
+                    />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

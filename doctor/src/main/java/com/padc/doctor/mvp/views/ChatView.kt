@@ -13,5 +13,6 @@ interface ChatView : BaseView {
     fun navigateToMedicineActivity(specialityName: String,specialityId: String,consultId: String)
 
     fun displayPatientChat(chat : List<ChatMessageVO>)
+    fun displayPrescription(Lists: List<PresriptionVO>)
 
 }

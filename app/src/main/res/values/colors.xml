@@ -8,4 +8,7 @@
     <color name="bg_color_in_log_in">#cee7f5</color>
     <color name="text_color_hint">#979797</color>
     <color name="shawdow_color_in_patient_login">#297b7b7b</color>
+    <color name="genmental">#424656</color>
+    <color name="black">#000000</color>
+    <color name="bg_tint">#424656</color>
 </resources>
