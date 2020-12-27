@@ -333,18 +333,11 @@ object HealthCareModelImpl : HealthCareModel, BaseModel() {
 //    }
 
     override fun addToCheckOut(
-        prescription: List<PresriptionVO>,
-        deliveryRoutineVO: DeliveryRoutineVO,
-        id: String,
-        address: String
+        checkOutVO: CheckOutVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
     ) {
-        mFirebaseApi.checkOutMedicine(
-            prescription,
-            deliveryRoutineVO,
-            id,
-            address,
-            onSuccess = {},
-            onFailure = {})
+        mFirebaseApi.checkoutMedicine(checkOutVO,onSuccess,onFailure)
     }
 
     override fun getAllGeneralQuestion(onError: (String) -> Unit): LiveData<GeneralQuestionVO> {

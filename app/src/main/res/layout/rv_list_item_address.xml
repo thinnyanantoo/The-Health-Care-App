@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="1dp"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#f6f6f6"
+    android:id="@+id/card_address"
+    app:cardBackgroundColor="#ffffff"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_edittext"
+        android:padding="8dp"
+        android:maxLines="3"
+        android:lines="5"
+        android:editable="false"
+        android:textAlignment="center"
+        android:scrollbars="none"
+        android:textSize="13sp"
+        android:maxLength="2000"
+        android:gravity="center"
+        android:text="Address"
+        android:textColor="#000000"
+        android:id="@+id/ed_patient_address"
+        android:layout_margin="3dp"
+        tools:ignore="RtlCompat" />
+</com.google.android.material.card.MaterialCardView>

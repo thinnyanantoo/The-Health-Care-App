@@ -128,10 +128,9 @@ interface HealthCareModel {
   //  fun addedToPrescription(documentId: String, presriptionVO: PresriptionVO)
 
     fun addToCheckOut(
-        prescription: List<PresriptionVO>,
-        deliveryRoutineVO: DeliveryRoutineVO,
-        id: String,
-        address: String
+        checkOutVO: CheckOutVO,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
     )
 
 

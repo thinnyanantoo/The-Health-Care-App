@@ -31,11 +31,11 @@ class OrderPrescriptionMedicinePresenterImpl : OrderPrescriptionMedicinePresente
     ) {
         mConsultationId = consutationID
         mModel.getPatientById(patientId).observe(lifecycleOwner, Observer {
-            mAddressLists.addAll(it.address)
+          //  mAddressLists.addAll(it.address)
             mView?.displayPatientAddress(mAddressLists)
         })
 
-        mModel.getPrescription(consultationId = consutationID, onSuccess = {
+        mModel.getPrescription(consultationId = mConsultationId, onSuccess = {
             mView?.displayPrescribeMedicineLists(it)
             mPrescriptionDataList.value = it
         },
@@ -95,6 +95,10 @@ class OrderPrescriptionMedicinePresenterImpl : OrderPrescriptionMedicinePresente
                     prescription = prescribMedicineLists,
                     totalPrice = toatlPrice
                 )
+
+                mModel.addToCheckOut(checkOut,onSuccess = {
+                        mView?.navigateToHomeFragment()
+                },onFailure = {})
             }
         },onFailure = {})
     }

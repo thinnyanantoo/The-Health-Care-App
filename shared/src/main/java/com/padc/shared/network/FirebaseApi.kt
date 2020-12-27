@@ -212,14 +212,12 @@ interface FirebaseApi {
 
     //CheckOut
 
-    fun checkOutMedicine(
-        prescription: List<PresriptionVO>,
-        deliveryRoutineVO: DeliveryRoutineVO,
-        id: String,
-        address: String,
-        onSuccess: (checkOutVO: CheckOutVO) -> Unit,
+    fun checkoutMedicine(
+        checkOutVO: CheckOutVO,
+        onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     )
+
 
     fun finishConsultation(
         consultationVO : ConsultationVO,

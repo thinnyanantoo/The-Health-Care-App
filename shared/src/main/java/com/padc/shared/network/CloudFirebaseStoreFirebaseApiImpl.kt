@@ -871,27 +871,20 @@ object CloudFirebaseStoreFirebaseApiImpl : FirebaseApi {
     }
 
 
-    override fun checkOutMedicine(
-        prescription: List<PresriptionVO>,
-        deliveryRoutineVO: DeliveryRoutineVO,
-        id: String,
-        address: String,
-        onSuccess: (checkOutVO: CheckOutVO) -> Unit,
+
+    override fun checkoutMedicine(
+        checkOutVO: CheckOutVO,
+        onSuccess: () -> Unit,
         onFailure: (String) -> Unit
     ) {
-        val checkOutMap = hashMapOf(
-            "id" to id,
-            "delivery-routine" to deliveryRoutineVO,
-            "prescription" to prescription,
-            "address" to address
-        )
-
+        val id = UUID.randomUUID().toString()
         db.collection("checkout")
-            .document(UUID.randomUUID().toString())
-            .set(checkOutMap)
-            .addOnFailureListener { Log.d("Success", "Successfully added checkout") }
-            .addOnFailureListener { Log.d("Failed", "Failed to add checkout") }
-
+            .document(id)
+            .set(checkOutVO)
+            .addOnSuccessListener {
+                onSuccess()
+                Log.d("Success", "Successfully added patient") }
+            .addOnFailureListener { Log.d("Failure", "Failed to add patient") }
     }
 
     override fun getMedicineBySpeciality(
